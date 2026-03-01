@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragon SMP — Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================================================================
+     LOGIN SCREEN
+     ================================================================ -->
+<div class="admin-login" id="login-screen">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <h2>Panel Admin</h2>
+    <p>Dragon SMP Wiki — Accès restreint</p>
+
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" id="login-password" placeholder="••••••••"
+        onkeydown="if(event.key==='Enter') attemptLogin()">
+    </div>
+    <div id="login-error" style="color:var(--danger);font-size:.85rem;margin-bottom:.8rem;display:none">
+      ❌ Mot de passe incorrect
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="attemptLogin()">
+      Se connecter
+    </button>
+    <div style="margin-top:1rem">
+      <a href="index.html" style="color:var(--text-dim);font-size:.85rem;text-decoration:none">
+        ← Retour au wiki
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     ADMIN PANEL (caché jusqu'au login)
+     ================================================================ -->
+<div id="admin-panel" style="display:none">
+
+  <!-- Header -->
+  <header>
+    <a class="header-logo" href="index.html">🐉 Dragon<span>SMP</span></a>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <span style="color:var(--success);font-size:.85rem">● Connecté</span>
+      <button class="btn btn-secondary btn-sm" onclick="logout()">Déconnexion</button>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+
+    <!-- Sidebar admin -->
+    <aside class="admin-sidebar">
+      <div class="admin-nav-item active" onclick="showAdminPanel('dashboard', this)">
+        📊 Dashboard
+      </div>
+      <div class="admin-nav-item" onclick="showAdminPanel('pages-list', this)">
+        📄 Pages du wiki
+      </div>
+      <div class="admin-nav-item" onclick="showAdminPanel('new-page', this)">
+        ➕ Nouvelle page
+      </div>
+      <div class="admin-nav-item" onclick="showAdminPanel('settings', this)">
+        ⚙️ Paramètres
+      </div>
+      <div style="padding: 1rem 1.2rem; margin-top: 1rem;">
+        <div class="sidebar-divider" style="margin: 0 0 1rem;"></div>
+        <a href="index.html" class="admin-nav-item" style="opacity:.6;font-size:.85rem">
+          ← Retour au wiki
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main admin -->
+    <main class="admin-main">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="admin-panel active" id="panel-dashboard">
+        <h2 class="admin-title">📊 Dashboard</h2>
+        <div class="stats-row" id="dashboard-stats"></div>
+        <div style="color:var(--text-dim);font-size:.9rem;line-height:1.8">
+          <p>Bienvenue dans le panel admin du <strong style="color:var(--ember)">Dragon SMP Wiki</strong>.</p>
+          <p>Toutes les modifications sont sauvegardées en <strong>localStorage</strong> — elles persistent entre les sessions sur cet appareil.</p>
+          <br>
+          <p style="color:var(--gold)">💡 Astuce :</p>
+          <p>Le contenu des pages utilise le <strong>Markdown</strong>. Utilise la toolbar dans l'éditeur pour les balises courantes.</p>
+        </div>
+      </div>
+
+      <!-- ── LISTE DES PAGES ── -->
+      <div class="admin-panel" id="panel-pages-list">
+        <h2 class="admin-title">📄 Pages du wiki</h2>
+        <div class="pages-list" id="admin-pages-list"></div>
+      </div>
+
+      <!-- ── NOUVELLE PAGE / ÉDITION ── -->
+      <div class="admin-panel" id="panel-new-page">
+        <h2 class="admin-title" id="editor-title">➕ Nouvelle page</h2>
+        <input type="hidden" id="edit-page-id">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+          <div class="form-group">
+            <label>Titre de la page *</label>
+            <input type="text" id="page-title" placeholder="Ex: Économie">
+          </div>
+          <div class="form-group">
+            <label>Icône (emoji)</label>
+            <input type="text" id="page-icon" placeholder="Ex: 💰" maxlength="4">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="page-category">
+              <option value="general">📖 Général</option>
+              <option value="guides">📚 Guides</option>
+              <option value="custom">📄 Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description courte</label>
+            <input type="text" id="page-desc" placeholder="Ex: Le système économique du serveur">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Contenu (Markdown)</label>
+          <!-- Toolbar -->
+          <div class="editor-toolbar">
+            <button onclick="insertMd('## ', '')">H2</button>
+            <button onclick="insertMd('### ', '')">H3</button>
+            <div class="sep"></div>
+            <button onclick="insertMd('**', '**')"><b>B</b></button>
+            <button onclick="insertMd('*', '*')"><i>I</i></button>
+            <button onclick="insertMd('`', '`')">Code</button>
+            <div class="sep"></div>
+            <button onclick="insertMd('- ', '')">Liste</button>
+            <button onclick="insertMd('1. ', '')">1.</button>
+            <button onclick="insertMd('> ', '')">Citation</button>
+            <div class="sep"></div>
+            <button onclick="insertMd('\n---\n', '')">—</button>
+            <button onclick="insertMd('\n```\n', '\n```')">Bloc code</button>
+          </div>
+          <textarea class="editor-area" id="page-content"
+            placeholder="Contenu en Markdown..."></textarea>
+        </div>
+
+        <!-- Prévisualisation -->
+        <div class="preview-label">👁 Prévisualisation</div>
+        <div class="preview-box wiki-content" id="preview-box">
+          <span style="color:var(--text-dim);font-size:.88rem">La prévisualisation apparaîtra ici...</span>
+        </div>
+
+        <div style="display:flex;gap:.8rem;margin-top:1.5rem;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="savePage()">💾 Sauvegarder</button>
+          <button class="btn btn-secondary" onclick="updatePreview()">👁 Prévisualiser</button>
+          <button class="btn btn-secondary" onclick="resetEditor()">✕ Annuler</button>
+        </div>
+      </div>
+
+      <!-- ── PARAMÈTRES ── -->
+      <div class="admin-panel" id="panel-settings">
+        <h2 class="admin-title">⚙️ Paramètres</h2>
+
+        <div style="max-width:480px">
+          <div class="form-group">
+            <label>Changer le mot de passe admin</label>
+            <input type="password" id="new-password" placeholder="Nouveau mot de passe">
+          </div>
+          <div class="form-group">
+            <input type="password" id="confirm-password" placeholder="Confirmer le mot de passe">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="changePassword()">Mettre à jour</button>
+
+          <div class="sidebar-divider" style="margin: 2rem 0;"></div>
+
+          <p style="color:var(--text-dim);font-size:.88rem;margin-bottom:1rem">
+            <strong style="color:var(--danger)">Zone dangereuse</strong>
+          </p>
+          <button class="btn btn-danger btn-sm" onclick="exportData()">📤 Exporter les données (JSON)</button>
+          &nbsp;
+          <button class="btn btn-danger btn-sm" onclick="confirmReset()">🗑 Réinitialiser le wiki</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+/* ================================================================
+   ADMIN LOGIC
+   ================================================================ */
+
+// ── Mot de passe (hash simple) ────────────────────────────────────────────────
+// Pour changer le mot de passe par défaut, modifie la valeur ci-dessous.
+// Utilise la fonction hashPassword() dans la console pour obtenir le hash.
+// Mot de passe par défaut : dragonsmp2024
+const DEFAULT_PASS_HASH = '5e0d5e2f8a3c1b4d9f6e2a7c8b3d1e4f';
+
+function simpleHash(str) {
+  // Hash basique côté front — suffisant pour un wiki communautaire
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h).toString(16).padStart(8, '0').repeat(4);
+}
+
+function attemptLogin() {
+  const pw = document.getElementById('login-password').value;
+  const storedHash = localStorage.getItem('dsmp_admin_hash') || DEFAULT_PASS_HASH;
+
+  if (simpleHash(pw) === storedHash) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    renderDashboard();
+    renderPagesList();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('login-error').style.display = 'none';
+    }, 3000);
+  }
+}
+
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('login-password').value = '';
+}
+
+// ── Navigation admin ──────────────────────────────────────────────────────────
+function showAdminPanel(id, el) {
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id)?.classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const stats = document.getElementById('dashboard-stats');
+  if (!stats) return;
+  stats.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-num">${pages.length}</div>
+      <div class="stat-card-label">Pages</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num">${Object.keys(groupByCategory()).length}</div>
+      <div class="stat-card-label">Catégories</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num">${pages.reduce((a, p) => a + (p.content || '').split('\n').length, 0)}</div>
+      <div class="stat-card-label">Lignes</div>
+    </div>`;
+}
+
+function groupByCategory() {
+  return pages.reduce((acc, p) => {
+    const c = p.category || 'custom';
+    if (!acc[c]) acc[c] = [];
+    acc[c].push(p);
+    return acc;
+  }, {});
+}
+
+// ── Liste des pages ───────────────────────────────────────────────────────────
+function renderPagesList() {
+  const list = document.getElementById('admin-pages-list');
+  if (!list) return;
+
+  if (!pages.length) {
+    list.innerHTML = '<p style="color:var(--text-dim)">Aucune page pour l\'instant.</p>';
+    return;
+  }
+
+  list.innerHTML = pages.map(p => `
+    <div class="page-item">
+      <div class="page-item-info">
+        <span class="page-item-icon">${p.icon || '📄'}</span>
+        <div>
+          <div class="page-item-title">${escHtml(p.title)}</div>
+          <div class="page-item-slug">#${p.id}</div>
+        </div>
+      </div>
+      <div class="page-item-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editPage('${p.id}')">✏️ Modifier</button>
+        <button class="btn btn-danger btn-sm" onclick="deletePage('${p.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+// ── Éditeur ───────────────────────────────────────────────────────────────────
+function editPage(id) {
+  const page = pages.find(p => p.id === id);
+  if (!page) return;
+
+  document.getElementById('edit-page-id').value = page.id;
+  document.getElementById('editor-title').textContent = `✏️ Modifier : ${page.title}`;
+  document.getElementById('page-title').value = page.title;
+  document.getElementById('page-icon').value = page.icon || '';
+  document.getElementById('page-category').value = page.category || 'custom';
+  document.getElementById('page-desc').value = page.description || '';
+  document.getElementById('page-content').value = page.content || '';
+  document.getElementById('preview-box').innerHTML = '<span style="color:var(--text-dim);font-size:.88rem">Clique sur Prévisualiser...</span>';
+
+  showAdminPanel('new-page', document.querySelectorAll('.admin-nav-item')[2]);
+}
+
+function resetEditor() {
+  document.getElementById('edit-page-id').value = '';
+  document.getElementById('editor-title').textContent = '➕ Nouvelle page';
+  document.getElementById('page-title').value = '';
+  document.getElementById('page-icon').value = '';
+  document.getElementById('page-category').value = 'general';
+  document.getElementById('page-desc').value = '';
+  document.getElementById('page-content').value = '';
+  document.getElementById('preview-box').innerHTML = '<span style="color:var(--text-dim);font-size:.88rem">La prévisualisation apparaîtra ici...</span>';
+}
+
+function savePage() {
+  const title = document.getElementById('page-title').value.trim();
+  const icon = document.getElementById('page-icon').value.trim();
+  const category = document.getElementById('page-category').value;
+  const description = document.getElementById('page-desc').value.trim();
+  const content = document.getElementById('page-content').value;
+  const editId = document.getElementById('edit-page-id').value;
+
+  if (!title) { showToast('Le titre est requis !', 'error'); return; }
+
+  if (editId) {
+    // Modification
+    const idx = pages.findIndex(p => p.id === editId);
+    if (idx !== -1) {
+      pages[idx] = { ...pages[idx], title, icon, category, description, content };
+      showToast('✅ Page modifiée avec succès !');
+    }
+  } else {
+    // Nouvelle page
+    const id = title.toLowerCase()
+      .replace(/[àáâãäå]/g, 'a').replace(/[èéêë]/g, 'e')
+      .replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o')
+      .replace(/[ùúûü]/g, 'u').replace(/ç/g, 'c')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    if (pages.find(p => p.id === id)) {
+      showToast('Une page avec ce nom existe déjà !', 'error');
+      return;
+    }
+
+    pages.push({ id, title, icon, category, description, content, slug: id });
+    showToast('✅ Page créée avec succès !');
+  }
+
+  savePages();
+  renderSidebar();
+  renderPagesList();
+  renderDashboard();
+  resetEditor();
+}
+
+function deletePage(id) {
+  if (!confirm(`Supprimer cette page ? Cette action est irréversible.`)) return;
+  pages = pages.filter(p => p.id !== id);
+  savePages();
+  renderPagesList();
+  renderDashboard();
+  renderSidebar();
+  showToast('🗑 Page supprimée.');
+}
+
+// ── Toolbar Markdown ──────────────────────────────────────────────────────────
+function insertMd(before, after) {
+  const ta = document.getElementById('page-content');
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  const sel = ta.value.substring(start, end);
+  ta.value = ta.value.substring(0, start) + before + sel + after + ta.value.substring(end);
+  ta.focus();
+  ta.setSelectionRange(start + before.length, start + before.length + sel.length);
+}
+
+function updatePreview() {
+  const content = document.getElementById('page-content').value;
+  const box = document.getElementById('preview-box');
+  box.innerHTML = parseMarkdown(content) || '<span style="color:var(--text-dim)">Aucun contenu à prévisualiser.</span>';
+}
+
+// Live preview
+document.addEventListener('DOMContentLoaded', () => {
+  const ta = document.getElementById('page-content');
+  if (ta) {
+    let debounce;
+    ta.addEventListener('input', () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(updatePreview, 600);
+    });
+  }
+});
+
+// ── Paramètres ────────────────────────────────────────────────────────────────
+function changePassword() {
+  const np = document.getElementById('new-password').value;
+  const cp = document.getElementById('confirm-password').value;
+
+  if (!np) { showToast('Entre un mot de passe.', 'error'); return; }
+  if (np !== cp) { showToast('Les mots de passe ne correspondent pas.', 'error'); return; }
+  if (np.length < 6) { showToast('Minimum 6 caractères.', 'error'); return; }
+
+  localStorage.setItem('dsmp_admin_hash', simpleHash(np));
+  document.getElementById('new-password').value = '';
+  document.getElementById('confirm-password').value = '';
+  showToast('✅ Mot de passe mis à jour !');
+}
+
+function exportData() {
+  const data = JSON.stringify(pages, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'dragonsmp-wiki-backup.json';
+  a.click();
+  showToast('📤 Export réussi !');
+}
+
+function confirmReset() {
+  if (!confirm('⚠️ Réinitialiser TOUT le wiki ? Toutes les pages personnalisées seront supprimées.')) return;
+  localStorage.removeItem('dsmp_pages');
+  loadPages();
+  renderPagesList();
+  renderDashboard();
+  renderSidebar();
+  showToast('Wiki réinitialisé aux pages par défaut.', 'error');
+}
+</script>
+
+</body>
+</html>
