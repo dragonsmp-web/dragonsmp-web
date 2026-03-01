@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon SMP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fire: #ff4500;
+            --ember: #ff8c00;
+            --gold: #ffd700;
+            --dark: #0a0a0a;
+            --dark2: #111111;
+            --dark3: #1a1a1a;
+            --text: #e8e0d0;
+            --muted: #8a8070;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── FOND ANIMÉ ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 100%, rgba(255,69,0,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 20% 80%, rgba(255,140,0,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,69,0,0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: breathe 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,69,0,0.2);
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+            letter-spacing: 2px;
+        }
+
+        .nav-logo span {
+            color: var(--fire);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--fire), var(--ember));
+            transition: transform 0.25s;
+            border-radius: 2px;
+        }
+
+        .nav-btn:hover { color: var(--text); }
+        .nav-btn:hover::after { transform: translateX(-50%) scaleX(1); }
+        .nav-btn.active { color: var(--ember); }
+        .nav-btn.active::after { transform: translateX(-50%) scaleX(1); }
+
+        .discord-btn {
+            background: linear-gradient(135deg, #5865f2, #4752c4);
+            color: white !important;
+            border-radius: 6px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 700;
+            transition: all 0.25s;
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(88,101,242,0.4);
+        }
+
+        .discord-btn::after { display: none; }
+
+        /* ── PAGES ── */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 64px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: calc(100vh - 64px);
+            padding: 4rem 2rem;
+        }
+
+        .dragon-icon {
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255,69,0,0.6));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            color: var(--gold);
+            text-shadow: 0 0 40px rgba(255,215,0,0.4), 0 0 80px rgba(255,69,0,0.2);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 span { color: var(--fire); }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: var(--muted);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero-desc {
+            max-width: 600px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #b0a898;
+            margin-bottom: 3rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--fire), var(--ember));
+            color: white;
+            border: none;
+            padding: 0.9rem 2.5rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(255,69,0,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255,69,0,0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid rgba(255,215,0,0.4);
+            padding: 0.9rem 2.5rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,215,0,0.1);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,69,0,0.15);
+        }
+
+        .stat { text-align: center; }
+        .stat-num {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2rem;
+            color: var(--fire);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.3rem;
+        }
+
+        /* ── SECTIONS GÉNÉRIQUES ── */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        .section-title span { color: var(--fire); }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--fire), transparent);
+            margin: 1rem 0 2.5rem;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,69,0,0.15);
+            border-radius: 10px;
+            padding: 1.8rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            background: rgba(255,69,0,0.05);
+            border-color: rgba(255,69,0,0.3);
+            transform: translateY(-4px);
+        }
+
+        .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .card-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.9rem;
+            color: var(--ember);
+            margin-bottom: 0.7rem;
+            letter-spacing: 1px;
+        }
+        .card-text { color: #9a9080; line-height: 1.6; font-size: 0.95rem; }
+
+        /* Rules */
+        .rule {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.02);
+            border-left: 3px solid var(--fire);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+            transition: background 0.2s;
+        }
+
+        .rule:hover { background: rgba(255,69,0,0.05); }
+        .rule-num {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5rem;
+            color: var(--fire);
+            opacity: 0.5;
+            min-width: 40px;
+        }
+        .rule-title { font-weight: 700; color: var(--text); margin-bottom: 0.4rem; font-size: 1.05rem; }
+        .rule-text { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+
+        /* IP Box */
+        .ip-box {
+            background: rgba(255,69,0,0.08);
+            border: 1px solid rgba(255,69,0,0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .ip-label { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
+        .ip-value {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+        .ip-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,69,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        footer span { color: var(--fire); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-logo">🐉 Dragon<span>SMP</span></div>
+    <div class="nav-links">
+        <button class="nav-btn active" onclick="showPage('accueil', this)">Accueil</button>
+        <button class="nav-btn" onclick="showPage('serveur', this)">Serveur</button>
+        <button class="nav-btn" onclick="showPage('regles', this)">Règles</button>
+        <button class="nav-btn" onclick="showPage('wiki', this)">Wiki</button>
+        <button class="nav-btn discord-btn" onclick="window.open('https://discord.gg/TON_LIEN','_blank')">Discord</button>
+    </div>
+</nav>
+
+<!-- PAGE : ACCUEIL -->
+<div class="page active" id="page-accueil">
+    <div class="hero">
+        <div class="dragon-icon">🐉</div>
+        <h1>Dragon <span>SMP</span></h1>
+        <p class="hero-sub">Survie • Communauté • Aventure</p>
+        <p class="hero-desc">
+            Bienvenue sur le Dragon SMP — un serveur Minecraft Survie où la communauté est au cœur de tout.
+            Construis, explore et forge des alliances dans un monde partagé.
+        </p>
+        <div class="hero-buttons">
+            <button class="btn-primary" onclick="showPage('serveur', document.querySelectorAll('.nav-btn')[1])">Rejoindre le serveur</button>
+            <button class="btn-secondary" onclick="showPage('wiki', document.querySelectorAll('.nav-btn')[3])">Voir le wiki</button>
+        </div>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-num">100+</div>
+                <div class="stat-label">Membres</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">1.21</div>
+                <div class="stat-label">Version</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">24/7</div>
+                <div class="stat-label">En ligne</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE : SERVEUR -->
+<div class="page" id="page-serveur">
+    <div class="section">
+        <h2 class="section-title">Le <span>Serveur</span></h2>
+        <div class="divider"></div>
+
+        <div class="ip-box">
+            <div class="ip-label">IP Java — Toutes versions</div>
+            <div class="ip-value">connect.axohosts.fr:25883</div>
+            <div class="ip-sub">Lance Minecraft → Multijoueur → Ajouter un serveur</div>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">⚔️</div>
+                <div class="card-title">Mode de jeu</div>
+                <div class="card-text">Survie vanilla améliorée avec quelques plugins de qualité de vie. PvP activé dans certaines zones.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🗺️</div>
+                <div class="card-title">Monde</div>
+                <div class="card-text">Map générée en 1.21, sans limite de taille. Nether et End accessibles dès le départ.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🛡️</div>
+                <div class="card-title">Protection</div>
+                <div class="card-text">Système de claim pour protéger tes constructions. Anti-grief actif sur tout le serveur.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💬</div>
+                <div class="card-title">Communauté</div>
+                <div class="card-text">Plus de 100 membres sur Discord. Events réguliers, tournois et projets communautaires.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE : RÈGLES -->
+<div class="page" id="page-regles">
+    <div class="section">
+        <h2 class="section-title">Règles du <span>Serveur</span></h2>
+        <div class="divider"></div>
+
+        <div class="rule">
+            <div class="rule-num">01</div>
+            <div>
+                <div class="rule-title">Respect mutuel</div>
+                <div class="rule-text">Aucune insulte, discrimination ou harcèlement. Tout le monde doit se sentir le bienvenu.</div>
+            </div>
+        </div>
+        <div class="rule">
+            <div class="rule-num">02</div>
+            <div>
+                <div class="rule-title">Pas de triche</div>
+                <div class="rule-text">Aucun hack, cheat ou exploit. Les bugs doivent être signalés aux admins.</div>
+            </div>
+        </div>
+        <div class="rule">
+            <div class="rule-num">03</div>
+            <div>
+                <div class="rule-title">Pas de grief</div>
+                <div class="rule-text">Interdiction de détruire les constructions des autres joueurs sans leur accord.</div>
+            </div>
+        </div>
+        <div class="rule">
+            <div class="rule-num">04</div>
+            <div>
+                <div class="rule-title">Pas de spam</div>
+                <div class="rule-text">Ni dans le chat Minecraft, ni sur Discord. Les pubs non autorisées sont interdites.</div>
+            </div>
+        </div>
+        <div class="rule">
+            <div class="rule-num">05</div>
+            <div>
+                <div class="rule-title">PvP fair-play</div>
+                <div class="rule-text">Le PvP est autorisé dans certaines zones uniquement. Toujours avec l'accord des deux parties hors zones PvP.</div>
+            </div>
+        </div>
+        <div class="rule">
+            <div class="rule-num">06</div>
+            <div>
+                <div class="rule-title">Écoute des admins</div>
+                <div class="rule-text">Les décisions des modérateurs et administrateurs sont finales. Tout litige se règle en privé.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE : WIKI -->
+<div class="page" id="page-wiki">
+    <div class="section">
+        <h2 class="section-title">Wiki <span>Dragon SMP</span></h2>
+        <div class="divider"></div>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">🏠</div>
+                <div class="card-title">Débuter sur le serveur</div>
+                <div class="card-text">Guide pour les nouveaux joueurs : spawn, premières ressources, claim de terrain et premiers pas.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏰</div>
+                <div class="card-title">Claim & Protection</div>
+                <div class="card-text">Comment protéger ta base, ajouter des amis à ton claim et gérer tes permissions.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💰</div>
+                <div class="card-title">Économie</div>
+                <div class="card-text">Système de monnaie, shops joueurs, marché et comment gagner de l'argent sur le serveur.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">Events & Tournois</div>
+                <div class="card-text">Calendrier des events, règles des tournois et comment participer pour gagner des récompenses.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">⚗️</div>
+                <div class="card-title">Plugins & Commandes</div>
+                <div class="card-text">Liste des commandes disponibles sur le serveur et explication de chaque plugin installé.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">❓</div>
+                <div class="card-title">FAQ</div>
+                <div class="card-text">Les questions les plus posées : lag, connexion, perte d'items, bugs courants et solutions.</div>
+            </div>
+        </div>
+
+        <p style="color: var(--muted); margin-top: 2rem; font-size: 0.9rem; text-align: center;">
+            📝 Le wiki est en cours de construction. Rejoins le Discord pour contribuer !
+        </p>
+    </div>
+</div>
+
+<footer>
+    Fait avec <span>🔥</span> par l'équipe Dragon SMP
+</footer>
+
+<script>
+    function showPage(id, btn) {
+        // Cache toutes les pages
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // Désactive tous les boutons nav
+        document.querySelectorAll('.nav-btn:not(.discord-btn)').forEach(b => b.classList.remove('active'));
+        // Affiche la page cible
+        document.getElementById('page-' + id).classList.add('active');
+        // Active le bouton
+        if (btn) btn.classList.add('active');
+        // Scroll en haut
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
