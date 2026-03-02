@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Dragon SMP — Wiki</title>
+  <meta name="description" content="Wiki officiel du serveur Minecraft Dragon SMP">
+  <meta name="theme-color" content="#0d0f12">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════════════ -->
+<header class="header">
+
+  <!-- Hamburger (mobile) -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Logo -->
+  <a class="header-logo" href="index.html">
+    <span class="logo-dragon">Dragon</span><span class="logo-sep">|</span>Wiki
+  </a>
+
+  <!-- Nav principale (pages top-level) -->
+  <nav class="header-nav" id="header-nav">
+    <!-- Rempli dynamiquement si besoin -->
+  </nav>
+
+  <!-- Barre de recherche -->
+  <div class="header-search">
+    <span class="search-icon">🔍</span>
+    <input type="search" id="search-input" placeholder="Rechercher..." autocomplete="off">
+    <div class="search-dropdown" id="search-drop"></div>
+  </div>
+
+  <!-- Liens externes -->
+  <div class="header-links">
+    <a class="btn-discord" href="https://discord.gg/A7wpe2Yr6S" target="_blank" rel="noopener">
+      💬 Discord
+    </a>
+    <a class="btn-kofi" href="https://ko-fi.com/dragonsmpv2" target="_blank" rel="noopener">
+      ☕ Ko-fi
+    </a>
+  </div>
+
+</header>
+
+<!-- Overlay mobile -->
+<div class="sidebar-overlay" id="mob-overlay"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT
+════════════════════════════════════════════════════════ -->
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Statut serveur MC -->
+    <div class="mc-status-bar">
+      <div id="mc-status">
+        <div class="mc-label" style="color:var(--text3)">Chargement...</div>
+        <div class="mc-ip">connect.axohosts.fr:25883</div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div id="sidebar-nav">
+      <div style="padding:1rem;color:var(--text3);font-size:.82rem">Chargement...</div>
+    </div>
+
+  </aside>
+
+  <!-- ── CONTENU ── -->
+  <main class="main">
+    <div id="wiki-main">
+      <div style="color:var(--text3);padding:2rem 0">Chargement du wiki...</div>
+    </div>
+  </main>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  🐉 Dragon SMP &nbsp;·&nbsp;
+  <a href="https://discord.gg/A7wpe2Yr6S" target="_blank">Discord</a> &nbsp;·&nbsp;
+  <a href="https://ko-fi.com/dragonsmpv2" target="_blank">Ko-fi</a>
+</footer>
+
+<div id="toast"></div>
+
+<script src="db.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

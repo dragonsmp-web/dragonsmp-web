@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Dragon SMP — Admin</title>
+  <meta name="theme-color" content="#0d0f12">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     LOGIN
+════════════════════════════════════════════════════════ -->
+<div class="login-wrap" id="login-wrap">
+  <div class="login-card">
+    <div class="l-icon">🔐</div>
+    <h2>Panel Admin</h2>
+    <p>Dragon SMP — Accès restreint</p>
+
+    <!-- Indicateur d'étapes -->
+    <div class="step-dots">
+      <div class="sdot cur" id="sdot1">1</div>
+      <div class="sdot-line"></div>
+      <div class="sdot" id="sdot2">2</div>
+    </div>
+
+    <!-- Étape 1 -->
+    <div class="lstep on" id="lstep1">
+      <div class="fg">
+        <label>Premier mot de passe</label>
+        <input type="password" id="lpw1" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')step1()">
+      </div>
+      <div id="lerr1" style="color:var(--danger);font-size:.82rem;min-height:1.2rem;margin-bottom:.5rem"></div>
+      <button class="btn btn-primary" style="width:100%" onclick="step1()">Continuer →</button>
+    </div>
+
+    <!-- Étape 2 -->
+    <div class="lstep" id="lstep2">
+      <div class="fg">
+        <label>Deuxième mot de passe</label>
+        <input type="password" id="lpw2" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')step2()">
+      </div>
+      <div id="lerr2" style="color:var(--danger);font-size:.82rem;min-height:1.2rem;margin-bottom:.5rem"></div>
+      <button class="btn btn-primary" style="width:100%" onclick="step2()">Se connecter</button>
+      <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.5rem" onclick="resetLogin()">← Retour</button>
+    </div>
+
+    <div style="margin-top:1rem;text-align:center">
+      <a href="index.html" style="color:var(--text3);font-size:.82rem">← Retour au wiki</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     ADMIN PANEL
+════════════════════════════════════════════════════════ -->
+<div id="adm-wrap" style="display:none">
+
+  <!-- Header admin -->
+  <header class="header">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="header-logo" href="index.html">
+      <span class="logo-dragon">Dragon</span><span class="logo-sep">|</span>Admin
+    </a>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:.75rem">
+      <span style="color:var(--success);font-size:.8rem;font-weight:600">● Connecté</span>
+      <button class="btn btn-ghost btn-sm" onclick="logout()">Déconnexion</button>
+      <a href="index.html" class="btn btn-ghost btn-sm">← Wiki</a>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay" id="mob-overlay"></div>
+
+  <div class="adm-layout">
+
+    <!-- Sidebar admin -->
+    <aside class="adm-sidebar" id="adm-sidebar">
+      <div class="adm-nav on" onclick="showPanel('dashboard',this)">📊 Dashboard</div>
+      <div class="adm-nav" onclick="showPanel('categories',this)">📁 Catégories</div>
+      <div class="adm-nav" onclick="showPanel('pages',this)">📄 Pages</div>
+      <div class="adm-nav" onclick="showPanel('editor',this)" id="adm-nav-editor">✏️ Éditeur</div>
+      <div class="adm-nav" onclick="showPanel('settings',this)">⚙️ Paramètres</div>
+    </aside>
+
+    <main class="adm-main">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="adm-panel on" id="panel-dashboard">
+        <h2 class="adm-title">📊 Dashboard</h2>
+        <div class="stat-grid" id="adm-stats"></div>
+        <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem;margin-top:1rem">
+          <p style="color:var(--text2);font-size:.88rem;line-height:1.7">
+            Bienvenue dans le panel admin du <strong style="color:var(--accent2)">Dragon SMP Wiki</strong>.<br>
+            Crée des catégories, puis des pages dans ces catégories.<br>
+            Les données sont sauvegardées automatiquement.
+          </p>
+          <div id="db-status" style="margin-top:.75rem;font-size:.8rem;color:var(--text3)"></div>
+        </div>
+
+        <!-- Maintenance rapide -->
+        <div style="margin-top:1.5rem;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+            <div>
+              <div style="font-weight:700;margin-bottom:.25rem">🔧 Mode Maintenance</div>
+              <div style="font-size:.82rem;color:var(--text3)" id="maint-status-text">Chargement...</div>
+            </div>
+            <button class="btn" id="maint-btn" onclick="toggleMaintenance()">...</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CATÉGORIES ── -->
+      <div class="adm-panel" id="panel-categories">
+        <h2 class="adm-title">📁 Catégories</h2>
+        <div style="display:flex;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="showPanel('cat-new',document.getElementById('adm-nav-editor'))">➕ Nouvelle catégorie</button>
+        </div>
+        <div class="cat-list" id="adm-cat-list"></div>
+      </div>
+
+      <!-- ── NOUVELLE CATÉGORIE ── -->
+      <div class="adm-panel" id="panel-cat-new">
+        <h2 class="adm-title" id="cat-editor-title">➕ Nouvelle catégorie</h2>
+        <input type="hidden" id="cat-edit-id">
+        <div style="max-width:400px">
+          <div class="fg-row">
+            <div class="fg">
+              <label>Nom *</label>
+              <input type="text" id="cat-name" placeholder="Ex: Guides">
+            </div>
+            <div class="fg">
+              <label>Icône (emoji)</label>
+              <input type="text" id="cat-icon" placeholder="Ex: 📚" maxlength="4">
+            </div>
+          </div>
+          <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="saveCat()">💾 Sauvegarder</button>
+            <button class="btn btn-ghost" onclick="resetCatEditor()">✕ Annuler</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PAGES ── -->
+      <div class="adm-panel" id="panel-pages">
+        <h2 class="adm-title">📄 Pages du wiki</h2>
+        <div style="display:flex;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="newPage()">➕ Nouvelle page</button>
+        </div>
+        <div class="pages-list" id="adm-pages-list"></div>
+      </div>
+
+      <!-- ── ÉDITEUR ── -->
+      <div class="adm-panel" id="panel-editor">
+        <h2 class="adm-title" id="editor-title">✏️ Éditeur de page</h2>
+        <input type="hidden" id="edit-id">
+
+        <div class="fg-row">
+          <div class="fg">
+            <label>Titre *</label>
+            <input type="text" id="pg-title" placeholder="Ex: Économie">
+          </div>
+          <div class="fg">
+            <label>Icône</label>
+            <input type="text" id="pg-icon" placeholder="Ex: 💰" maxlength="4">
+          </div>
+        </div>
+
+        <div class="fg-row">
+          <div class="fg">
+            <label>Catégorie *</label>
+            <select id="pg-cat"></select>
+          </div>
+          <div class="fg">
+            <label>Description</label>
+            <input type="text" id="pg-desc" placeholder="Description courte...">
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="fg">
+          <label>Contenu (Markdown)</label>
+          <div class="ed-bar">
+            <button onclick="ins('## ','')">H2</button>
+            <button onclick="ins('### ','')">H3</button>
+            <div class="ed-sep"></div>
+            <button onclick="ins('**','**')"><b>G</b></button>
+            <button onclick="ins('*','*')"><i>I</i></button>
+            <button onclick="ins('`','`')">Code</button>
+            <div class="ed-sep"></div>
+            <button onclick="ins('- ','')">• Liste</button>
+            <button onclick="ins('1. ','')">1. Liste</button>
+            <button onclick="ins('> ','')">❝</button>
+            <div class="ed-sep"></div>
+            <button onclick="ins('\n---\n','')">—</button>
+            <button onclick="insLink()">🔗 Lien</button>
+            <button onclick="insImg()">🖼 Image</button>
+            <button onclick="ins('\n```\n','\n```')">Bloc code</button>
+          </div>
+          <textarea class="ed-textarea" id="pg-content" placeholder="Contenu en Markdown..."></textarea>
+        </div>
+
+        <!-- Prévisualisation -->
+        <div class="preview-label">👁 Prévisualisation</div>
+        <div class="preview-box wiki-body" id="preview-box">
+          <span style="color:var(--text3);font-size:.85rem">Commence à écrire pour voir la prévisualisation...</span>
+        </div>
+
+        <div style="display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="savePage()">💾 Sauvegarder</button>
+          <button class="btn btn-ghost" onclick="doPreview()">👁 Actualiser</button>
+          <button class="btn btn-ghost" onclick="resetEditor()">✕ Annuler</button>
+        </div>
+      </div>
+
+      <!-- ── PARAMÈTRES ── -->
+      <div class="adm-panel" id="panel-settings">
+        <h2 class="adm-title">⚙️ Paramètres</h2>
+
+        <!-- JSONbin config -->
+        <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem">
+          <div style="font-weight:700;margin-bottom:.25rem;color:var(--gold)">☁️ Base de données (JSONbin.io)</div>
+          <p style="color:var(--text3);font-size:.82rem;margin-bottom:1rem;line-height:1.6">
+            Crée un compte sur <a href="https://jsonbin.io" target="_blank" style="color:var(--accent2)">jsonbin.io</a>, 
+            crée un bin vide (<code>{}</code>), puis entre ton ID de bin et ta clé API ici.
+            Les données seront sauvegardées dans le cloud et survivront aux mises à jour du code.
+          </p>
+          <div class="fg-row">
+            <div class="fg">
+              <label>ID du Bin</label>
+              <input type="text" id="set-bin-id" placeholder="Ex: 64f3b2...">
+            </div>
+            <div class="fg">
+              <label>Clé API Master</label>
+              <input type="password" id="set-api-key" placeholder="$2a$10$...">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="saveDbConfig()">💾 Sauvegarder la config DB</button>
+        </div>
+
+        <!-- MC settings -->
+        <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem">
+          <div style="font-weight:700;margin-bottom:1rem">⚔️ Serveur Minecraft</div>
+          <div class="fg-row">
+            <div class="fg">
+              <label>IP interne (pour le ping)</label>
+              <input type="text" id="set-mc-host" placeholder="163.5.141.232">
+            </div>
+            <div class="fg">
+              <label>Port</label>
+              <input type="number" id="set-mc-port" placeholder="25816">
+            </div>
+          </div>
+          <div class="fg">
+            <label>IP affichée aux joueurs</label>
+            <input type="text" id="set-mc-display" placeholder="connect.axohosts.fr:25883">
+          </div>
+          <div class="fg">
+            <label>Message de maintenance</label>
+            <input type="text" id="set-maint-msg" placeholder="Le serveur est en maintenance...">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="saveMCSettings()">💾 Sauvegarder</button>
+        </div>
+
+        <!-- Danger zone -->
+        <div style="background:rgba(231,76,60,0.05);border:1px solid rgba(231,76,60,0.2);border-radius:var(--r);padding:1.25rem">
+          <div style="font-weight:700;color:var(--danger);margin-bottom:1rem">⚠️ Zone dangereuse</div>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" onclick="exportData()">📤 Exporter JSON</button>
+            <button class="btn btn-red btn-sm" onclick="confirmReset()">🗑 Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="db.js"></script>
+<script src="app.js"></script>
+<script>
+/* ================================================================
+   ADMIN SCRIPT
+   ================================================================ */
+
+// ── Hashes des mots de passe ──────────────────────────────────────────────────
+const HASH_1 = '14a4112514a4112514a4112514a41125'; // MDP 1
+const HASH_2 = '2d2438242d2438242d2438242d243824'; // MDP 2
+
+function simpleHash(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+  return Math.abs(h).toString(16).padStart(8,'0').repeat(4);
+}
+
+// ── Login ─────────────────────────────────────────────────────────────────────
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = '❌ ' + msg;
+  setTimeout(() => el.textContent = '', 3000);
+}
+
+function step1() {
+  const pw = document.getElementById('lpw1').value;
+  if (simpleHash(pw) === HASH_1) {
+    document.getElementById('lstep1').classList.remove('on');
+    document.getElementById('lstep2').classList.add('on');
+    document.getElementById('sdot1').className = 'sdot done';
+    document.getElementById('sdot2').className = 'sdot cur';
+    setTimeout(() => document.getElementById('lpw2').focus(), 50);
+  } else {
+    showErr('lerr1','Mot de passe incorrect');
+    document.getElementById('lpw1').value = '';
+  }
+}
+
+function step2() {
+  const pw = document.getElementById('lpw2').value;
+  if (simpleHash(pw) === HASH_2) {
+    document.getElementById('sdot2').className = 'sdot done';
+    document.getElementById('login-wrap').style.display = 'none';
+    document.getElementById('adm-wrap').style.display = 'block';
+    initAdmin();
+  } else {
+    showErr('lerr2','Mot de passe incorrect');
+    document.getElementById('lpw2').value = '';
+  }
+}
+
+function resetLogin() {
+  document.getElementById('lstep1').classList.add('on');
+  document.getElementById('lstep2').classList.remove('on');
+  document.getElementById('sdot1').className = 'sdot cur';
+  document.getElementById('sdot2').className = 'sdot';
+  document.getElementById('lpw1').value = '';
+  document.getElementById('lpw2').value = '';
+}
+
+function logout() {
+  resetLogin();
+  document.getElementById('login-wrap').style.display = 'flex';
+  document.getElementById('adm-wrap').style.display = 'none';
+}
+
+// ── Init admin ────────────────────────────────────────────────────────────────
+async function initAdmin() {
+  // Charge les données (déjà fait par app.js, mais on recharge au cas où)
+  if (!_data) _data = await DB.load();
+  setupHamburger();
+  renderStats();
+  renderCatList();
+  renderPagesList();
+  fillCatSelect();
+  loadSettings();
+  updateMaintUI();
+}
+
+// ── Navigation admin ──────────────────────────────────────────────────────────
+function showPanel(id, el) {
+  document.querySelectorAll('.adm-panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.adm-nav').forEach(n => n.classList.remove('on'));
+  document.getElementById('panel-' + id)?.classList.add('on');
+  if (el) el.classList.add('on');
+  closeMobileMenu();
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+function renderStats() {
+  const el = document.getElementById('adm-stats');
+  if (!el || !_data) return;
+  el.innerHTML = `
+    <div class="stat-c"><div class="n">${_data.pages.length}</div><div class="l">Pages</div></div>
+    <div class="stat-c"><div class="n">${_data.categories.length}</div><div class="l">Catégories</div></div>
+    <div class="stat-c"><div class="n">${_data.pages.reduce((a,p)=>a+(p.content||'').split('\n').length,0)}</div><div class="l">Lignes</div></div>`;
+
+  const dbEl = document.getElementById('db-status');
+  if (dbEl) {
+    dbEl.textContent = DB.isConfigured()
+      ? '✅ Base de données cloud configurée (JSONbin)'
+      : '⚠️ Données en localStorage uniquement — configure JSONbin dans Paramètres pour la persistance cloud';
+    dbEl.style.color = DB.isConfigured() ? 'var(--success)' : '#f39c12';
+  }
+}
+
+function updateMaintUI() {
+  if (!_data) return;
+  const on = _data.settings.maintenance;
+  const txt = document.getElementById('maint-status-text');
+  const btn = document.getElementById('maint-btn');
+  if (txt) txt.textContent = on ? '🔧 Maintenance activée — le site affiche "En maintenance"' : '✅ Serveur accessible normalement';
+  if (btn) {
+    btn.textContent = on ? '✅ Désactiver la maintenance' : '🔧 Activer la maintenance';
+    btn.className = `btn ${on ? 'btn-ghost' : 'btn-primary'}`;
+  }
+}
+
+async function toggleMaintenance() {
+  if (!_data) return;
+  _data.settings.maintenance = !_data.settings.maintenance;
+  await DB.save();
+  updateMaintUI();
+  toast(_data.settings.maintenance ? '🔧 Maintenance activée' : '✅ Maintenance désactivée');
+}
+
+// ── Catégories ────────────────────────────────────────────────────────────────
+function renderCatList() {
+  const el = document.getElementById('adm-cat-list');
+  if (!el || !_data) return;
+  if (!_data.categories.length) { el.innerHTML = '<p style="color:var(--text3)">Aucune catégorie.</p>'; return; }
+  el.innerHTML = _data.categories.map(c => `
+    <div class="cat-item">
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <span>${c.icon||'📁'}</span>
+        <span style="font-weight:600">${esc(c.name)}</span>
+        <span style="font-size:.75rem;color:var(--text3)">(${_data.pages.filter(p=>p.categoryId===c.id).length} pages)</span>
+      </div>
+      <div style="display:flex;gap:.4rem">
+        <button class="btn btn-ghost btn-sm" onclick="editCat('${c.id}')">✏️</button>
+        <button class="btn btn-red btn-sm" onclick="deleteCat('${c.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function saveCat() {
+  const name = document.getElementById('cat-name').value.trim();
+  const icon = document.getElementById('cat-icon').value.trim();
+  const editId = document.getElementById('cat-edit-id').value;
+  if (!name) { toast('Le nom est requis !','err'); return; }
+
+  if (editId) {
+    const c = _data.categories.find(c=>c.id===editId);
+    if (c) { c.name = name; c.icon = icon; }
+    toast('✅ Catégorie modifiée !');
+  } else {
+    const id = genId(name);
+    if (_data.categories.find(c=>c.id===id)) { toast('Cette catégorie existe déjà !','err'); return; }
+    _data.categories.push({ id, name, icon, order: _data.categories.length });
+    toast('✅ Catégorie créée !');
+  }
+
+  DB.save(); renderCatList(); fillCatSelect(); buildSidebar();
+  resetCatEditor();
+}
+
+function editCat(id) {
+  const c = _data.categories.find(c=>c.id===id);
+  if (!c) return;
+  document.getElementById('cat-edit-id').value = c.id;
+  document.getElementById('cat-editor-title').textContent = `✏️ Modifier : ${c.name}`;
+  document.getElementById('cat-name').value = c.name;
+  document.getElementById('cat-icon').value = c.icon||'';
+  showPanel('cat-new', document.querySelectorAll('.adm-nav')[1]);
+}
+
+function deleteCat(id) {
+  const pages = _data.pages.filter(p=>p.categoryId===id);
+  if (pages.length && !confirm(`Cette catégorie contient ${pages.length} page(s). Supprimer quand même ?`)) return;
+  _data.categories = _data.categories.filter(c=>c.id!==id);
+  _data.pages = _data.pages.filter(p=>p.categoryId!==id);
+  DB.save(); renderCatList(); renderPagesList(); fillCatSelect(); buildSidebar();
+  toast('🗑 Catégorie supprimée.','info');
+}
+
+function resetCatEditor() {
+  document.getElementById('cat-edit-id').value = '';
+  document.getElementById('cat-editor-title').textContent = '➕ Nouvelle catégorie';
+  document.getElementById('cat-name').value = '';
+  document.getElementById('cat-icon').value = '';
+  showPanel('categories', document.querySelectorAll('.adm-nav')[1]);
+}
+
+// ── Pages ─────────────────────────────────────────────────────────────────────
+function fillCatSelect() {
+  const sel = document.getElementById('pg-cat');
+  if (!sel || !_data) return;
+  sel.innerHTML = _data.categories.map(c =>
+    `<option value="${c.id}">${c.icon||''} ${esc(c.name)}</option>`
+  ).join('') || '<option value="">— Aucune catégorie —</option>';
+}
+
+function renderPagesList() {
+  const el = document.getElementById('adm-pages-list');
+  if (!el || !_data) return;
+  if (!_data.pages.length) { el.innerHTML = '<p style="color:var(--text3)">Aucune page.</p>'; return; }
+
+  const cats = {};
+  _data.categories.forEach(c => cats[c.id] = c);
+
+  el.innerHTML = _data.pages.map(p => {
+    const cat = cats[p.categoryId];
+    return `
+      <div class="pg-item">
+        <div class="pg-item-l">
+          <span style="font-size:1.1rem">${p.icon||'📄'}</span>
+          <div>
+            <div class="pg-item-name">${esc(p.title)}</div>
+            <div class="pg-item-meta">${cat ? `${cat.icon||''} ${cat.name}` : '—'} · #${p.id}</div>
+          </div>
+        </div>
+        <div class="pg-item-r">
+          <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️ Modifier</button>
+          <button class="btn btn-red btn-sm" onclick="deletePage('${p.id}')">🗑</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function newPage() {
+  resetEditor();
+  showPanel('editor', document.getElementById('adm-nav-editor'));
+}
+
+function editPage(id) {
+  const p = _data.pages.find(p=>p.id===id);
+  if (!p) return;
+  document.getElementById('edit-id').value = p.id;
+  document.getElementById('editor-title').textContent = `✏️ ${p.title}`;
+  document.getElementById('pg-title').value = p.title;
+  document.getElementById('pg-icon').value = p.icon||'';
+  document.getElementById('pg-cat').value = p.categoryId||'';
+  document.getElementById('pg-desc').value = p.description||'';
+  document.getElementById('pg-content').value = p.content||'';
+  document.getElementById('preview-box').innerHTML = '<span style="color:var(--text3)">Clique sur Actualiser...</span>';
+  showPanel('editor', document.getElementById('adm-nav-editor'));
+}
+
+function resetEditor() {
+  document.getElementById('edit-id').value = '';
+  document.getElementById('editor-title').textContent = '✏️ Nouvelle page';
+  ['pg-title','pg-icon','pg-desc','pg-content'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  if (_data?.categories?.length) document.getElementById('pg-cat').value = _data.categories[0].id;
+  document.getElementById('preview-box').innerHTML = '<span style="color:var(--text3)">La prévisualisation apparaîtra ici...</span>';
+}
+
+async function savePage() {
+  const title   = document.getElementById('pg-title').value.trim();
+  const icon    = document.getElementById('pg-icon').value.trim();
+  const catId   = document.getElementById('pg-cat').value;
+  const desc    = document.getElementById('pg-desc').value.trim();
+  const content = document.getElementById('pg-content').value;
+  const editId  = document.getElementById('edit-id').value;
+
+  if (!title) { toast('Le titre est requis !','err'); return; }
+  if (!catId) { toast('Choisis une catégorie !','err'); return; }
+
+  if (editId) {
+    const idx = _data.pages.findIndex(p=>p.id===editId);
+    if (idx !== -1) _data.pages[idx] = { ..._data.pages[idx], title, icon, categoryId: catId, description: desc, content };
+    toast('✅ Page modifiée !');
+  } else {
+    const id = genId(title);
+    if (_data.pages.find(p=>p.id===id)) { toast('Cette page existe déjà !','err'); return; }
+    _data.pages.push({ id, title, icon, categoryId: catId, description: desc, content, slug: id, order: _data.pages.length });
+    toast('✅ Page créée !');
+  }
+
+  await DB.save();
+  renderPagesList(); buildSidebar(); renderStats();
+  resetEditor();
+  showPanel('pages', document.querySelectorAll('.adm-nav')[2]);
+}
+
+async function deletePage(id) {
+  if (!confirm('Supprimer cette page ?')) return;
+  _data.pages = _data.pages.filter(p=>p.id!==id);
+  await DB.save();
+  renderPagesList(); buildSidebar(); renderStats();
+  toast('🗑 Page supprimée.','info');
+}
+
+// ── Toolbar éditeur ───────────────────────────────────────────────────────────
+function ins(before, after) {
+  const ta = document.getElementById('pg-content');
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  const sel = ta.value.substring(s,e);
+  ta.value = ta.value.substring(0,s) + before + sel + after + ta.value.substring(e);
+  ta.focus(); ta.setSelectionRange(s+before.length, s+before.length+sel.length);
+  doPreview();
+}
+
+function insLink() {
+  const url = prompt('URL du lien :','https://');
+  if (!url) return;
+  const text = prompt('Texte du lien :','Cliquez ici');
+  ins(`[${text||'lien'}](${url})`, '');
+}
+
+function insImg() {
+  const url = prompt('URL de l\'image :','https://');
+  if (!url) return;
+  const alt = prompt('Description (alt) :','Image');
+  ins(`![${alt||'image'}](${url})`, '');
+}
+
+function doPreview() {
+  const content = document.getElementById('pg-content').value;
+  const box = document.getElementById('preview-box');
+  box.innerHTML = md(content) || '<span style="color:var(--text3)">Aucun contenu.</span>';
+}
+
+// Live preview avec debounce
+document.addEventListener('DOMContentLoaded', () => {
+  const ta = document.getElementById('pg-content');
+  if (ta) {
+    let deb;
+    ta.addEventListener('input', () => { clearTimeout(deb); deb = setTimeout(doPreview, 500); });
+  }
+});
+
+// ── Paramètres ────────────────────────────────────────────────────────────────
+function loadSettings() {
+  if (!_data) return;
+  const s = _data.settings;
+  const setV = (id, v) => { const el = document.getElementById(id); if (el && v !== undefined) el.value = v; };
+  setV('set-mc-host', s.mcHost);
+  setV('set-mc-port', s.mcPort);
+  setV('set-mc-display', s.mcDisplayIp);
+  setV('set-maint-msg', s.maintenanceMsg);
+  setV('set-bin-id', localStorage.getItem('dsmp_bin_id')||'');
+  // Ne pas pré-remplir la clé API pour la sécurité
+}
+
+function saveDbConfig() {
+  const binId = document.getElementById('set-bin-id').value.trim();
+  const apiKey = document.getElementById('set-api-key').value.trim();
+  if (!binId || !apiKey) { toast('Remplis les deux champs !','err'); return; }
+  DB.configureRemote(binId, apiKey);
+  toast('✅ Config DB sauvegardée ! Recharge la page.','ok');
+}
+
+async function saveMCSettings() {
+  if (!_data) return;
+  _data.settings.mcHost = document.getElementById('set-mc-host').value.trim();
+  _data.settings.mcPort = parseInt(document.getElementById('set-mc-port').value) || 25565;
+  _data.settings.mcDisplayIp = document.getElementById('set-mc-display').value.trim();
+  _data.settings.maintenanceMsg = document.getElementById('set-maint-msg').value.trim();
+  await DB.save();
+  toast('✅ Paramètres MC sauvegardés !');
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(_data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'dragonsmp-wiki-data.json'; a.click();
+  toast('📤 Export réussi !','info');
+}
+
+async function confirmReset() {
+  if (!confirm('⚠️ Réinitialiser TOUTES les données ?')) return;
+  localStorage.removeItem('dsmp_data');
+  _data = JSON.parse(JSON.stringify(DB.DEFAULTS));
+  await DB.save();
+  renderStats(); renderCatList(); renderPagesList(); buildSidebar();
+  toast('Wiki réinitialisé.','info');
+}
+</script>
+
+</body>
+</html>
