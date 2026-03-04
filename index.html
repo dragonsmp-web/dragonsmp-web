@@ -2,431 +2,429 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#080a0d">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dragon SMP</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════════════
-   DRAGON SMP WIKI V4
-   ═══════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   DRAGON SMP — WIKI V5
+   Design épuré, professionnel, centré
+════════════════════════════════════════════ */
 :root {
   --fire:   #d94f1e;
   --ember:  #f07030;
-  --gold:   #d4a843;
-  --gold2:  #8a6820;
-  --bg0:    #080a0d;
-  --bg1:    #0d1017;
-  --bg2:    #131820;
-  --bg3:    #1a2030;
-  --bg4:    #222a3a;
-  --ln:     rgba(212,168,67,.12);
-  --ln2:    rgba(255,255,255,.07);
-  --txt:    #d0d8e8;
-  --txt2:   #7080a0;
-  --txt3:   #384060;
-  --ok:     #2ecc71;
-  --bad:    #e74c3c;
-  --H:      56px;
-  --SL:     240px;
-  --SR:     260px;
-  --R:      8px;
+  --gold:   #c8963c;
+  --gold-l: #e8b84b;
+  --bg:     #0a0c10;
+  --bg1:    #0f1318;
+  --bg2:    #151b24;
+  --bg3:    #1c2434;
+  --bg4:    #232d40;
+  --line:   rgba(200,150,60,.15);
+  --line2:  rgba(255,255,255,.07);
+  --txt:    #cdd8ea;
+  --txt2:   #6878a0;
+  --txt3:   #303d55;
+  --ok:     #27ae60;
+  --bad:    #c0392b;
+  --H:      54px;
+  --TOC:    230px;
+  --CMD:    270px;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'DM Sans',sans-serif;background:var(--bg0);color:var(--txt);
-  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer}
 
-/* Grain + glow */
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 70% 50% at 50% 100%,rgba(217,79,30,.09) 0%,transparent 65%)}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
+html { scroll-behavior:smooth }
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--txt);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+a { color:inherit; text-decoration:none }
+button { font-family:inherit; cursor:pointer; border:none; background:none }
 
-/* ═══════════════════════════════════════════════════════════
-   HEADER
-   ═══════════════════════════════════════════════════════════ */
+/* Ambiance */
+body::after {
+  content:'';
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(217,79,30,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 0%, rgba(200,150,60,.04) 0%, transparent 50%);
+}
+
+/* ════ HEADER ════ */
 .hdr {
-  position:fixed;top:0;left:0;right:0;z-index:800;
+  position:fixed; top:0; left:0; right:0; z-index:900;
   height:var(--H);
-  background:rgba(8,10,13,.96);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--ln);
-  display:flex;align-items:center;
-  padding:0 1rem;gap:.5rem;
+  background:rgba(10,12,16,.97);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center;
+  padding:0 1.5rem; gap:1rem;
 }
 
-/* Logo */
 .logo {
-  font-family:'Cinzel',serif;font-weight:900;font-size:.95rem;
-  color:var(--gold);letter-spacing:2px;flex-shrink:0;
-  cursor:pointer;transition:opacity .2s;white-space:nowrap;
-  text-shadow:0 0 20px rgba(212,168,67,.25);
+  font-family:'Cinzel',serif; font-weight:900; font-size:.95rem;
+  color:var(--gold-l); letter-spacing:2px; cursor:pointer;
+  flex-shrink:0; white-space:nowrap;
+  text-shadow:0 0 24px rgba(232,184,75,.25);
+  transition:opacity .2s;
 }
-.logo:hover{opacity:.8}
-.logo em{color:var(--fire);font-style:normal}
+.logo:hover { opacity:.8 }
+.logo em { color:var(--fire); font-style:normal }
 
 /* IP copiable */
-.hdr-ip {
-  display:flex;align-items:center;gap:.4rem;
-  background:var(--bg2);border:1px solid var(--ln2);
-  border-radius:6px;padding:.28rem .65rem;
-  font-family:'Courier New',monospace;font-size:.75rem;
-  color:var(--gold);cursor:pointer;flex-shrink:0;
-  transition:all .2s;position:relative;
-  -webkit-tap-highlight-color:transparent;
+.ip-chip {
+  display:flex; align-items:center; gap:.4rem;
+  background:var(--bg2); border:1px solid var(--line2);
+  border-radius:6px; padding:.28rem .7rem;
+  font-family:'Courier New',monospace; font-size:.75rem;
+  color:var(--gold); cursor:pointer; flex-shrink:0;
+  transition:all .2s; position:relative;
+  user-select:none;
 }
-.hdr-ip:hover{border-color:rgba(212,168,67,.3);background:var(--bg3)}
-.hdr-ip .copy-icon{font-size:.7rem;color:var(--txt3)}
-.hdr-ip .copied-tip{
-  position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);
-  background:var(--ok);color:#fff;font-size:.7rem;font-weight:700;
-  padding:.2rem .5rem;border-radius:4px;white-space:nowrap;
-  opacity:0;pointer-events:none;transition:opacity .2s;font-family:'DM Sans',sans-serif;
+.ip-chip:hover { border-color:rgba(200,150,60,.35); background:var(--bg3) }
+.ip-chip .icon { font-size:.72rem; opacity:.6 }
+.ip-chip .tip {
+  position:absolute; top:calc(100% + 5px); left:50%;
+  transform:translateX(-50%);
+  background:var(--ok); color:#fff;
+  font-size:.68rem; font-weight:700; font-family:'Inter',sans-serif;
+  padding:.18rem .45rem; border-radius:4px; white-space:nowrap;
+  opacity:0; pointer-events:none; transition:opacity .2s;
 }
-.hdr-ip.copied .copied-tip{opacity:1}
+.ip-chip.copied .tip { opacity:1 }
 
-/* Onglets nav */
-.hdr-nav{display:flex;align-items:center;gap:.1rem;flex:1;margin:0 .5rem;overflow-x:auto;
-  scrollbar-width:none;-ms-overflow-style:none}
-.hdr-nav::-webkit-scrollbar{display:none}
-.nav-tab {
-  background:none;border:none;color:var(--txt2);
-  font-size:.85rem;font-weight:500;padding:.35rem .75rem;
-  border-radius:6px;transition:all .2s;white-space:nowrap;
-  -webkit-tap-highlight-color:transparent;
+/* Nav onglets */
+.hdr-nav {
+  display:flex; align-items:center; gap:.1rem;
+  flex:1; overflow-x:auto;
+  scrollbar-width:none;
 }
-.nav-tab:hover{color:var(--txt);background:rgba(255,255,255,.05)}
-.nav-tab.active{color:var(--ember);background:rgba(217,79,30,.1);font-weight:600}
+.hdr-nav::-webkit-scrollbar { display:none }
+.tab {
+  color:var(--txt2); font-size:.84rem; font-weight:500;
+  padding:.32rem .8rem; border-radius:6px;
+  transition:all .2s; white-space:nowrap;
+}
+.tab:hover { color:var(--txt); background:rgba(255,255,255,.05) }
+.tab.active {
+  color:var(--ember); background:rgba(217,79,30,.1);
+  font-weight:600;
+}
+
+/* Recherche globale */
+.hdr-search { position:relative; flex-shrink:0 }
+.hdr-search input {
+  background:var(--bg2); border:1px solid var(--line2);
+  border-radius:20px; padding:.35rem 1rem .35rem 2rem;
+  color:var(--txt); font-size:.83rem; width:200px;
+  transition:all .2s; outline:none;
+}
+.hdr-search input:focus {
+  width:260px; border-color:rgba(217,79,30,.45);
+  background:var(--bg3); box-shadow:0 0 0 3px rgba(217,79,30,.07);
+}
+.hdr-search input::placeholder { color:var(--txt3) }
+.hdr-search .s-ico {
+  position:absolute; left:.65rem; top:50%; transform:translateY(-50%);
+  font-size:.78rem; color:var(--txt3); pointer-events:none;
+}
+.search-drop {
+  display:none; position:absolute; top:calc(100% + 6px);
+  right:0; width:320px; z-index:999;
+  background:var(--bg2); border:1px solid var(--line);
+  border-radius:10px; overflow:hidden;
+  box-shadow:0 16px 48px rgba(0,0,0,.5);
+}
+.search-drop.on { display:block }
+.sdrop-item {
+  display:flex; align-items:center; gap:.65rem;
+  padding:.65rem 1rem; cursor:pointer;
+  border-bottom:1px solid var(--line2); transition:background .15s;
+}
+.sdrop-item:last-child { border-bottom:none }
+.sdrop-item:hover { background:rgba(217,79,30,.07) }
+.sdrop-icon { font-size:.95rem; flex-shrink:0 }
+.sdrop-title { font-weight:600; font-size:.855rem }
+.sdrop-sub { font-size:.72rem; color:var(--txt3); margin-top:.05rem }
+.sdrop-empty { padding:.9rem 1rem; text-align:center; color:var(--txt3); font-size:.82rem }
 
 /* Liens externes */
-.hdr-ext{display:flex;gap:.4rem;flex-shrink:0}
-.btn-disc,.btn-kofi{
-  border:none;border-radius:6px;font-size:.78rem;font-weight:600;
-  padding:.32rem .75rem;display:flex;align-items:center;gap:.3rem;
-  transition:all .2s;white-space:nowrap;-webkit-tap-highlight-color:transparent;
+.hdr-ext { display:flex; gap:.4rem; flex-shrink:0 }
+.btn-disc {
+  background:#5865f2; color:#fff;
+  padding:.3rem .8rem; border-radius:6px;
+  font-size:.78rem; font-weight:600;
+  display:flex; align-items:center; gap:.3rem;
+  transition:all .2s;
 }
-.btn-disc{background:#5865f2;color:#fff}
-.btn-disc:hover{background:#4752c4}
-.btn-kofi{background:#ff5e5b;color:#fff}
-.btn-kofi:hover{background:#e54e4b}
+.btn-disc:hover { background:#4752c4 }
+.btn-kofi {
+  background:#ff5e5b; color:#fff;
+  padding:.3rem .8rem; border-radius:6px;
+  font-size:.78rem; font-weight:600;
+  transition:all .2s;
+}
+.btn-kofi:hover { background:#e54e4b }
 
-/* Burger */
-.burger{display:none;flex-direction:column;gap:5px;
-  background:none;border:none;color:var(--txt);padding:.4rem;flex-shrink:0}
-.burger span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:all .3s}
-.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-/* ═══════════════════════════════════════════════════════════
-   LAYOUT PRINCIPAL
-   ═══════════════════════════════════════════════════════════ */
+/* ════ LAYOUT ════ */
 .app {
-  display:flex;padding-top:var(--H);min-height:100vh;
-  position:relative;z-index:1;
+  display:flex;
+  padding-top:var(--H);
+  min-height:100vh;
+  position:relative; z-index:1;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SIDEBAR GAUCHE — Table des matières / chapitres
-   ═══════════════════════════════════════════════════════════ */
-.sb-left {
-  width:var(--SL);min-width:var(--SL);flex-shrink:0;
-  background:var(--bg1);border-right:1px solid var(--ln2);
-  height:calc(100vh - var(--H));position:sticky;top:var(--H);
-  overflow-y:auto;padding:1.25rem 0 3rem;
-  scrollbar-width:thin;scrollbar-color:var(--ln2) transparent;
-  transition:transform .3s cubic-bezier(.4,0,.2,1);
+/* ════ SIDEBAR GAUCHE — TOC ════ */
+.toc-sidebar {
+  width:var(--TOC); flex-shrink:0;
+  background:var(--bg1);
+  border-right:1px solid var(--line2);
+  position:sticky; top:var(--H);
+  height:calc(100vh - var(--H));
+  overflow-y:auto; padding:1.25rem 0 3rem;
+  scrollbar-width:thin;
+  scrollbar-color:var(--line2) transparent;
+  transition:all .3s;
 }
-.sb-left:not(.visible){display:none}
+.toc-sidebar.hidden { display:none }
 
-.toc-title{
-  font-size:.65rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:2px;color:var(--txt3);padding:.25rem .85rem .6rem;
+.toc-head {
+  font-size:.63rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:2px; color:var(--txt3);
+  padding:.2rem .9rem .8rem;
 }
-.toc-cat{margin-bottom:.15rem}
-.toc-cat-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.45rem .85rem;cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-.toc-cat-head:hover{background:rgba(255,255,255,.02)}
-.toc-cat-name{
-  font-size:.7rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:1.5px;color:var(--txt3);
-  display:flex;align-items:center;gap:.4rem;
-}
-.toc-arrow{font-size:.55rem;color:var(--txt3);transition:transform .2s}
-.toc-cat.open .toc-arrow{transform:rotate(90deg)}
-.toc-chapters{display:none}
-.toc-cat.open .toc-chapters{display:block}
-
-.toc-link{
-  display:flex;align-items:baseline;gap:.45rem;
-  padding:.38rem .85rem .38rem 1.4rem;
-  cursor:pointer;color:var(--txt2);font-size:.82rem;
+.toc-entry {
+  display:flex; align-items:baseline; gap:.4rem;
+  padding:.4rem .9rem .4rem 1.1rem;
+  cursor:pointer; font-size:.82rem; color:var(--txt2);
   border-left:2px solid transparent;
-  transition:all .15s;-webkit-tap-highlight-color:transparent;
-  line-height:1.35;
+  transition:all .15s; line-height:1.35;
 }
-.toc-link:hover{color:var(--txt);background:rgba(255,255,255,.03)}
-.toc-link.active{color:var(--ember);border-left-color:var(--fire);
-  background:rgba(217,79,30,.07);font-weight:600}
-.toc-num{font-size:.68rem;color:var(--txt3);flex-shrink:0;font-family:'Courier New',monospace}
-
-/* ═══════════════════════════════════════════════════════════
-   CONTENU PRINCIPAL
-   ═══════════════════════════════════════════════════════════ */
-.main{flex:1;min-width:0;padding:2.5rem 2.5rem;max-width:820px}
-
-/* Pages */
-.page-view{animation:fadeUp .22s ease both;display:none}
-.page-view.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-
-.page-head{margin-bottom:1.75rem;padding-bottom:1rem;border-bottom:1px solid var(--ln2)}
-.page-title{
-  font-family:'Cinzel',serif;font-size:1.65rem;font-weight:700;
-  color:var(--gold);text-shadow:0 0 25px rgba(212,168,67,.12);
+.toc-entry:hover { color:var(--txt); background:rgba(255,255,255,.03) }
+.toc-entry.h3 { padding-left:1.7rem; font-size:.78rem }
+.toc-entry.active {
+  color:var(--ember); border-left-color:var(--fire);
+  background:rgba(217,79,30,.07); font-weight:600;
 }
-.page-desc{color:var(--txt3);font-size:.85rem;margin-top:.4rem}
+.toc-num { font-size:.66rem; color:var(--txt3); font-family:'Courier New',monospace; flex-shrink:0 }
 
-/* Markdown */
-.wc h1{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);margin:2rem 0 .75rem;
-  scroll-margin-top:calc(var(--H) + 1.5rem)}
-.wc h2{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--ember);
-  margin:2rem 0 .65rem;padding-left:.7rem;border-left:3px solid var(--fire);
-  scroll-margin-top:calc(var(--H) + 1.5rem)}
-.wc h3{font-size:.92rem;font-weight:700;color:var(--txt);margin:1.2rem 0 .35rem;
-  scroll-margin-top:calc(var(--H) + 1.5rem)}
-.wc p{color:var(--txt2);margin-bottom:.7rem;font-size:.9rem;line-height:1.8}
-.wc ul,.wc ol{padding-left:1.4rem;margin-bottom:.7rem}
-.wc li{color:var(--txt2);font-size:.9rem;margin-bottom:.28rem;line-height:1.65}
-.wc strong{color:var(--txt);font-weight:700}
-.wc em{color:var(--gold);font-style:italic}
-.wc a{color:var(--ember);text-decoration:underline;text-underline-offset:2px}
-.wc a:hover{color:var(--fire)}
-.wc code{background:var(--bg4);border:1px solid var(--ln2);border-radius:4px;
-  padding:.1rem .38rem;font-family:'Courier New',monospace;font-size:.83rem;color:var(--ember)}
-.wc pre{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);
-  padding:1rem 1.2rem;overflow-x:auto;margin:1rem 0}
-.wc pre code{background:none;border:none;padding:0;font-size:.84rem;color:var(--txt2);line-height:1.6}
-.wc blockquote{border-left:3px solid var(--gold2);background:rgba(212,168,67,.05);
-  padding:.8rem 1rem;border-radius:0 var(--R) var(--R) 0;margin:1rem 0}
-.wc blockquote p{margin:0;font-style:italic;color:var(--txt2)}
-.wc hr{border:none;border-top:1px solid var(--ln2);margin:1.5rem 0}
-.wc img{max-width:100%;border-radius:var(--R);border:1px solid var(--ln2);margin:.5rem 0}
-.wc table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.875rem}
-.wc th{padding:.48rem .8rem;background:var(--bg3);border:1px solid var(--ln2);
-  color:var(--ember);font-weight:700;text-align:left;font-size:.78rem;
-  text-transform:uppercase;letter-spacing:.5px}
-.wc td{padding:.48rem .8rem;border:1px solid var(--ln2);color:var(--txt2)}
-.wc tr:nth-child(even) td{background:rgba(255,255,255,.02)}
-.wc .tbl{overflow-x:auto;margin:1rem 0}
+/* ════ MAIN ════ */
+.main {
+  flex:1; min-width:0;
+  padding:2.5rem 3rem;
+}
 
-/* ═══════════════════════════════════════════════════════════
-   SIDEBAR DROITE — Recherche commandes (page wiki seulement)
-   ═══════════════════════════════════════════════════════════ */
-.sb-right {
-  width:var(--SR);min-width:var(--SR);flex-shrink:0;
-  background:var(--bg1);border-left:1px solid var(--ln2);
-  height:calc(100vh - var(--H));position:sticky;top:var(--H);
-  overflow-y:auto;padding:1.25rem .85rem 3rem;
-  scrollbar-width:thin;scrollbar-color:var(--ln2) transparent;
-  display:none;
+/* Page */
+.page { display:none; animation:fadeUp .22s ease }
+.page.active { display:block }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(8px) }
+  to   { opacity:1; transform:translateY(0) }
 }
-.sb-right.visible{display:block}
 
-.cmd-search-title{
-  font-size:.65rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:2px;color:var(--txt3);margin-bottom:.65rem;
+.page-head {
+  margin-bottom:2rem;
+  padding-bottom:1.1rem;
+  border-bottom:1px solid var(--line2);
 }
-.cmd-search-wrap{position:relative;margin-bottom:.85rem}
-.cmd-search-wrap input{
-  width:100%;background:var(--bg3);border:1px solid var(--ln2);
-  border-radius:6px;padding:.5rem .75rem .5rem 2rem;
-  color:var(--txt);font-size:.85rem;
-  transition:all .2s;-webkit-appearance:none;font-size:16px;
+.page-title {
+  font-family:'Cinzel',serif; font-size:1.75rem; font-weight:700;
+  color:var(--gold-l); line-height:1.15;
 }
-.cmd-search-wrap input:focus{border-color:rgba(217,79,30,.5);background:var(--bg4);
-  box-shadow:0 0 0 3px rgba(217,79,30,.07)}
-.cmd-search-wrap input::placeholder{color:var(--txt3)}
-.cmd-search-ico{position:absolute;left:.6rem;top:50%;transform:translateY(-50%);
-  color:var(--txt3);font-size:.8rem;pointer-events:none}
+.page-desc { color:var(--txt3); font-size:.855rem; margin-top:.4rem }
 
-.cmd-results{display:flex;flex-direction:column;gap:.5rem}
-.cmd-card{
-  background:var(--bg2);border:1px solid var(--ln2);
-  border-radius:var(--R);padding:.7rem .85rem;
-  transition:border-color .15s;
+/* Contenu wiki */
+.wc { line-height:1.8 }
+.wc h2 {
+  font-family:'Cinzel',serif; font-size:1.1rem; color:var(--ember);
+  margin:2.25rem 0 .8rem;
+  padding-left:.75rem; border-left:3px solid var(--fire);
+  scroll-margin-top:calc(var(--H) + 1.5rem);
 }
-.cmd-card:hover{border-color:rgba(217,79,30,.25)}
-.cmd-main{
-  font-family:'Courier New',monospace;font-size:.85rem;
-  color:var(--ember);font-weight:700;margin-bottom:.2rem;
+.wc h3 {
+  font-size:.95rem; font-weight:700; color:var(--txt);
+  margin:1.4rem 0 .4rem;
+  scroll-margin-top:calc(var(--H) + 1.5rem);
 }
-.cmd-alt{font-size:.72rem;color:var(--txt3);margin-bottom:.2rem}
-.cmd-info{font-size:.78rem;color:var(--txt2);line-height:1.45}
-.cmd-empty{color:var(--txt3);font-size:.82rem;text-align:center;padding:1rem 0}
+.wc p { color:var(--txt2); margin-bottom:.75rem; font-size:.9rem }
+.wc ul, .wc ol { padding-left:1.5rem; margin-bottom:.75rem }
+.wc li { color:var(--txt2); font-size:.9rem; margin-bottom:.28rem }
+.wc strong { color:var(--txt); font-weight:700 }
+.wc em { color:var(--gold); font-style:italic }
+.wc a { color:var(--ember); text-decoration:underline; text-underline-offset:2px }
+.wc a:hover { color:var(--fire) }
+.wc code {
+  background:var(--bg4); border:1px solid var(--line2);
+  border-radius:4px; padding:.08rem .38rem;
+  font-family:'Courier New',monospace; font-size:.83rem; color:var(--ember);
+}
+.wc pre {
+  background:var(--bg2); border:1px solid var(--line2);
+  border-radius:8px; padding:1rem 1.2rem;
+  overflow-x:auto; margin:1rem 0;
+}
+.wc pre code { background:none; border:none; padding:0; font-size:.84rem; color:var(--txt2) }
+.wc blockquote {
+  border-left:3px solid var(--gold);
+  background:rgba(200,150,60,.05);
+  padding:.8rem 1rem; border-radius:0 8px 8px 0; margin:1rem 0;
+}
+.wc blockquote p { margin:0; font-style:italic }
+.wc hr { border:none; border-top:1px solid var(--line2); margin:1.75rem 0 }
+.wc img { max-width:100%; border-radius:8px; border:1px solid var(--line2); margin:.5rem 0 }
+.wc table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.875rem }
+.wc th {
+  padding:.5rem .85rem; background:var(--bg3);
+  border:1px solid var(--line2); color:var(--ember);
+  font-weight:700; text-align:left; font-size:.78rem;
+  text-transform:uppercase; letter-spacing:.4px;
+}
+.wc td { padding:.5rem .85rem; border:1px solid var(--line2); color:var(--txt2) }
+.wc tr:nth-child(even) td { background:rgba(255,255,255,.02) }
+.tbl-wrap { overflow-x:auto; margin:1rem 0 }
 
-/* ═══════════════════════════════════════════════════════════
-   PAGE PRÉSENTATION (hero)
-   ═══════════════════════════════════════════════════════════ */
-.hero{
-  text-align:center;padding:4rem 2rem 3rem;
-  max-width:700px;margin:0 auto;
+/* ════ SIDEBAR DROITE — Commandes ════ */
+.cmd-sidebar {
+  width:var(--CMD); flex-shrink:0;
+  background:var(--bg1);
+  border-left:1px solid var(--line2);
+  position:sticky; top:var(--H);
+  height:calc(100vh - var(--H));
+  overflow-y:auto; padding:1.25rem .9rem 3rem;
+  scrollbar-width:thin;
+  scrollbar-color:var(--line2) transparent;
 }
-.hero-icon{font-size:4rem;margin-bottom:1.25rem;display:block}
-.hero-title{
-  font-family:'Cinzel',serif;font-size:2.5rem;font-weight:900;
-  color:var(--gold);text-shadow:0 0 40px rgba(212,168,67,.25);
-  line-height:1.15;margin-bottom:.75rem;
-}
-.hero-title em{color:var(--fire);font-style:normal}
-.hero-sub{color:var(--txt2);font-size:1rem;line-height:1.7;margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto}
-.hero-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
-.hero-btn{
-  padding:.6rem 1.4rem;border-radius:8px;font-weight:700;font-size:.9rem;
-  border:none;transition:all .2s;display:flex;align-items:center;gap:.4rem;
-}
-.hero-btn-fire{background:var(--fire);color:#fff;box-shadow:0 4px 20px rgba(217,79,30,.3)}
-.hero-btn-fire:hover{background:#bf4118;transform:translateY(-2px)}
-.hero-btn-ghost{background:transparent;color:var(--txt2);border:1px solid var(--ln2)}
-.hero-btn-ghost:hover{background:var(--bg3);color:var(--txt)}
+.cmd-sidebar.hidden { display:none }
 
-/* Cartes stats */
-.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:2rem}
-.stat-c{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:1rem;text-align:center}
-.stat-n{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--fire)}
-.stat-l{font-size:.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-top:.15rem}
-
-/* IP hero */
-.hero-ip{
-  display:inline-flex;align-items:center;gap:.6rem;
-  background:var(--bg2);border:1px solid var(--ln);
-  border-radius:8px;padding:.6rem 1.2rem;
-  font-family:'Courier New',monospace;font-size:.9rem;color:var(--gold);
-  cursor:pointer;transition:all .2s;position:relative;
+.cmd-head { font-size:.63rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:2px; color:var(--txt3); margin-bottom:.75rem }
+.cmd-input-wrap { position:relative; margin-bottom:.85rem }
+.cmd-input-wrap input {
+  width:100%; background:var(--bg3); border:1px solid var(--line2);
+  border-radius:8px; padding:.5rem .75rem .5rem 2.1rem;
+  color:var(--txt); font-size:.84rem; outline:none;
+  transition:all .2s;
 }
-.hero-ip:hover{background:var(--bg3);border-color:rgba(212,168,67,.3)}
-.hero-ip .tip{
-  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
-  background:var(--ok);color:#fff;font-size:.7rem;font-weight:700;font-family:'DM Sans',sans-serif;
-  padding:.2rem .5rem;border-radius:4px;white-space:nowrap;
-  opacity:0;pointer-events:none;transition:opacity .2s;
+.cmd-input-wrap input:focus {
+  border-color:rgba(217,79,30,.5); background:var(--bg4);
+  box-shadow:0 0 0 3px rgba(217,79,30,.07);
 }
-.hero-ip.copied .tip{opacity:1}
-
-/* ═══════════════════════════════════════════════════════════
-   OVERLAY MOBILE
-   ═══════════════════════════════════════════════════════════ */
-.overlay{display:none;position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.8)}
-.overlay.on{display:block}
-
-/* ═══════════════════════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════════════════════ */
-.footer{
-  text-align:center;padding:1.25rem 1rem;color:var(--txt3);font-size:.76rem;
-  border-top:1px solid var(--ln2);position:relative;z-index:1;line-height:1.8;
+.cmd-input-wrap input::placeholder { color:var(--txt3) }
+.cmd-input-wrap .ico {
+  position:absolute; left:.65rem; top:50%; transform:translateY(-50%);
+  font-size:.8rem; color:var(--txt3); pointer-events:none;
 }
-.footer a{color:var(--txt3);transition:color .15s}
-.footer a:hover{color:var(--ember)}
+.cmd-list { display:flex; flex-direction:column; gap:.5rem }
+.cmd-card {
+  background:var(--bg2); border:1px solid var(--line2);
+  border-radius:8px; padding:.7rem .85rem; transition:border-color .15s;
+}
+.cmd-card:hover { border-color:rgba(217,79,30,.3) }
+.cmd-name {
+  font-family:'Courier New',monospace; font-size:.85rem;
+  color:var(--ember); font-weight:700; margin-bottom:.18rem;
+}
+.cmd-alts { font-size:.72rem; color:var(--txt3); margin-bottom:.18rem }
+.cmd-desc { font-size:.78rem; color:var(--txt2); line-height:1.45 }
+.cmd-empty { color:var(--txt3); font-size:.82rem; text-align:center; padding:1.5rem 0 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOAST
-   ═══════════════════════════════════════════════════════════ */
-#toast{
-  position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
-  padding:.65rem 1.1rem;border-radius:var(--R);
-  background:var(--bg3);border:1px solid var(--ln2);
-  font-size:.83rem;font-weight:500;
+/* ════ PAGE PRÉSENTATION ════ */
+.hero {
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; padding:3.5rem 2rem 3rem;
+  max-width:680px; margin:0 auto;
+}
+.hero-icon { font-size:3.5rem; margin-bottom:1.25rem }
+.hero-title {
+  font-family:'Cinzel',serif; font-size:2.6rem; font-weight:900;
+  color:var(--gold-l); line-height:1.1; margin-bottom:.75rem;
+  text-shadow:0 0 50px rgba(232,184,75,.2);
+}
+.hero-title em { color:var(--fire); font-style:normal }
+.hero-sub {
+  color:var(--txt2); font-size:.95rem; line-height:1.75;
+  margin-bottom:2rem; max-width:500px;
+}
+.hero-stats {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:.75rem; width:100%; max-width:480px; margin-bottom:2rem;
+}
+.hstat {
+  background:var(--bg2); border:1px solid var(--line2);
+  border-radius:10px; padding:1rem .75rem; text-align:center;
+}
+.hstat-n {
+  font-family:'Cinzel',serif; font-size:1.5rem; color:var(--fire);
+  display:block; margin-bottom:.2rem;
+}
+.hstat-l { font-size:.68rem; text-transform:uppercase; letter-spacing:1px; color:var(--txt3) }
+.hero-ip {
+  display:flex; align-items:center; gap:.6rem;
+  background:var(--bg2); border:1px solid var(--line);
+  border-radius:10px; padding:.65rem 1.3rem;
+  font-family:'Courier New',monospace; font-size:.9rem; color:var(--gold);
+  cursor:pointer; transition:all .2s; position:relative; user-select:none;
+}
+.hero-ip:hover { background:var(--bg3); border-color:rgba(200,150,60,.35) }
+.hero-ip .tip {
+  position:absolute; bottom:calc(100% + 5px); left:50%; transform:translateX(-50%);
+  background:var(--ok); color:#fff;
+  font-size:.68rem; font-weight:700; font-family:'Inter',sans-serif;
+  padding:.18rem .45rem; border-radius:4px; white-space:nowrap;
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+.hero-ip.copied .tip { opacity:1 }
+
+/* ════ TOAST ════ */
+#toast {
+  position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
+  padding:.65rem 1.15rem; border-radius:8px;
+  background:var(--bg3); border:1px solid var(--line2);
+  font-size:.83rem; font-weight:500;
   box-shadow:0 8px 30px rgba(0,0,0,.4);
-  transform:translateY(60px);opacity:0;
-  transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;
+  transform:translateY(60px); opacity:0;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
 }
-#toast.on{transform:translateY(0);opacity:1}
-#toast.ok{border-color:rgba(46,204,113,.4);color:var(--ok)}
-#toast.err{border-color:rgba(231,76,60,.4);color:var(--bad)}
-#toast.info{border-color:rgba(212,168,67,.4);color:var(--gold)}
+#toast.on { transform:translateY(0); opacity:1 }
+#toast.ok  { border-color:rgba(39,174,96,.4); color:var(--ok) }
+#toast.err { border-color:rgba(192,57,43,.4); color:var(--bad) }
+#toast.info{ border-color:rgba(200,150,60,.4); color:var(--gold) }
 
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════════════ */
-@media(max-width:1100px){
-  :root{--SR:220px}
-}
-@media(max-width:900px){
-  .sb-right{display:none!important}
-  .main{max-width:none}
-}
-@media(max-width:768px){
-  .burger{display:flex!important}
-  .btn-kofi{display:none}
-  .hdr-nav{display:none!important}
-
-  /* Sidebar gauche : toujours en tiroir sur mobile,
-     cachée par défaut via transform (pas display:none),
-     ce qui permet la transition CSS */
-  .sb-left{
-    display:block!important;           /* toujours dans le DOM */
-    position:fixed;
-    top:var(--H);left:0;bottom:0;
-    z-index:750;
-    width:var(--SL);
-    height:calc(100vh - var(--H));
-    transform:translateX(-100%);       /* caché par défaut */
-    box-shadow:4px 0 24px rgba(0,0,0,.5);
-    transition:transform .3s cubic-bezier(.4,0,.2,1);
-  }
-  .sb-left.open{
-    transform:translateX(0);           /* visible quand .open */
-  }
-
-  .main{padding:1.25rem 1rem 3rem}
-  .page-title{font-size:1.35rem}
-  .hero-title{font-size:1.8rem}
-  .hero-stats{grid-template-columns:repeat(3,1fr)}
-
-  /* Hero plus compact */
-  .hero{padding:2rem 1rem 2rem}
-  .hero-icon{font-size:3rem}
-}
-@media(min-width:769px){.burger{display:none!important}}
-@media(max-width:420px){
-  .hero-stats{grid-template-columns:1fr 1fr}
-  .hdr-ip .ip-text{display:none}
-  .hero-title{font-size:1.5rem}
-}
-
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(217,79,30,.2);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(217,79,30,.4)}
+/* Scrollbar */
+::-webkit-scrollbar { width:5px; height:5px }
+::-webkit-scrollbar-track { background:transparent }
+::-webkit-scrollbar-thumb { background:rgba(217,79,30,.2); border-radius:3px }
+::-webkit-scrollbar-thumb:hover { background:rgba(217,79,30,.4) }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════ HEADER ══════════════════ -->
+<!-- ═══ HEADER ═══ -->
 <header class="hdr">
-  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  <div class="logo" onclick="goPage('presentation')">🐉 Dragon<em>SMP</em></div>
 
-  <div class="logo" onclick="showPresentation()">🐉 Dragon<em>SMP</em></div>
-
-  <div class="hdr-ip" id="hdr-ip" onclick="copyIP(this)">
-    <span class="copy-icon">📋</span>
-    <span class="ip-text" id="hdr-ip-txt">chargement...</span>
-    <span class="copied-tip">Copié !</span>
+  <div class="ip-chip" id="hdr-ip" onclick="copyIP(this)">
+    <span class="icon">📋</span>
+    <span id="hdr-ip-txt">163.5.141.232:25816</span>
+    <span class="tip">Copié !</span>
   </div>
 
   <nav class="hdr-nav" id="hdr-nav">
-    <button class="nav-tab active" data-page="presentation" onclick="showPresentation()">🏠 Présentation</button>
-    <button class="nav-tab" data-page="reglement" onclick="navTo('reglement')">📋 Règlement</button>
-    <button class="nav-tab" data-page="wiki" onclick="navTo('wiki')">📖 Wiki</button>
-    <!-- Pages custom injectées ici -->
+    <!-- injecté dynamiquement -->
   </nav>
+
+  <!-- Recherche globale -->
+  <div class="hdr-search">
+    <span class="s-ico">🔍</span>
+    <input type="search" id="gsearch" placeholder="Rechercher…" autocomplete="off">
+    <div class="search-drop" id="gsearch-drop"></div>
+  </div>
 
   <div class="hdr-ext">
     <a class="btn-disc" href="https://discord.gg/A7wpe2Yr6S" target="_blank">💬 Discord</a>
@@ -434,497 +432,592 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </header>
 
-<div class="overlay" id="overlay"></div>
-
-<!-- ══════════════════ APP ══════════════════ -->
+<!-- ═══ APP ═══ -->
 <div class="app" id="app">
 
-  <!-- SIDEBAR GAUCHE -->
-  <aside class="sb-left" id="sb-left">
-    <div id="toc-content">
-      <div style="padding:.5rem .85rem;color:var(--txt3);font-size:.8rem">Chargement…</div>
-    </div>
+  <!-- TOC sidebar gauche -->
+  <aside class="toc-sidebar hidden" id="toc-sidebar">
+    <div class="toc-head">Sur cette page</div>
+    <div id="toc-links"></div>
   </aside>
 
-  <!-- MAIN -->
-  <main class="main" id="main-content">
+  <!-- Contenu principal -->
+  <main class="main" id="main">
 
-    <!-- PAGE PRÉSENTATION -->
-    <div class="page-view active" id="page-presentation">
+    <!-- Présentation -->
+    <div class="page active" id="page-presentation">
       <div class="hero">
-        <span class="hero-icon">🐉</span>
+        <div class="hero-icon">🐉</div>
         <h1 class="hero-title">Dragon<em>SMP</em></h1>
-        <p class="hero-sub" id="hero-desc">Serveur Minecraft Survie communautaire francophone. Aventure, construction et entraide au rendez-vous.</p>
-
-        <div class="hero-btns">
-          <button class="hero-btn hero-btn-fire" onclick="navTo('wiki')">📖 Explorer le Wiki</button>
-          <a class="hero-btn hero-btn-ghost" href="https://discord.gg/A7wpe2Yr6S" target="_blank">💬 Discord</a>
+        <p class="hero-sub" id="hero-sub">Serveur Minecraft Survie communautaire francophone. Aventure, construction et entraide au rendez-vous.</p>
+        <div class="hero-stats">
+          <div class="hstat">
+            <span class="hstat-n" id="mc-online">—</span>
+            <span class="hstat-l">Joueurs</span>
+          </div>
+          <div class="hstat">
+            <span class="hstat-n">Java</span>
+            <span class="hstat-l">1.21+</span>
+          </div>
+          <div class="hstat">
+            <span class="hstat-n">🐉</span>
+            <span class="hstat-l">Dragon SMP</span>
+          </div>
         </div>
-
-        <div class="hero-stats" id="hero-stats">
-          <div class="stat-c"><div class="stat-n" id="mc-players">—</div><div class="stat-l">Joueurs en ligne</div></div>
-          <div class="stat-c"><div class="stat-n">Java</div><div class="stat-l">Version 1.21+</div></div>
-          <div class="stat-c"><div class="stat-n">🐉</div><div class="stat-l">Dragon SMP</div></div>
-        </div>
-
         <div class="hero-ip" id="hero-ip" onclick="copyIP(this)">
-          📋 <span id="hero-ip-txt">chargement...</span>
+          📋 <span id="hero-ip-txt">163.5.141.232:25816</span>
           <span class="tip">Copié !</span>
         </div>
       </div>
     </div>
 
-    <!-- PAGES WIKI (injectées dynamiquement) -->
+    <!-- Pages dynamiques injectées ici -->
     <div id="dynamic-pages"></div>
 
   </main>
 
-  <!-- SIDEBAR DROITE — Commandes -->
-  <aside class="sb-right" id="sb-right">
-    <div class="cmd-search-title">🔍 Recherche commandes</div>
-    <div class="cmd-search-wrap">
-      <span class="cmd-search-ico">⌨️</span>
-      <input type="search" id="cmd-input" placeholder="Ex: home, argent..." autocomplete="off">
+  <!-- Commandes sidebar droite -->
+  <aside class="cmd-sidebar hidden" id="cmd-sidebar">
+    <div class="cmd-head">⌨️ Commandes</div>
+    <div class="cmd-input-wrap">
+      <span class="ico">🔍</span>
+      <input type="search" id="cmd-q" placeholder="Ex: home, argent…" autocomplete="off">
     </div>
-    <div class="cmd-results" id="cmd-results">
-      <div class="cmd-empty">Tape une commande ou un mot-clé…</div>
+    <div class="cmd-list" id="cmd-list">
+      <div class="cmd-empty">Tape un mot-clé…</div>
     </div>
   </aside>
 
 </div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  🐉 Dragon SMP &nbsp;·&nbsp;
-  <a href="https://discord.gg/A7wpe2Yr6S" target="_blank">Discord</a> &nbsp;·&nbsp;
-  <a href="https://ko-fi.com/dragonsmpv2" target="_blank">Ko-fi</a>
-</footer>
-
 <div id="toast"></div>
 
-<!-- ══════════════════ SCRIPT ══════════════════ -->
 <script>
 'use strict';
 
-/* ── Defaults ─────────────────────────────────────────────── */
+/* ─── Données par défaut ────────────────────────────────── */
 const DEFAULTS = {
-  settings:{
-    mcHost:'163.5.141.232',mcPort:25816,
-    mcIp:'connect.axohosts.fr:25883',
-    maintenance:false,maintMsg:'Serveur en maintenance.',
-    heroDesc:'Serveur Minecraft Survie communautaire francophone. Aventure, construction et entraide au rendez-vous.'
+  settings: {
+    mcHost: '163.5.141.232', mcPort: 25816,
+    mcIp: '163.5.141.232:25816',
+    maintenance: false,
+    heroSub: 'Serveur Minecraft Survie communautaire francophone. Aventure, construction et entraide au rendez-vous.'
   },
-  pages:[
-    {id:'reglement',title:'Règlement',icon:'📋',isCore:true,
-     showToc:true,showCmdSearch:false,
-     desc:'Les règles à respecter sur le serveur',
-     toc:[{id:'general',name:'Général',chapters:[]}],
-     content:`## Règlement du Dragon SMP\n\nLe respect de ces règles est **obligatoire** pour tous les joueurs.\n\n## Règles générales\n\n**1. Respect mutuel** — Aucune insulte, discrimination ou harcèlement.\n\n**2. Anti-triche** — Hacks, cheats et exploits sont interdits.\n\n**3. Anti-grief** — Ne détruis pas les constructions des autres sans accord.\n\n**4. PvP fair-play** — Uniquement avec accord mutuel, sauf zones PvP dédiées.\n\n**5. Respect du staff** — Les décisions de l'équipe sont finales.\n\n## Sanctions\n\n| Infraction | Sanction |\n|---|---|\n| 1er avertissement | Warn |\n| 2ème | Kick |\n| 3ème | Ban temporaire |\n| Grave | Ban définitif |`
+  pages: [
+    {
+      id: 'presentation', title: 'Présentation', icon: '🏠',
+      isSpecial: true, // page hero, pas de contenu markdown
+      showToc: false, showCmds: false
     },
-    {id:'wiki',title:'Wiki',icon:'📖',isCore:true,
-     showToc:true,showCmdSearch:true,
-     desc:'Documentation complète du serveur',
-     toc:[
-       {id:'debutant',name:'Débutant',chapters:[]},
-       {id:'avance',name:'Avancé',chapters:[]}
-     ],
-     content:`## Bienvenue sur le Wiki\n\nCe wiki contient toute la documentation du **Dragon SMP**.\n\n## Premiers pas\n\n### Se connecter\n\nIP : \`connect.axohosts.fr:25883\` — Java 1.21+\n\n### Commandes de base\n\nUtilise la barre de recherche à droite pour trouver une commande rapidement.\n\n## Économie\n\nLa monnaie du serveur s'appelle les **Écailles**. Gagne-en en vendant des ressources au spawn shop ou en participant aux events.\n\n## Protection\n\nProtège ta base avec le système de claim intégré. Tape \`/claim\` pour protéger la chunk sur laquelle tu te trouves.`
+    {
+      id: 'reglement', title: 'Règlement', icon: '📋',
+      showToc: true, showCmds: false,
+      desc: 'Les règles à respecter sur le serveur Dragon SMP.',
+      content: `## Introduction
+
+Bienvenue sur le **Dragon SMP**. Ce règlement s'applique à tous les joueurs sans exception. Le non-respect de ces règles entraîne des sanctions pouvant aller jusqu'au ban définitif.
+
+## Comportement
+
+### Respect mutuel
+
+Le respect est la base de toute communauté. Aucune insulte, moquerie, discrimination ou harcèlement ne sera toléré, que ce soit en jeu, sur Discord ou sur ce wiki.
+
+### Spam et publicité
+
+Le spam de messages répétitifs et la publicité pour d'autres serveurs sont interdits dans tous nos espaces de communication.
+
+## Jeu équitable
+
+### Anti-triche
+
+L'utilisation de clients modifiés, hacks, macros automatiques ou tout exploit de bug est strictement interdite. En cas de doute, demandez à un membre du staff.
+
+### Anti-grief
+
+Détruire, modifier ou voler dans les constructions d'autres joueurs sans leur accord explicite est interdit. Cela inclut les fermes, maisons et infrastructures publiques.
+
+### PvP
+
+Le PvP est autorisé uniquement dans les zones dédiées ou avec accord mutuel des deux joueurs. Le kill stealing et le spawn killing sont interdits.
+
+## Staff
+
+### Décisions
+
+Les décisions du staff sont finales. Si vous pensez qu'une décision est injuste, ouvrez un ticket sur Discord — ne discutez pas en jeu.
+
+### Sanctions
+
+| Infraction | 1ère fois | 2ème fois | 3ème fois |
+|---|---|---|---|
+| Insulte | Warn | Mute 24h | Ban 7j |
+| Grief mineur | Warn + réparation | Ban 7j | Ban définitif |
+| Triche | Ban 30j | Ban définitif | — |
+| Grief majeur | Ban définitif | — | — |`
+    },
+    {
+      id: 'wiki', title: 'Wiki', icon: '📖',
+      showToc: true, showCmds: true,
+      desc: 'Documentation complète du serveur Dragon SMP.',
+      content: `## Premiers pas
+
+Bienvenue dans le Wiki du **Dragon SMP** ! Cette documentation couvre tout ce que tu as besoin de savoir pour profiter pleinement du serveur.
+
+### Rejoindre le serveur
+
+**IP :** \`163.5.141.232:25816\`
+**Version :** Java Edition 1.21+
+
+Lance Minecraft, clique sur **Multijoueur** → **Ajouter un serveur**, entre l'IP et connecte-toi !
+
+### Premiers gestes
+
+Une fois connecté, tu te retrouves au **spawn**. Avant tout :
+
+- Lis le règlement (/rules)
+- Définis ton home avec \`/sethome\`
+- Utilise \`/rtp\` pour te téléporter dans la nature
+
+## Économie
+
+### Monnaie
+
+La monnaie du serveur s'appelle les **Écailles** 🐉. Tu peux en gagner de plusieurs façons :
+
+- Vendre des ressources au **Shop spawn** (\`/warp shop\`)
+- Participer aux **events** organisés par le staff
+- Commercer avec les autres joueurs
+
+### Commandes économie
+
+Utilise la barre de recherche à droite pour trouver rapidement les commandes. Par exemple, cherche **"argent"** pour voir toutes les commandes liées à l'économie.
+
+## Protection
+
+### Claim de terrain
+
+Protège ton terrain avec le système de claim intégré. La commande \`/claim\` protège la chunk sur laquelle tu te trouves. Les chunks protégées apparaissent en jaune avec \`/claim map\`.
+
+### Trusts
+
+Tu peux autoriser un ami à accéder à ton claim avec \`/trust [joueur]\`. Pour retirer l'accès, utilise \`/untrust [joueur]\`.
+
+## Mondes
+
+### Monde principal
+
+Le monde principal (**Overworld**) est le cœur du serveur. La map est disponible sur notre site.
+
+### Monde ressources
+
+Un monde **ressources** est disponible pour miner sans abîmer le monde principal. Il est réinitialisé tous les mois. Accède-y avec \`/warp ressources\`.
+
+### Nether & End
+
+Le **Nether** et l'**End** sont accessibles normalement. Les portails sont au spawn.`
     }
   ],
-  commands:[
-    {id:'cmd1',cmd:'/home',alts:'/retour, /spawn perso',desc:'Retourne à ton point de home défini.',keywords:'home retour base'},
-    {id:'cmd2',cmd:'/sethome',alts:'/home set',desc:'Définit ton point de retour à ta position actuelle.',keywords:'sethome définir set home base'},
-    {id:'cmd3',cmd:'/tpa [joueur]',alts:'/tp demande',desc:'Envoie une demande de téléportation à un joueur.',keywords:'tpa tp téléportation joueur'},
-    {id:'cmd4',cmd:'/money',alts:'/balance, /bal',desc:'Affiche ton solde en Écailles.',keywords:'money argent solde balance économie'},
-    {id:'cmd5',cmd:'/pay [joueur] [montant]',alts:'/donner argent',desc:'Envoie des Écailles à un autre joueur.',keywords:'pay payer argent donner transfert'},
-    {id:'cmd6',cmd:'/claim',alts:'/protéger chunk',desc:'Protège la chunk sur laquelle tu te trouves.',keywords:'claim protéger chunk protection base griéf'}
+  commands: [
+    { id:'c1', cmd:'/home', alts:'/h', desc:'Retourne à ton point de home.', kw:'home,retour,base,tp maison,téléportation' },
+    { id:'c2', cmd:'/sethome', alts:'/sh, /set home', desc:'Définit ton home à ta position actuelle.', kw:'sethome,set home,définir home,poser home,créer home' },
+    { id:'c3', cmd:'/delhome', alts:'/deletehome', desc:'Supprime ton home.', kw:'delhome,supprimer home,effacer home' },
+    { id:'c4', cmd:'/spawn', alts:'/s', desc:"Retourne au spawn du serveur.", kw:'spawn,retour spawn,point de départ' },
+    { id:'c5', cmd:'/rtp', alts:'/randomtp', desc:'Téléportation aléatoire dans la nature.', kw:'rtp,random tp,téléportation aléatoire,se perdre,explorer' },
+    { id:'c6', cmd:'/tpa [joueur]', alts:'/tp demande', desc:'Envoie une demande de TP à un joueur.', kw:'tpa,tp joueur,téléportation,rejoindre ami' },
+    { id:'c7', cmd:'/tpaccept', alts:'/tpyes', desc:'Accepte une demande de TP.', kw:'tpaccept,accepter tp,oui tp' },
+    { id:'c8', cmd:'/tpdeny', alts:'/tpno', desc:'Refuse une demande de TP.', kw:'tpdeny,refuser tp,non tp' },
+    { id:'c9', cmd:'/money', alts:'/balance, /bal, /solde', desc:'Affiche ton solde en Écailles.', kw:'money,argent,solde,balance,écailles,combien,richesse' },
+    { id:'c10', cmd:'/pay [joueur] [montant]', alts:'/donner argent', desc:'Envoie des Écailles à un joueur.', kw:'pay,payer,donner argent,transfert,envoyer argent,écailles' },
+    { id:'c11', cmd:'/baltop', alts:'/richlist', desc:'Classement des joueurs les plus riches.', kw:'baltop,classement argent,top richesse,les plus riches' },
+    { id:'c12', cmd:'/claim', alts:'/protéger', desc:'Protège la chunk sur laquelle tu te trouves.', kw:'claim,protéger,protection,terrain,chunk,grief' },
+    { id:'c13', cmd:'/unclaim', alts:'/déclaim', desc:'Retire la protection de ta chunk.', kw:'unclaim,déprotéger,enlever protection,claim' },
+    { id:'c14', cmd:'/trust [joueur]', alts:'/autoriser', desc:'Autorise un joueur à accéder à ton claim.', kw:'trust,autoriser,accès,ami claim,partager terrain' },
+    { id:'c15', cmd:'/untrust [joueur]', alts:'/révoquer', desc:"Retire l'accès d'un joueur à ton claim.", kw:'untrust,révoquer,enlever accès,virer claim' },
+    { id:'c16', cmd:'/warp [nom]', alts:'/tp warp', desc:'Téléportation vers un warp public.', kw:'warp,téléportation,lieu,destination,shop,ressources' },
+    { id:'c17', cmd:'/warplist', alts:'/warps', desc:'Liste tous les warps disponibles.', kw:'warplist,liste warps,destinations disponibles' },
+    { id:'c18', cmd:'/msg [joueur] [message]', alts:'/tell, /m', desc:'Envoie un message privé à un joueur.', kw:'msg,message privé,mp,tell,parler,chuchoter' },
+    { id:'c19', cmd:'/rules', alts:'/règlement', desc:'Affiche le règlement du serveur.', kw:'rules,règlement,règles,lire règles' },
+    { id:'c20', cmd:'/helpop [message]', alts:'/staff', desc:'Contacte le staff en jeu.', kw:'helpop,contacter staff,aide,admin,modérateur,problème' }
   ]
 };
 
-/* ── Persistance ─────────────────────────────────────────── */
+/* ─── Persistance ───────────────────────────────────────── */
 let DATA = null;
 
-async function loadData(){
+async function loadData() {
   const binId  = localStorage.getItem('dsmp_bin_id');
   const apiKey = localStorage.getItem('dsmp_api_key');
-  if(binId && apiKey){
-    try{
+  if (binId && apiKey) {
+    try {
       const r = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`,
-        {headers:{'X-Master-Key':apiKey}});
-      if(r.ok){DATA=(await r.json()).record;
-        localStorage.setItem('dsmp_cache',JSON.stringify(DATA));return;}
-    }catch{}
+        { headers: { 'X-Master-Key': apiKey } });
+      if (r.ok) {
+        DATA = (await r.json()).record;
+        localStorage.setItem('dsmp_cache', JSON.stringify(DATA));
+        return;
+      }
+    } catch {}
   }
-  const c=localStorage.getItem('dsmp_cache');
-  if(c){try{DATA=JSON.parse(c);return}catch{}}
-  DATA=JSON.parse(JSON.stringify(DEFAULTS));
+  try {
+    const c = localStorage.getItem('dsmp_cache');
+    if (c) { DATA = JSON.parse(c); return; }
+  } catch {}
+  DATA = JSON.parse(JSON.stringify(DEFAULTS));
 }
 
-/* ── Init ────────────────────────────────────────────────── */
-let _curPage = 'presentation';
+/* ─── Init ──────────────────────────────────────────────── */
+let _cur = 'presentation';
 
-document.addEventListener('DOMContentLoaded', async ()=>{
+document.addEventListener('DOMContentLoaded', async () => {
   await loadData();
   applySettings();
-  buildNavTabs();
-  buildDynamicPages();
+  buildNav();
+  buildPages();
+  setupGlobalSearch();
   setupCmdSearch();
-  setupBurger();
   startMC();
 
-  const hash = location.hash.replace('#','');
-  if(hash && hash !== 'presentation') navTo(hash);
-  else showPresentation();
+  const hash = location.hash.replace('#', '');
+  goPage(hash && DATA.pages.find(p => p.id === hash) ? hash : 'presentation');
 });
 
-window.addEventListener('hashchange',()=>{
-  const id = location.hash.replace('#','');
-  if(id) id==='presentation' ? showPresentation() : navTo(id);
+window.addEventListener('hashchange', () => {
+  const id = location.hash.replace('#', '');
+  if (id) goPage(id);
 });
 
-/* ── Settings ────────────────────────────────────────────── */
-function applySettings(){
+/* ─── Paramètres ────────────────────────────────────────── */
+function applySettings() {
   const s = DATA?.settings || DEFAULTS.settings;
-  const ip = s.mcIp || 'connect.axohosts.fr:25883';
-  document.getElementById('hdr-ip-txt').textContent = ip;
+  const ip = s.mcIp || '163.5.141.232:25816';
+  document.getElementById('hdr-ip-txt').textContent  = ip;
   document.getElementById('hero-ip-txt').textContent = ip;
-  if(document.getElementById('hero-desc'))
-    document.getElementById('hero-desc').textContent = s.heroDesc || DEFAULTS.settings.heroDesc;
+  const sub = s.heroSub || DEFAULTS.settings.heroSub;
+  document.getElementById('hero-sub').textContent = sub;
 }
 
-/* ── Navigation ──────────────────────────────────────────── */
-function buildNavTabs(){
+/* ─── Navigation ────────────────────────────────────────── */
+function buildNav() {
   const nav = document.getElementById('hdr-nav');
-  const custom = (DATA?.pages||[]).filter(p=>!p.isCore);
-  // Supprime les anciens onglets custom
-  nav.querySelectorAll('.nav-tab-custom').forEach(el=>el.remove());
-  custom.forEach(p=>{
+  nav.innerHTML = '';
+  (DATA?.pages || []).forEach(p => {
     const btn = document.createElement('button');
-    btn.className='nav-tab nav-tab-custom';
-    btn.dataset.page=p.id;
-    btn.textContent=`${p.icon||'📄'} ${p.title}`;
-    btn.onclick=()=>navTo(p.id);
+    btn.className = 'tab' + (p.id === _cur ? ' active' : '');
+    btn.dataset.id = p.id;
+    btn.textContent = `${p.icon || ''} ${p.title}`;
+    btn.onclick = () => goPage(p.id);
     nav.appendChild(btn);
   });
 }
 
-function buildDynamicPages(){
+function buildPages() {
   const container = document.getElementById('dynamic-pages');
-  container.innerHTML='';
-  const pages = DATA?.pages || [];
-  pages.forEach(p=>{
+  container.innerHTML = '';
+  (DATA?.pages || []).filter(p => !p.isSpecial).forEach(p => {
     const div = document.createElement('div');
-    div.className='page-view';
-    div.id=`page-${p.id}`;
-    div.innerHTML=`
+    div.className = 'page';
+    div.id = `page-${p.id}`;
+    div.innerHTML = `
       <div class="page-head">
-        <h1 class="page-title">${p.icon||''} ${e(p.title)}</h1>
-        ${p.desc?`<p class="page-desc">${e(p.desc)}</p>`:''}
+        <h1 class="page-title">${p.icon || ''} ${e(p.title)}</h1>
+        ${p.desc ? `<p class="page-desc">${e(p.desc)}</p>` : ''}
       </div>
-      <div class="wc">${mdToHtml(p.content||'')}</div>`;
+      <div class="wc" id="wc-${p.id}">${mdToHtml(p.content || '')}</div>`;
     container.appendChild(div);
   });
 }
 
-function showPresentation(){
-  _curPage='presentation';
-  location.hash='presentation';
-  setActiveTab('presentation');
-  document.querySelectorAll('.page-view').forEach(el=>el.classList.remove('active'));
-  document.getElementById('page-presentation')?.classList.add('active');
-  // Sur desktop, cache les sidebars ; sur mobile le burger reste
-  if(window.innerWidth > 768){
-    const sl = document.getElementById('sb-left');
-    const sr = document.getElementById('sb-right');
-    if(sl) sl.style.display = 'none';
-    if(sr) sr.style.display = 'none';
-  }
-  closeBurger();
-}
+function goPage(id) {
+  const page = (DATA?.pages || []).find(p => p.id === id);
+  if (!page) { goPage('presentation'); return; }
 
-function navTo(id){
-  const page = (DATA?.pages||[]).find(p=>p.id===id);
-  if(!page) return;
-
-  _curPage = id;
+  _cur = id;
   location.hash = id;
-  setActiveTab(id);
 
-  document.querySelectorAll('.page-view').forEach(el=>el.classList.remove('active'));
-  const el = document.getElementById(`page-${id}`);
-  if(el) el.classList.add('active');
-
-  const sbLeft  = document.getElementById('sb-left');
-  const sbRight = document.getElementById('sb-right');
-  const mobile  = window.innerWidth <= 768;
-
-  // Sidebar gauche TOC
-  if(sbLeft){
-    if(mobile){
-      // Sur mobile : toujours disponible via burger, on reconstruit la TOC
-      sbLeft.style.display = '';
-      buildTOC(page);
-    } else {
-      // Sur desktop : afficher ou cacher selon la config de la page
-      sbLeft.style.display = page.showToc ? '' : 'none';
-      if(page.showToc) buildTOC(page);
-    }
-  }
-
-  // Sidebar droite commandes (desktop seulement)
-  if(sbRight){
-    sbRight.style.display = (!mobile && page.showCmdSearch) ? '' : 'none';
-    if(!mobile && page.showCmdSearch) showAllCmds();
-  }
-
-  closeBurger();
-  window.scrollTo(0,0);
-}
-
-function setActiveTab(id){
-  document.querySelectorAll('.nav-tab').forEach(t=>{
-    t.classList.toggle('active', t.dataset.page===id);
+  // Active onglet
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.id === id);
   });
+
+  // Affiche la bonne page
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById(`page-${id}`);
+  if (el) el.classList.add('active');
+
+  // TOC
+  const tocSB = document.getElementById('toc-sidebar');
+  if (page.showToc && !page.isSpecial) {
+    tocSB.classList.remove('hidden');
+    buildTOC(id);
+  } else {
+    tocSB.classList.add('hidden');
+  }
+
+  // Commandes
+  const cmdSB = document.getElementById('cmd-sidebar');
+  if (page.showCmds && !page.isSpecial) {
+    cmdSB.classList.remove('hidden');
+    renderCmds(DATA?.commands || DEFAULTS.commands);
+    document.getElementById('cmd-q').value = '';
+  } else {
+    cmdSB.classList.add('hidden');
+  }
+
+  window.scrollTo(0, 0);
 }
 
-/* ── Table des matières auto ─────────────────────────────── */
-function buildTOC(page){
-  const el = document.getElementById('toc-content');
-  if(!el) return;
+/* ─── TOC ───────────────────────────────────────────────── */
+function buildTOC(pageId) {
+  const page = DATA.pages.find(p => p.id === pageId);
+  if (!page?.content) return;
 
-  // Génère auto depuis les ## dans le contenu
-  const content = page.content || '';
-  const headings = [];
-  content.split('\n').forEach(line=>{
+  const links = document.getElementById('toc-links');
+  const entries = [];
+  page.content.split('\n').forEach(line => {
     const m2 = line.match(/^## (.+)$/);
     const m3 = line.match(/^### (.+)$/);
-    if(m2) headings.push({level:2,text:m2[1],id:slugify(m2[1])});
-    if(m3) headings.push({level:3,text:m3[1],id:slugify(m3[1])});
+    if (m2) entries.push({ lvl: 2, text: m2[1], id: slug(m2[1]) });
+    if (m3) entries.push({ lvl: 3, text: m3[1], id: slug(m3[1]) });
   });
 
-  if(!headings.length){
-    el.innerHTML='<div style="padding:.75rem .85rem;color:var(--txt3);font-size:.8rem">Pas de chapitres</div>';
-    return;
-  }
+  if (!entries.length) { links.innerHTML = ''; return; }
 
-  let html = `<div class="toc-title">Sur cette page</div>`;
-  headings.forEach((h,i)=>{
-    const indent = h.level===3 ? 'padding-left:1.8rem' : '';
-    html += `<div class="toc-link" style="${indent}" data-target="${h.id}" onclick="scrollToHeading('${h.id}',this)">
-      <span class="toc-num">${h.level===2?'#':'·'}</span>
-      ${e(h.text)}
-    </div>`;
-  });
+  links.innerHTML = entries.map(e2 => `
+    <div class="toc-entry${e2.lvl === 3 ? ' h3' : ''}" data-tgt="${e2.id}"
+      onclick="scrollTo2('${e2.id}',this)">
+      <span class="toc-num">${e2.lvl === 2 ? '#' : '·'}</span>
+      ${e(e2.text)}
+    </div>`).join('');
 
-  el.innerHTML = html;
-
-  // Injecte les IDs dans les headings du DOM
-  setTimeout(()=>{
-    const wc = document.querySelector(`.page-view.active .wc`);
-    if(!wc) return;
-    const els = wc.querySelectorAll('h2,h3');
-    els.forEach(heading=>{
-      const id = slugify(heading.textContent);
-      heading.id = id;
-    });
-    setupScrollSpy();
-  },100);
+  // Injecte les IDs dans le DOM
+  setTimeout(() => {
+    const wc = document.querySelector(`#wc-${pageId}`);
+    if (!wc) return;
+    wc.querySelectorAll('h2,h3').forEach(h => { h.id = slug(h.textContent) });
+    setupScrollSpy(pageId);
+  }, 80);
 }
 
-function scrollToHeading(id, linkEl){
+function scrollTo2(id, el) {
   const target = document.getElementById(id);
-  if(!target) return;
-  const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H'))||56;
-  const y = target.getBoundingClientRect().top + window.scrollY - offset - 20;
-  window.scrollTo({top:y,behavior:'smooth'});
-  document.querySelectorAll('.toc-link').forEach(l=>l.classList.remove('active'));
-  linkEl?.classList.add('active');
+  if (!target) return;
+  const y = target.getBoundingClientRect().top + window.scrollY - parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H')) - 20;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+  document.querySelectorAll('.toc-entry').forEach(t => t.classList.remove('active'));
+  el?.classList.add('active');
 }
 
-function setupScrollSpy(){
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
+function setupScrollSpy(pageId) {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
         const id = entry.target.id;
-        document.querySelectorAll('.toc-link').forEach(l=>{
-          l.classList.toggle('active', l.dataset.target===id);
+        document.querySelectorAll('.toc-entry').forEach(t => {
+          t.classList.toggle('active', t.dataset.tgt === id);
         });
       }
     });
-  },{rootMargin:`-${(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H'))||56)+30}px 0px -60% 0px`});
+  }, { rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H')) + 30}px 0px -60% 0px` });
 
-  document.querySelectorAll('.page-view.active .wc h2, .page-view.active .wc h3')
-    .forEach(el=>observer.observe(el));
+  document.querySelectorAll(`#wc-${pageId} h2, #wc-${pageId} h3`).forEach(h => obs.observe(h));
 }
 
-/* ── Recherche commandes ─────────────────────────────────── */
-function setupCmdSearch(){
-  const inp = document.getElementById('cmd-input');
-  if(!inp) return;
+/* ─── Recherche globale ─────────────────────────────────── */
+function setupGlobalSearch() {
+  const inp  = document.getElementById('gsearch');
+  const drop = document.getElementById('gsearch-drop');
+  if (!inp || !drop) return;
+
   let t;
-  inp.addEventListener('input',()=>{
-    clearTimeout(t);
-    t=setTimeout(()=>doSearch(inp.value.trim()),200);
-  });
-  inp.addEventListener('focus',()=>{
-    if(!inp.value.trim()) showAllCmds();
+  inp.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => doGSearch(inp.value.trim()), 180) });
+  inp.addEventListener('focus', () => { if (inp.value.trim()) doGSearch(inp.value.trim()) });
+  document.addEventListener('click', ev => {
+    if (!ev.target.closest('.hdr-search')) { drop.classList.remove('on'); inp.value = '' }
   });
 }
 
-function showAllCmds(){
-  const cmds = DATA?.commands || DEFAULTS.commands;
-  renderCmds(cmds);
+function doGSearch(q) {
+  const drop = document.getElementById('gsearch-drop');
+  if (!q) { drop.classList.remove('on'); return; }
+  const ql = q.toLowerCase();
+  const results = [];
+
+  // Pages
+  (DATA?.pages || []).filter(p => !p.isSpecial).forEach(p => {
+    if (p.title.toLowerCase().includes(ql) ||
+        (p.desc  || '').toLowerCase().includes(ql) ||
+        (p.content || '').toLowerCase().includes(ql)) {
+      results.push({ type: 'page', icon: p.icon || '📄', title: p.title, sub: p.desc || '', action: () => goPage(p.id) });
+    }
+  });
+
+  // Commandes (avec mots-clés)
+  (DATA?.commands || DEFAULTS.commands).forEach(c => {
+    const kws = (c.kw || '').split(',').map(k => k.trim().toLowerCase());
+    if (c.cmd.toLowerCase().includes(ql) ||
+        (c.alts || '').toLowerCase().includes(ql) ||
+        (c.desc || '').toLowerCase().includes(ql) ||
+        kws.some(k => k.includes(ql))) {
+      results.push({ type: 'cmd', icon: '⌨️', title: c.cmd, sub: c.desc, action: () => {
+        goPage('wiki');
+        setTimeout(() => { document.getElementById('cmd-q').value = q; doCmd(q); }, 200);
+      }});
+    }
+  });
+
+  if (!results.length) {
+    drop.innerHTML = `<div class="sdrop-empty">Aucun résultat pour « ${e(q)} »</div>`;
+  } else {
+    drop.innerHTML = results.slice(0, 8).map((r, i) => `
+      <div class="sdrop-item" id="sdr-${i}" onclick="sdrClick(${i})">
+        <span class="sdrop-icon">${r.icon}</span>
+        <div>
+          <div class="sdrop-title">${e(r.title)}</div>
+          <div class="sdrop-sub">${e(r.sub)}</div>
+        </div>
+      </div>`).join('');
+    // stocke les actions
+    window._sdrActions = results.map(r => r.action);
+  }
+  drop.classList.add('on');
 }
 
-function doSearch(q){
-  if(!q){showAllCmds();return}
-  const ql=q.toLowerCase();
-  const cmds=(DATA?.commands||DEFAULTS.commands).filter(c=>
-    c.cmd.toLowerCase().includes(ql)||
-    (c.alts||'').toLowerCase().includes(ql)||
-    (c.desc||'').toLowerCase().includes(ql)||
-    (c.keywords||'').toLowerCase().includes(ql)
-  );
-  renderCmds(cmds, q);
+function sdrClick(i) {
+  document.getElementById('gsearch-drop').classList.remove('on');
+  document.getElementById('gsearch').value = '';
+  if (window._sdrActions?.[i]) window._sdrActions[i]();
 }
 
-function renderCmds(cmds, q=''){
-  const el=document.getElementById('cmd-results');
-  if(!el)return;
-  if(!cmds.length){
-    el.innerHTML=`<div class="cmd-empty">Aucune commande trouvée pour « ${e(q)} »</div>`;
+/* ─── Recherche commandes ───────────────────────────────── */
+function setupCmdSearch() {
+  const inp = document.getElementById('cmd-q');
+  if (!inp) return;
+  let t;
+  inp.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => doCmd(inp.value.trim()), 180) });
+  inp.addEventListener('focus', () => { if (!inp.value.trim()) renderCmds(DATA?.commands || DEFAULTS.commands) });
+}
+
+function doCmd(q) {
+  if (!q) { renderCmds(DATA?.commands || DEFAULTS.commands); return; }
+  const ql = q.toLowerCase();
+  const res = (DATA?.commands || DEFAULTS.commands).filter(c => {
+    const kws = (c.kw || '').split(',').map(k => k.trim().toLowerCase());
+    return c.cmd.toLowerCase().includes(ql) ||
+           (c.alts || '').toLowerCase().includes(ql) ||
+           (c.desc || '').toLowerCase().includes(ql) ||
+           kws.some(k => k.includes(ql));
+  });
+  renderCmds(res, q);
+}
+
+function renderCmds(cmds, q = '') {
+  const el = document.getElementById('cmd-list');
+  if (!el) return;
+  if (!cmds.length) {
+    el.innerHTML = `<div class="cmd-empty">Aucune commande pour « ${e(q)} »</div>`;
     return;
   }
-  el.innerHTML=cmds.map(c=>`
+  el.innerHTML = cmds.map(c => `
     <div class="cmd-card">
-      <div class="cmd-main">${e(c.cmd)}</div>
-      ${c.alts?`<div class="cmd-alt">Aussi : ${e(c.alts)}</div>`:''}
-      <div class="cmd-info">${e(c.desc)}</div>
+      <div class="cmd-name">${e(c.cmd)}</div>
+      ${c.alts ? `<div class="cmd-alts">Aussi : ${e(c.alts)}</div>` : ''}
+      <div class="cmd-desc">${e(c.desc)}</div>
     </div>`).join('');
 }
 
-/* ── IP copiable ─────────────────────────────────────────── */
-function copyIP(el){
-  const ip = DATA?.settings?.mcIp || 'connect.axohosts.fr:25883';
-  navigator.clipboard?.writeText(ip).then(()=>{
-    el.classList.add('copied');
-    setTimeout(()=>el.classList.remove('copied'),2000);
-  }).catch(()=>{
-    // Fallback
-    const ta=document.createElement('textarea');
-    ta.value=ip;document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);
-    el.classList.add('copied');
-    setTimeout(()=>el.classList.remove('copied'),2000);
-  });
+/* ─── IP ────────────────────────────────────────────────── */
+function copyIP(el) {
+  const ip = DATA?.settings?.mcIp || '163.5.141.232:25816';
+  (navigator.clipboard?.writeText(ip) || Promise.reject()).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = ip; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }).finally?.(() => {});
+  // Toujours afficher le feedback
+  el.classList.add('copied');
+  setTimeout(() => el.classList.remove('copied'), 2000);
 }
 
-/* ── Statut MC ───────────────────────────────────────────── */
-function startMC(){updateMC();setInterval(updateMC,60000)}
-async function updateMC(){
-  const s=DATA?.settings||DEFAULTS.settings;
-  if(s.maintenance){
-    document.getElementById('mc-players').textContent='🔧';
-    return;
-  }
-  try{
-    const r=await fetch(`https://api.mcstatus.io/v2/status/java/${s.mcHost}:${s.mcPort}`);
-    const j=await r.json();
-    if(j.online) document.getElementById('mc-players').textContent=`${j.players?.online||0}/${j.players?.max||0}`;
-    else throw 0;
-  }catch{
-    document.getElementById('mc-players').textContent='Hors ligne';
+/* ─── Statut MC ─────────────────────────────────────────── */
+function startMC() { updateMC(); setInterval(updateMC, 60000) }
+async function updateMC() {
+  const s = DATA?.settings || DEFAULTS.settings;
+  if (s.maintenance) { document.getElementById('mc-online').textContent = '🔧'; return; }
+  try {
+    const r = await fetch(`https://api.mcstatus.io/v2/status/java/${s.mcHost}:${s.mcPort}`);
+    const j = await r.json();
+    document.getElementById('mc-online').textContent =
+      j.online ? `${j.players?.online ?? 0}/${j.players?.max ?? 0}` : 'Off';
+  } catch {
+    document.getElementById('mc-online').textContent = 'Off';
   }
 }
 
-/* ── Burger ──────────────────────────────────────────────── */
-function setupBurger(){
-  const btn = document.getElementById('burger');
-  const ovl = document.getElementById('overlay');
-  if(btn) btn.addEventListener('click', toggleBurger);
-  if(ovl) ovl.addEventListener('click', closeBurger);
-}
-function toggleBurger(){
-  const sb  = document.getElementById('sb-left');
-  const btn = document.getElementById('burger');
-  const ovl = document.getElementById('overlay');
-  const isOpen = sb?.classList.contains('open');
-  if(isOpen){ closeBurger(); }
-  else {
-    sb?.classList.add('open');
-    btn?.classList.add('open');
-    ovl?.classList.add('on');
-    // Empêche le scroll du body quand le tiroir est ouvert
-    document.body.style.overflow = 'hidden';
-  }
-}
-function closeBurger(){
-  document.getElementById('sb-left')?.classList.remove('open');
-  document.getElementById('burger')?.classList.remove('open');
-  document.getElementById('overlay')?.classList.remove('on');
-  document.body.style.overflow = '';
-}
-
-/* ── Markdown ────────────────────────────────────────────── */
-function mdToHtml(raw){
-  if(!raw)return'';
-  let s=raw;
-  const blocks=[];
-  s=s.replace(/```([\s\S]*?)```/g,(_,c)=>{blocks.push(c);return`\x00B${blocks.length-1}\x00`});
-  s=s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  s=s.replace(/`([^`\n]+)`/g,'<code>$1</code>');
-  s=s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" loading="lazy">');
-  s=s.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
-  s=s.replace(/^&gt; (.+)$/gm,'<blockquote><p>$1</p></blockquote>');
-  s=s.replace(/^---$/gm,'<hr>');
-  s=s.replace(/(\|.+\|\n)(\|[-| :]+\|\n)((?:\|.+\|?\n?)*)/g,(_,h,__,b)=>{
-    const ths=h.split('|').filter(c=>c.trim()).map(c=>`<th>${c.trim()}</th>`).join('');
-    const trs=b.trim().split('\n').map(row=>{
-      const tds=row.split('|').filter(c=>c.trim()).map(c=>`<td>${c.trim()}</td>`).join('');
-      return`<tr>${tds}</tr>`;
+/* ─── Markdown ──────────────────────────────────────────── */
+function mdToHtml(raw) {
+  if (!raw) return '';
+  let s = raw;
+  const codeBlocks = [];
+  s = s.replace(/```([\s\S]*?)```/g, (_, c) => { codeBlocks.push(c); return `\x00B${codeBlocks.length - 1}\x00` });
+  s = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  s = s.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy">');
+  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s = s.replace(/^&gt; (.+)$/gm, '<blockquote><p>$1</p></blockquote>');
+  s = s.replace(/^---$/gm, '<hr>');
+  // Tables
+  s = s.replace(/(\|.+\|\n)(\|[-| :]+\|\n)((?:\|.+\|?\n?)*)/g, (_, h, __, b) => {
+    const ths = h.split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`).join('');
+    const trs = b.trim().split('\n').map(row => {
+      const tds = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`).join('');
+      return `<tr>${tds}</tr>`;
     }).join('');
-    return`<div class="tbl"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+    return `<div class="tbl-wrap"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
   });
-  s=s.replace(/^### (.+)$/gm,'<h3>$1</h3>');
-  s=s.replace(/^## (.+)$/gm,'<h2>$1</h2>');
-  s=s.replace(/^# (.+)$/gm,'<h1>$1</h1>');
-  s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  s=s.replace(/\*(.+?)\*/g,'<em>$1</em>');
-  s=s.replace(/((?:^- .+\n?)+)/gm,m=>{
-    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^- /,'')}</li>`).join('');
-    return`<ul>${li}</ul>`;
+  s = s.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  s = s.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  s = s.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  s = s.replace(/((?:^- .+\n?)+)/gm, m => {
+    const li = m.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('');
+    return `<ul>${li}</ul>`;
   });
-  s=s.replace(/((?:^\d+\. .+\n?)+)/gm,m=>{
-    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('');
-    return`<ol>${li}</ol>`;
+  s = s.replace(/((?:^\d+\. .+\n?)+)/gm, m => {
+    const li = m.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('');
+    return `<ol>${li}</ol>`;
   });
-  s=s.replace(/\n{2,}/g,'</p><p>');
-  s=`<p>${s}</p>`;
-  s=s.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|hr|div)[^>]*>)/g,'$1');
-  s=s.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|hr|div)>)\s*<\/p>/g,'$1');
-  s=s.replace(/<p>\s*<\/p>/g,'');
-  s=s.replace(/\x00B(\d+)\x00/g,(_,i)=>{
-    const code=blocks[+i].replace(/^\n/,'').replace(/\n$/,'')
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return`<pre><code>${code}</code></pre>`;
+  // Paragraphes
+  s = s.replace(/\n{2,}/g, '</p><p>');
+  s = `<p>${s}</p>`;
+  s = s.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|hr|div)[^>]*>)/g, '$1');
+  s = s.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|hr|div)>)\s*<\/p>/g, '$1');
+  s = s.replace(/<p>\s*<\/p>/g, '');
+  // Blocs de code
+  s = s.replace(/\x00B(\d+)\x00/g, (_, i) => {
+    const code = codeBlocks[+i].replace(/^\n/, '').replace(/\n$/, '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return `<pre><code>${code}</code></pre>`;
   });
   return s.trim();
 }
 
-/* ── Utils ───────────────────────────────────────────────── */
-function e(s){
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* ─── Utils ─────────────────────────────────────────────── */
+function e(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
-function slugify(s){
-  return String(s||'').toLowerCase()
-    .replace(/[àáâã]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
-    .replace(/[òóôõ]/g,'o').replace(/[ùúûü]/g,'u').replace(/ç/g,'c')
-    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function slug(s) {
+  return String(s || '').toLowerCase()
+    .replace(/[àáâã]/g, 'a').replace(/[èéêë]/g, 'e').replace(/[ìíîï]/g, 'i')
+    .replace(/[òóô]/g, 'o').replace(/[ùúûü]/g, 'u').replace(/ç/g, 'c')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
-function toast(msg,type='ok'){
-  const t=document.getElementById('toast');if(!t)return;
-  t.textContent=msg;t.className=`on ${type}`;
-  setTimeout(()=>t.className='',3000);
+function toast(msg, type = 'ok') {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg; t.className = `on ${type}`;
+  setTimeout(() => t.className = '', 3000);
 }
 </script>
 </body>
