@@ -842,7 +842,7 @@ function renderPages() {
         <span class="lrow-icon">${p.icon || '📄'}</span>
         <div>
           <div class="lrow-name">${e(p.title)} ${badge}</div>
-          <div class="lrow-meta">${isPresentation ? 'Texte et description de la page d'accueil' : '#'+p.id+' · TOC:'+( p.showToc ? '✓' : '✗')+' · Cmds:'+(p.showCmds ? '✓' : '✗')}</div>
+          <div class="lrow-meta">${isPresentation ? 'Page d\'accueil' : '#'+p.id+' · TOC:'+( p.showToc ? '✓' : '✗')+' · Cmds:'+(p.showCmds ? '✓' : '✗')}</div>
         </div>
       </div>
       <div class="lrow-r">
@@ -872,7 +872,7 @@ function editPage(id) {
   // Cas spécial : page présentation (pas de markdown, juste texte + sous-titre)
   if (id === 'presentation') {
     document.getElementById('edit-pg-id').value = 'presentation';
-    document.getElementById('pged-title').textContent = '✏️ Page d'accueil';
+    document.getElementById('pged-title').textContent = "✏️ Page d'accueil";
     document.getElementById('pg-title').value = p.title || 'Présentation';
     document.getElementById('pg-icon').value = p.icon || '🏠';
     document.getElementById('pg-desc').value = DATA.settings.heroSub || '';
@@ -919,7 +919,7 @@ async function savePage() {
     const idx = DATA.pages.findIndex(p => p.id === 'presentation');
     if (idx !== -1) DATA.pages[idx] = { ...DATA.pages[idx], title, icon };
     await saveData(); renderPages(); renderDash();
-    toast('✅ Page d'accueil mise à jour !');
+    toast("✅ Page d'accueil mise à jour !");
     showP('pages', document.querySelector('[data-p=pages]'));
     // Ré-affiche les toggles
     document.getElementById('pg-toc').parentElement.parentElement.style.display = '';
