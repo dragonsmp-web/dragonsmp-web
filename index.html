@@ -4,412 +4,403 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#080a0d">
-<title>Dragon SMP — Wiki</title>
-<meta name="description" content="Wiki officiel du serveur Minecraft Dragon SMP">
+<title>Dragon SMP</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-/* ════════════════════════════════════════════════════════════════
-   DRAGON SMP WIKI V3 — index.html
-   Design : forge sombre, lave & acier, typographie épique
-   Mobile-first, tout dans un seul fichier
-════════════════════════════════════════════════════════════════ */
-
+/* ═══════════════════════════════════════════════════════════
+   DRAGON SMP WIKI V4
+   ═══════════════════════════════════════════════════════════ */
 :root {
-  --lava:    #d94f1e;
-  --ember:   #f07030;
-  --gold:    #d4a843;
-  --gold2:   #9a7828;
-  --steel:   #8090a8;
-  --bg0:     #080a0d;
-  --bg1:     #0e1118;
-  --bg2:     #141820;
-  --bg3:     #1c2230;
-  --bg4:     #242c3c;
-  --line:    rgba(212,168,67,.12);
-  --line2:   rgba(255,255,255,.06);
-  --txt:     #cdd5e0;
-  --txt2:    #7888a0;
-  --txt3:    #3a4458;
-  --ok:      #2ecc71;
-  --bad:     #e74c3c;
-  --warn:    #e67e22;
-  --H:       58px;
-  --SW:      260px;
-  --R:       8px;
+  --fire:   #d94f1e;
+  --ember:  #f07030;
+  --gold:   #d4a843;
+  --gold2:  #8a6820;
+  --bg0:    #080a0d;
+  --bg1:    #0d1017;
+  --bg2:    #131820;
+  --bg3:    #1a2030;
+  --bg4:    #222a3a;
+  --ln:     rgba(212,168,67,.12);
+  --ln2:    rgba(255,255,255,.07);
+  --txt:    #d0d8e8;
+  --txt2:   #7080a0;
+  --txt3:   #384060;
+  --ok:     #2ecc71;
+  --bad:    #e74c3c;
+  --H:      56px;
+  --SL:     240px;
+  --SR:     260px;
+  --R:      8px;
 }
-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg0);color:var(--txt);
-  min-height:100vh;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--bg0);color:var(--txt);
+  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-button,input,select,textarea{font-family:inherit;outline:none}
-img{max-width:100%;border-radius:var(--R)}
+button{font-family:inherit;cursor:pointer}
 
-/* ── Grain overlay ── */
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size:200px;opacity:.5;
-}
-/* ── Glow bas de page ── */
-body::after{
-  content:'';position:fixed;bottom:0;left:0;right:0;height:40vh;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(217,79,30,.1) 0%,transparent 70%);
-}
+/* Grain + glow */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at 50% 100%,rgba(217,79,30,.09) 0%,transparent 65%)}
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
    HEADER
-════════════════════════════════════════════════════════════════ */
-.hdr{
-  position:fixed;top:0;left:0;right:0;z-index:900;
+   ═══════════════════════════════════════════════════════════ */
+.hdr {
+  position:fixed;top:0;left:0;right:0;z-index:800;
   height:var(--H);
-  background:rgba(8,10,13,.92);
+  background:rgba(8,10,13,.96);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-  display:flex;align-items:center;gap:.75rem;padding:0 1rem;
-}
-.hdr-logo{
-  font-family:'Cinzel',serif;font-weight:900;font-size:1rem;
-  letter-spacing:2px;white-space:nowrap;flex-shrink:0;
-  color:var(--gold);text-shadow:0 0 20px rgba(212,168,67,.3);
-}
-.hdr-logo em{color:var(--lava);font-style:normal}
-
-/* Barre de recherche */
-.hdr-search{flex:1;max-width:340px;position:relative;margin-left:.5rem}
-.hdr-search input{
-  width:100%;
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--line2);border-radius:20px;
-  padding:.42rem 1rem .42rem 2.1rem;
-  color:var(--txt);font-size:.875rem;
-  transition:all .2s;
-  -webkit-appearance:none;appearance:none;
-}
-.hdr-search input::placeholder{color:var(--txt3)}
-.hdr-search input:focus{
-  border-color:rgba(217,79,30,.5);
-  background:rgba(217,79,30,.06);
-  box-shadow:0 0 0 3px rgba(217,79,30,.08);
-}
-.hdr-search .ico{
-  position:absolute;left:.7rem;top:50%;transform:translateY(-50%);
-  color:var(--txt3);font-size:.8rem;pointer-events:none;
+  border-bottom:1px solid var(--ln);
+  display:flex;align-items:center;
+  padding:0 1rem;gap:.5rem;
 }
 
-/* Dropdown recherche */
-.search-drop{
-  display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;
-  background:var(--bg2);border:1px solid var(--line);
-  border-radius:var(--R);overflow:hidden;
-  box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:950;
-  max-height:300px;overflow-y:auto;
+/* Logo */
+.logo {
+  font-family:'Cinzel',serif;font-weight:900;font-size:.95rem;
+  color:var(--gold);letter-spacing:2px;flex-shrink:0;
+  cursor:pointer;transition:opacity .2s;white-space:nowrap;
+  text-shadow:0 0 20px rgba(212,168,67,.25);
 }
-.search-drop.on{display:block}
-.s-item{
-  padding:.65rem 1rem;cursor:pointer;
-  border-bottom:1px solid var(--line2);transition:background .15s;
-  display:flex;align-items:center;gap:.6rem;
-}
-.s-item:last-child{border-bottom:none}
-.s-item:hover{background:rgba(217,79,30,.08)}
-.s-item-icon{font-size:1rem;flex-shrink:0}
-.s-item-title{font-weight:600;font-size:.875rem;color:var(--txt)}
-.s-item-cat{font-size:.72rem;color:var(--txt3);margin-top:.1rem}
-.s-empty{padding:1rem;text-align:center;color:var(--txt3);font-size:.85rem}
+.logo:hover{opacity:.8}
+.logo em{color:var(--fire);font-style:normal}
 
-/* Liens header */
-.hdr-links{display:flex;gap:.4rem;align-items:center;margin-left:auto;flex-shrink:0}
-.btn-disc{
-  background:#5865f2;color:#fff;border:none;
-  padding:.38rem .85rem;border-radius:6px;font-size:.8rem;font-weight:600;
-  cursor:pointer;display:flex;align-items:center;gap:.35rem;
-  transition:all .2s;white-space:nowrap;
-}
-.btn-disc:hover{background:#4752c4;transform:translateY(-1px)}
-.btn-kofi{
-  background:#ff5e5b;color:#fff;border:none;
-  padding:.38rem .85rem;border-radius:6px;font-size:.8rem;font-weight:600;
-  cursor:pointer;display:flex;align-items:center;gap:.35rem;
-  transition:all .2s;white-space:nowrap;
-}
-.btn-kofi:hover{background:#e54e4b;transform:translateY(-1px)}
-
-/* Hamburger */
-.burger{
-  display:none;flex-direction:column;gap:5px;
-  background:none;border:none;cursor:pointer;
-  color:var(--txt);padding:.4rem;flex-shrink:0;
+/* IP copiable */
+.hdr-ip {
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--bg2);border:1px solid var(--ln2);
+  border-radius:6px;padding:.28rem .65rem;
+  font-family:'Courier New',monospace;font-size:.75rem;
+  color:var(--gold);cursor:pointer;flex-shrink:0;
+  transition:all .2s;position:relative;
   -webkit-tap-highlight-color:transparent;
 }
-.burger span{
-  display:block;width:20px;height:2px;
-  background:currentColor;border-radius:2px;transition:all .3s;
+.hdr-ip:hover{border-color:rgba(212,168,67,.3);background:var(--bg3)}
+.hdr-ip .copy-icon{font-size:.7rem;color:var(--txt3)}
+.hdr-ip .copied-tip{
+  position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--ok);color:#fff;font-size:.7rem;font-weight:700;
+  padding:.2rem .5rem;border-radius:4px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s;font-family:'DM Sans',sans-serif;
 }
+.hdr-ip.copied .copied-tip{opacity:1}
+
+/* Onglets nav */
+.hdr-nav{display:flex;align-items:center;gap:.1rem;flex:1;margin:0 .5rem;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+.hdr-nav::-webkit-scrollbar{display:none}
+.nav-tab {
+  background:none;border:none;color:var(--txt2);
+  font-size:.85rem;font-weight:500;padding:.35rem .75rem;
+  border-radius:6px;transition:all .2s;white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;
+}
+.nav-tab:hover{color:var(--txt);background:rgba(255,255,255,.05)}
+.nav-tab.active{color:var(--ember);background:rgba(217,79,30,.1);font-weight:600}
+
+/* Liens externes */
+.hdr-ext{display:flex;gap:.4rem;flex-shrink:0}
+.btn-disc,.btn-kofi{
+  border:none;border-radius:6px;font-size:.78rem;font-weight:600;
+  padding:.32rem .75rem;display:flex;align-items:center;gap:.3rem;
+  transition:all .2s;white-space:nowrap;-webkit-tap-highlight-color:transparent;
+}
+.btn-disc{background:#5865f2;color:#fff}
+.btn-disc:hover{background:#4752c4}
+.btn-kofi{background:#ff5e5b;color:#fff}
+.btn-kofi:hover{background:#e54e4b}
+
+/* Burger */
+.burger{display:none;flex-direction:column;gap:5px;
+  background:none;border:none;color:var(--txt);padding:.4rem;flex-shrink:0}
+.burger span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:all .3s}
 .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-/* ════════════════════════════════════════════════════════════════
-   LAYOUT
-════════════════════════════════════════════════════════════════ */
-.layout{
-  display:flex;min-height:100vh;
-  padding-top:var(--H);position:relative;z-index:1;
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT PRINCIPAL
+   ═══════════════════════════════════════════════════════════ */
+.app {
+  display:flex;padding-top:var(--H);min-height:100vh;
+  position:relative;z-index:1;
 }
 
-/* ════════════════════════════════════════════════════════════════
-   SIDEBAR
-════════════════════════════════════════════════════════════════ */
-.sidebar{
-  width:var(--SW);min-width:var(--SW);flex-shrink:0;
-  background:var(--bg1);
-  border-right:1px solid var(--line2);
-  height:calc(100vh - var(--H));
-  position:sticky;top:var(--H);
-  overflow-y:auto;overflow-x:hidden;
-  padding:1rem 0 3rem;
-  scrollbar-width:thin;scrollbar-color:var(--line2) transparent;
+/* ═══════════════════════════════════════════════════════════
+   SIDEBAR GAUCHE — Table des matières / chapitres
+   ═══════════════════════════════════════════════════════════ */
+.sb-left {
+  width:var(--SL);min-width:var(--SL);flex-shrink:0;
+  background:var(--bg1);border-right:1px solid var(--ln2);
+  height:calc(100vh - var(--H));position:sticky;top:var(--H);
+  overflow-y:auto;padding:1.25rem 0 3rem;
+  scrollbar-width:thin;scrollbar-color:var(--ln2) transparent;
   transition:transform .3s cubic-bezier(.4,0,.2,1);
 }
+.sb-left:not(.visible){display:none}
 
-/* Statut MC */
-.mc-box{
-  margin:.25rem .75rem 1rem;
-  background:var(--bg2);border:1px solid var(--line2);
-  border-radius:var(--R);padding:.65rem .85rem;
-  font-size:.78rem;cursor:default;
+.toc-title{
+  font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:var(--txt3);padding:.25rem .85rem .6rem;
 }
-.mc-row{display:flex;align-items:center;gap:.4rem;margin-bottom:.2rem}
-.mc-dot{
-  width:7px;height:7px;border-radius:50%;flex-shrink:0;
-  transition:background .3s;
-}
-.mc-dot.on{background:var(--ok);box-shadow:0 0 6px var(--ok)}
-.mc-dot.off{background:var(--bad)}
-.mc-dot.maint{background:var(--warn);box-shadow:0 0 6px var(--warn)}
-.mc-status-txt{color:var(--txt2);font-weight:500}
-.mc-ip{
-  font-family:monospace;font-size:.8rem;color:var(--gold);
-  letter-spacing:.5px;margin-top:.1rem;
-}
-
-/* Catégories + pages */
-.cat-block{margin-bottom:.25rem}
-.cat-head{
+.toc-cat{margin-bottom:.15rem}
+.toc-cat-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:.55rem .85rem;cursor:pointer;
-  user-select:none;-webkit-tap-highlight-color:transparent;
-  transition:background .15s;
-}
-.cat-head:hover{background:rgba(255,255,255,.02)}
-.cat-head-l{display:flex;align-items:center;gap:.5rem}
-.cat-icon{font-size:.85rem}
-.cat-label{
-  font-size:.68rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:2px;
-  color:var(--txt3);
-}
-.cat-arrow{font-size:.6rem;color:var(--txt3);transition:transform .2s}
-.cat-block.open .cat-arrow{transform:rotate(90deg)}
-.cat-pages{display:none}
-.cat-block.open .cat-pages{display:block}
-
-.pg-link{
-  display:flex;align-items:center;gap:.55rem;
-  padding:.5rem .85rem .5rem 1.6rem;
-  cursor:pointer;color:var(--txt2);font-size:.875rem;
-  border-left:2px solid transparent;
-  transition:all .15s;
+  padding:.45rem .85rem;cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
-.pg-link:hover{color:var(--txt);background:rgba(255,255,255,.03)}
-.pg-link.active{
-  color:var(--ember);font-weight:600;
-  border-left-color:var(--lava);
-  background:rgba(217,79,30,.08);
+.toc-cat-head:hover{background:rgba(255,255,255,.02)}
+.toc-cat-name{
+  font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.5px;color:var(--txt3);
+  display:flex;align-items:center;gap:.4rem;
 }
-.pg-link-ico{font-size:.9rem;flex-shrink:0}
+.toc-arrow{font-size:.55rem;color:var(--txt3);transition:transform .2s}
+.toc-cat.open .toc-arrow{transform:rotate(90deg)}
+.toc-chapters{display:none}
+.toc-cat.open .toc-chapters{display:block}
 
-.sidebar-div{
-  height:1px;background:var(--line2);
-  margin:.5rem .85rem;
+.toc-link{
+  display:flex;align-items:baseline;gap:.45rem;
+  padding:.38rem .85rem .38rem 1.4rem;
+  cursor:pointer;color:var(--txt2);font-size:.82rem;
+  border-left:2px solid transparent;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;
+  line-height:1.35;
 }
+.toc-link:hover{color:var(--txt);background:rgba(255,255,255,.03)}
+.toc-link.active{color:var(--ember);border-left-color:var(--fire);
+  background:rgba(217,79,30,.07);font-weight:600}
+.toc-num{font-size:.68rem;color:var(--txt3);flex-shrink:0;font-family:'Courier New',monospace}
 
-/* ════════════════════════════════════════════════════════════════
-   MAIN CONTENT
-════════════════════════════════════════════════════════════════ */
-.main{
-  flex:1;min-width:0;
-  padding:2.5rem 3rem;
-  max-width:860px;
-}
+/* ═══════════════════════════════════════════════════════════
+   CONTENU PRINCIPAL
+   ═══════════════════════════════════════════════════════════ */
+.main{flex:1;min-width:0;padding:2.5rem 2.5rem;max-width:820px}
 
-/* Page view */
-.pv{animation:fadeUp .25s ease both}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:translateY(0)}
-}
+/* Pages */
+.page-view{animation:fadeUp .22s ease both;display:none}
+.page-view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 
-.pv-head{
-  margin-bottom:2rem;padding-bottom:1.25rem;
-  border-bottom:1px solid var(--line2);
+.page-head{margin-bottom:1.75rem;padding-bottom:1rem;border-bottom:1px solid var(--ln2)}
+.page-title{
+  font-family:'Cinzel',serif;font-size:1.65rem;font-weight:700;
+  color:var(--gold);text-shadow:0 0 25px rgba(212,168,67,.12);
 }
-.pv-title{
-  font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;
-  color:var(--gold);line-height:1.15;
-  text-shadow:0 0 30px rgba(212,168,67,.15);
-}
-.pv-desc{color:var(--txt3);font-size:.875rem;margin-top:.5rem;line-height:1.5}
+.page-desc{color:var(--txt3);font-size:.85rem;margin-top:.4rem}
 
-/* Contenu wiki */
-.wc h1{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--gold);margin:2rem 0 .75rem}
-.wc h2{
-  font-family:'Cinzel',serif;font-size:1.1rem;color:var(--ember);
-  margin:2rem 0 .75rem;padding-left:.75rem;
-  border-left:3px solid var(--lava);
-}
-.wc h3{font-size:.95rem;font-weight:700;color:var(--txt);margin:1.25rem 0 .4rem}
-.wc p{color:var(--txt2);margin-bottom:.75rem;font-size:.9rem;line-height:1.8}
-.wc ul,.wc ol{padding-left:1.4rem;margin-bottom:.75rem}
-.wc li{color:var(--txt2);font-size:.9rem;margin-bottom:.3rem;line-height:1.65}
+/* Markdown */
+.wc h1{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);margin:2rem 0 .75rem;
+  scroll-margin-top:calc(var(--H) + 1.5rem)}
+.wc h2{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--ember);
+  margin:2rem 0 .65rem;padding-left:.7rem;border-left:3px solid var(--fire);
+  scroll-margin-top:calc(var(--H) + 1.5rem)}
+.wc h3{font-size:.92rem;font-weight:700;color:var(--txt);margin:1.2rem 0 .35rem;
+  scroll-margin-top:calc(var(--H) + 1.5rem)}
+.wc p{color:var(--txt2);margin-bottom:.7rem;font-size:.9rem;line-height:1.8}
+.wc ul,.wc ol{padding-left:1.4rem;margin-bottom:.7rem}
+.wc li{color:var(--txt2);font-size:.9rem;margin-bottom:.28rem;line-height:1.65}
 .wc strong{color:var(--txt);font-weight:700}
 .wc em{color:var(--gold);font-style:italic}
 .wc a{color:var(--ember);text-decoration:underline;text-underline-offset:2px}
-.wc a:hover{color:var(--lava)}
-.wc code{
-  background:var(--bg4);border:1px solid var(--line2);
-  border-radius:4px;padding:.1rem .4rem;
-  font-family:'Courier New',monospace;font-size:.83rem;color:var(--ember);
-}
-.wc pre{
-  background:var(--bg2);border:1px solid var(--line2);
-  border-radius:var(--R);padding:1.1rem 1.25rem;overflow-x:auto;
-  margin:1rem 0;position:relative;
-}
-.wc pre::before{
-  content:'CODE';position:absolute;top:.5rem;right:.75rem;
-  font-size:.62rem;letter-spacing:1.5px;color:var(--txt3);font-weight:700;
-}
-.wc pre code{
-  background:none;border:none;padding:0;
-  font-size:.85rem;color:var(--txt2);line-height:1.6;
-}
-.wc blockquote{
-  border-left:3px solid var(--gold2);
-  background:rgba(212,168,67,.05);
-  padding:.85rem 1.1rem;border-radius:0 var(--R) var(--R) 0;
-  margin:1rem 0;
-}
-.wc blockquote p{color:var(--txt2);margin:0;font-style:italic}
-.wc hr{border:none;border-top:1px solid var(--line2);margin:1.75rem 0}
-.wc img{border-radius:var(--R);margin:.5rem 0;border:1px solid var(--line2)}
+.wc a:hover{color:var(--fire)}
+.wc code{background:var(--bg4);border:1px solid var(--ln2);border-radius:4px;
+  padding:.1rem .38rem;font-family:'Courier New',monospace;font-size:.83rem;color:var(--ember)}
+.wc pre{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);
+  padding:1rem 1.2rem;overflow-x:auto;margin:1rem 0}
+.wc pre code{background:none;border:none;padding:0;font-size:.84rem;color:var(--txt2);line-height:1.6}
+.wc blockquote{border-left:3px solid var(--gold2);background:rgba(212,168,67,.05);
+  padding:.8rem 1rem;border-radius:0 var(--R) var(--R) 0;margin:1rem 0}
+.wc blockquote p{margin:0;font-style:italic;color:var(--txt2)}
+.wc hr{border:none;border-top:1px solid var(--ln2);margin:1.5rem 0}
+.wc img{max-width:100%;border-radius:var(--R);border:1px solid var(--ln2);margin:.5rem 0}
 .wc table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.875rem}
-.wc th{
-  padding:.5rem .85rem;background:var(--bg3);
-  border:1px solid var(--line2);color:var(--ember);
-  font-weight:700;text-align:left;font-size:.8rem;
-  text-transform:uppercase;letter-spacing:.5px;
-}
-.wc td{padding:.5rem .85rem;border:1px solid var(--line2);color:var(--txt2)}
+.wc th{padding:.48rem .8rem;background:var(--bg3);border:1px solid var(--ln2);
+  color:var(--ember);font-weight:700;text-align:left;font-size:.78rem;
+  text-transform:uppercase;letter-spacing:.5px}
+.wc td{padding:.48rem .8rem;border:1px solid var(--ln2);color:var(--txt2)}
 .wc tr:nth-child(even) td{background:rgba(255,255,255,.02)}
-.wc .table-wrap{overflow-x:auto;margin:1rem 0}
+.wc .tbl{overflow-x:auto;margin:1rem 0}
 
-/* ════════════════════════════════════════════════════════════════
-   OVERLAY MOBILE
-════════════════════════════════════════════════════════════════ */
-.overlay{
-  display:none;position:fixed;inset:0;z-index:800;
-  background:rgba(0,0,0,.75);
-  -webkit-tap-highlight-color:transparent;
+/* ═══════════════════════════════════════════════════════════
+   SIDEBAR DROITE — Recherche commandes (page wiki seulement)
+   ═══════════════════════════════════════════════════════════ */
+.sb-right {
+  width:var(--SR);min-width:var(--SR);flex-shrink:0;
+  background:var(--bg1);border-left:1px solid var(--ln2);
+  height:calc(100vh - var(--H));position:sticky;top:var(--H);
+  overflow-y:auto;padding:1.25rem .85rem 3rem;
+  scrollbar-width:thin;scrollbar-color:var(--ln2) transparent;
+  display:none;
 }
+.sb-right.visible{display:block}
+
+.cmd-search-title{
+  font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:var(--txt3);margin-bottom:.65rem;
+}
+.cmd-search-wrap{position:relative;margin-bottom:.85rem}
+.cmd-search-wrap input{
+  width:100%;background:var(--bg3);border:1px solid var(--ln2);
+  border-radius:6px;padding:.5rem .75rem .5rem 2rem;
+  color:var(--txt);font-size:.85rem;
+  transition:all .2s;-webkit-appearance:none;font-size:16px;
+}
+.cmd-search-wrap input:focus{border-color:rgba(217,79,30,.5);background:var(--bg4);
+  box-shadow:0 0 0 3px rgba(217,79,30,.07)}
+.cmd-search-wrap input::placeholder{color:var(--txt3)}
+.cmd-search-ico{position:absolute;left:.6rem;top:50%;transform:translateY(-50%);
+  color:var(--txt3);font-size:.8rem;pointer-events:none}
+
+.cmd-results{display:flex;flex-direction:column;gap:.5rem}
+.cmd-card{
+  background:var(--bg2);border:1px solid var(--ln2);
+  border-radius:var(--R);padding:.7rem .85rem;
+  transition:border-color .15s;
+}
+.cmd-card:hover{border-color:rgba(217,79,30,.25)}
+.cmd-main{
+  font-family:'Courier New',monospace;font-size:.85rem;
+  color:var(--ember);font-weight:700;margin-bottom:.2rem;
+}
+.cmd-alt{font-size:.72rem;color:var(--txt3);margin-bottom:.2rem}
+.cmd-info{font-size:.78rem;color:var(--txt2);line-height:1.45}
+.cmd-empty{color:var(--txt3);font-size:.82rem;text-align:center;padding:1rem 0}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE PRÉSENTATION (hero)
+   ═══════════════════════════════════════════════════════════ */
+.hero{
+  text-align:center;padding:4rem 2rem 3rem;
+  max-width:700px;margin:0 auto;
+}
+.hero-icon{font-size:4rem;margin-bottom:1.25rem;display:block}
+.hero-title{
+  font-family:'Cinzel',serif;font-size:2.5rem;font-weight:900;
+  color:var(--gold);text-shadow:0 0 40px rgba(212,168,67,.25);
+  line-height:1.15;margin-bottom:.75rem;
+}
+.hero-title em{color:var(--fire);font-style:normal}
+.hero-sub{color:var(--txt2);font-size:1rem;line-height:1.7;margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto}
+.hero-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.hero-btn{
+  padding:.6rem 1.4rem;border-radius:8px;font-weight:700;font-size:.9rem;
+  border:none;transition:all .2s;display:flex;align-items:center;gap:.4rem;
+}
+.hero-btn-fire{background:var(--fire);color:#fff;box-shadow:0 4px 20px rgba(217,79,30,.3)}
+.hero-btn-fire:hover{background:#bf4118;transform:translateY(-2px)}
+.hero-btn-ghost{background:transparent;color:var(--txt2);border:1px solid var(--ln2)}
+.hero-btn-ghost:hover{background:var(--bg3);color:var(--txt)}
+
+/* Cartes stats */
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:2rem}
+.stat-c{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:1rem;text-align:center}
+.stat-n{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--fire)}
+.stat-l{font-size:.72rem;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-top:.15rem}
+
+/* IP hero */
+.hero-ip{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--bg2);border:1px solid var(--ln);
+  border-radius:8px;padding:.6rem 1.2rem;
+  font-family:'Courier New',monospace;font-size:.9rem;color:var(--gold);
+  cursor:pointer;transition:all .2s;position:relative;
+}
+.hero-ip:hover{background:var(--bg3);border-color:rgba(212,168,67,.3)}
+.hero-ip .tip{
+  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--ok);color:#fff;font-size:.7rem;font-weight:700;font-family:'DM Sans',sans-serif;
+  padding:.2rem .5rem;border-radius:4px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.hero-ip.copied .tip{opacity:1}
+
+/* ═══════════════════════════════════════════════════════════
+   OVERLAY MOBILE
+   ═══════════════════════════════════════════════════════════ */
+.overlay{display:none;position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.8)}
 .overlay.on{display:block}
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
    FOOTER
-════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════ */
 .footer{
-  text-align:center;padding:1.5rem 1rem;
-  color:var(--txt3);font-size:.78rem;
-  border-top:1px solid var(--line2);
-  position:relative;z-index:1;
-  line-height:2;
+  text-align:center;padding:1.25rem 1rem;color:var(--txt3);font-size:.76rem;
+  border-top:1px solid var(--ln2);position:relative;z-index:1;line-height:1.8;
 }
 .footer a{color:var(--txt3);transition:color .15s}
 .footer a:hover{color:var(--ember)}
-.footer .sep{margin:0 .5rem;opacity:.3}
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
    TOAST
-════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════ */
 #toast{
   position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
-  padding:.7rem 1.2rem;border-radius:var(--R);
-  background:var(--bg3);border:1px solid var(--line2);
-  font-size:.85rem;font-weight:500;
+  padding:.65rem 1.1rem;border-radius:var(--R);
+  background:var(--bg3);border:1px solid var(--ln2);
+  font-size:.83rem;font-weight:500;
   box-shadow:0 8px 30px rgba(0,0,0,.4);
   transform:translateY(60px);opacity:0;
-  transition:all .3s cubic-bezier(.34,1.56,.64,1);
-  pointer-events:none;max-width:280px;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;
 }
 #toast.on{transform:translateY(0);opacity:1}
 #toast.ok{border-color:rgba(46,204,113,.4);color:var(--ok)}
 #toast.err{border-color:rgba(231,76,60,.4);color:var(--bad)}
 #toast.info{border-color:rgba(212,168,67,.4);color:var(--gold)}
 
-/* ════════════════════════════════════════════════════════════════
-   BOUTONS
-════════════════════════════════════════════════════════════════ */
-.btn{
-  display:inline-flex;align-items:center;gap:.4rem;
-  padding:.48rem 1rem;border:none;border-radius:6px;
-  font-size:.875rem;font-weight:600;cursor:pointer;
-  transition:all .2s;-webkit-tap-highlight-color:transparent;
-}
-.btn-fire{background:var(--lava);color:#fff}
-.btn-fire:hover{background:#bf4118;transform:translateY(-1px);box-shadow:0 4px 16px rgba(217,79,30,.35)}
-.btn-ghost{background:transparent;color:var(--txt2);border:1px solid var(--line2)}
-.btn-ghost:hover{background:var(--bg3);color:var(--txt)}
-.btn-red{background:rgba(231,76,60,.12);color:var(--bad);border:1px solid rgba(231,76,60,.2)}
-.btn-red:hover{background:rgba(231,76,60,.22)}
-.btn-sm{padding:.3rem .75rem;font-size:.78rem}
-
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
    RESPONSIVE
-════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════ */
+@media(max-width:1100px){
+  :root{--SR:220px}
+}
+@media(max-width:900px){
+  .sb-right{display:none!important}
+  .main{max-width:none}
+}
 @media(max-width:768px){
-  .burger{display:flex}
+  .burger{display:flex!important}
   .btn-kofi{display:none}
-  .hdr-search{max-width:none}
+  .hdr-nav{display:none!important}
 
-  .sidebar{
-    position:fixed;top:var(--H);left:0;bottom:0;
-    z-index:850;transform:translateX(-100%);
+  /* Sidebar gauche : toujours en tiroir sur mobile,
+     cachée par défaut via transform (pas display:none),
+     ce qui permet la transition CSS */
+  .sb-left{
+    display:block!important;           /* toujours dans le DOM */
+    position:fixed;
+    top:var(--H);left:0;bottom:0;
+    z-index:750;
+    width:var(--SL);
     height:calc(100vh - var(--H));
+    transform:translateX(-100%);       /* caché par défaut */
     box-shadow:4px 0 24px rgba(0,0,0,.5);
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
   }
-  .sidebar.open{transform:translateX(0)}
+  .sb-left.open{
+    transform:translateX(0);           /* visible quand .open */
+  }
 
-  .main{padding:1.25rem 1rem 2rem}
-  .pv-title{font-size:1.4rem}
-  .wc h2{font-size:1rem}
+  .main{padding:1.25rem 1rem 3rem}
+  .page-title{font-size:1.35rem}
+  .hero-title{font-size:1.8rem}
+  .hero-stats{grid-template-columns:repeat(3,1fr)}
+
+  /* Hero plus compact */
+  .hero{padding:2rem 1rem 2rem}
+  .hero-icon{font-size:3rem}
 }
-@media(min-width:769px){
-  .burger{display:none!important}
-}
-@media(max-width:480px){
-  .btn-disc span{display:none}
+@media(min-width:769px){.burger{display:none!important}}
+@media(max-width:420px){
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .hdr-ip .ip-text{display:none}
+  .hero-title{font-size:1.5rem}
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(217,79,30,.2);border-radius:3px}
@@ -418,169 +409,139 @@ body::after{
 </head>
 <body>
 
-<!-- ══════════════════════════ HEADER ══════════════════════════ -->
+<!-- ══════════════════ HEADER ══════════════════ -->
 <header class="hdr">
-  <button class="burger" id="burger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
 
-  <div class="hdr-logo">🐉 Dragon<em>SMP</em></div>
+  <div class="logo" onclick="showPresentation()">🐉 Dragon<em>SMP</em></div>
 
-  <div class="hdr-search">
-    <span class="ico">🔍</span>
-    <input type="search" id="s-input" placeholder="Rechercher dans le wiki..." autocomplete="off">
-    <div class="search-drop" id="s-drop"></div>
+  <div class="hdr-ip" id="hdr-ip" onclick="copyIP(this)">
+    <span class="copy-icon">📋</span>
+    <span class="ip-text" id="hdr-ip-txt">chargement...</span>
+    <span class="copied-tip">Copié !</span>
   </div>
 
-  <div class="hdr-links">
-    <a class="btn-disc" href="https://discord.gg/A7wpe2Yr6S" target="_blank" rel="noopener">
-      <span>💬</span><span>Discord</span>
-    </a>
-    <a class="btn-kofi" href="https://ko-fi.com/dragonsmpv2" target="_blank" rel="noopener">
-      ☕ Ko-fi
-    </a>
+  <nav class="hdr-nav" id="hdr-nav">
+    <button class="nav-tab active" data-page="presentation" onclick="showPresentation()">🏠 Présentation</button>
+    <button class="nav-tab" data-page="reglement" onclick="navTo('reglement')">📋 Règlement</button>
+    <button class="nav-tab" data-page="wiki" onclick="navTo('wiki')">📖 Wiki</button>
+    <!-- Pages custom injectées ici -->
+  </nav>
+
+  <div class="hdr-ext">
+    <a class="btn-disc" href="https://discord.gg/A7wpe2Yr6S" target="_blank">💬 Discord</a>
+    <a class="btn-kofi" href="https://ko-fi.com/dragonsmpv2" target="_blank">☕ Ko-fi</a>
   </div>
 </header>
 
 <div class="overlay" id="overlay"></div>
 
-<!-- ══════════════════════════ LAYOUT ══════════════════════════ -->
-<div class="layout">
+<!-- ══════════════════ APP ══════════════════ -->
+<div class="app" id="app">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <!-- Statut MC -->
-    <div class="mc-box">
-      <div class="mc-row">
-        <div class="mc-dot off" id="mc-dot"></div>
-        <span class="mc-status-txt" id="mc-txt">Vérification...</span>
-      </div>
-      <div class="mc-ip" id="mc-ip">connect.axohosts.fr:25883</div>
-    </div>
-
-    <div id="sb-nav">
-      <div style="padding:.75rem .85rem;color:var(--txt3);font-size:.8rem">Chargement…</div>
+  <!-- SIDEBAR GAUCHE -->
+  <aside class="sb-left" id="sb-left">
+    <div id="toc-content">
+      <div style="padding:.5rem .85rem;color:var(--txt3);font-size:.8rem">Chargement…</div>
     </div>
   </aside>
 
   <!-- MAIN -->
-  <main class="main">
-    <div id="wiki-content">
-      <div style="color:var(--txt3);padding:3rem 0;text-align:center">🐉</div>
+  <main class="main" id="main-content">
+
+    <!-- PAGE PRÉSENTATION -->
+    <div class="page-view active" id="page-presentation">
+      <div class="hero">
+        <span class="hero-icon">🐉</span>
+        <h1 class="hero-title">Dragon<em>SMP</em></h1>
+        <p class="hero-sub" id="hero-desc">Serveur Minecraft Survie communautaire francophone. Aventure, construction et entraide au rendez-vous.</p>
+
+        <div class="hero-btns">
+          <button class="hero-btn hero-btn-fire" onclick="navTo('wiki')">📖 Explorer le Wiki</button>
+          <a class="hero-btn hero-btn-ghost" href="https://discord.gg/A7wpe2Yr6S" target="_blank">💬 Discord</a>
+        </div>
+
+        <div class="hero-stats" id="hero-stats">
+          <div class="stat-c"><div class="stat-n" id="mc-players">—</div><div class="stat-l">Joueurs en ligne</div></div>
+          <div class="stat-c"><div class="stat-n">Java</div><div class="stat-l">Version 1.21+</div></div>
+          <div class="stat-c"><div class="stat-n">🐉</div><div class="stat-l">Dragon SMP</div></div>
+        </div>
+
+        <div class="hero-ip" id="hero-ip" onclick="copyIP(this)">
+          📋 <span id="hero-ip-txt">chargement...</span>
+          <span class="tip">Copié !</span>
+        </div>
+      </div>
     </div>
+
+    <!-- PAGES WIKI (injectées dynamiquement) -->
+    <div id="dynamic-pages"></div>
+
   </main>
+
+  <!-- SIDEBAR DROITE — Commandes -->
+  <aside class="sb-right" id="sb-right">
+    <div class="cmd-search-title">🔍 Recherche commandes</div>
+    <div class="cmd-search-wrap">
+      <span class="cmd-search-ico">⌨️</span>
+      <input type="search" id="cmd-input" placeholder="Ex: home, argent..." autocomplete="off">
+    </div>
+    <div class="cmd-results" id="cmd-results">
+      <div class="cmd-empty">Tape une commande ou un mot-clé…</div>
+    </div>
+  </aside>
 
 </div>
 
 <!-- FOOTER -->
 <footer class="footer">
-  🐉 Dragon SMP Wiki
-  <span class="sep">·</span>
-  <a href="https://discord.gg/A7wpe2Yr6S" target="_blank">Discord</a>
-  <span class="sep">·</span>
+  🐉 Dragon SMP &nbsp;·&nbsp;
+  <a href="https://discord.gg/A7wpe2Yr6S" target="_blank">Discord</a> &nbsp;·&nbsp;
   <a href="https://ko-fi.com/dragonsmpv2" target="_blank">Ko-fi</a>
-  <br>
-  <span style="font-size:.72rem;opacity:.5">Hébergé gratuitement sur GitHub Pages</span>
 </footer>
 
 <div id="toast"></div>
 
-<!-- ══════════════════════════ SCRIPT ══════════════════════════ -->
+<!-- ══════════════════ SCRIPT ══════════════════ -->
 <script>
 'use strict';
 
-/* ── Données par défaut ───────────────────────────────────────── */
+/* ── Defaults ─────────────────────────────────────────────── */
 const DEFAULTS = {
-  categories:[
-    {id:'general',name:'Général',icon:'📖',order:0},
-    {id:'guides', name:'Guides', icon:'📚',order:1},
-    {id:'serveur',name:'Serveur',icon:'⚔️', order:2}
-  ],
+  settings:{
+    mcHost:'163.5.141.232',mcPort:25816,
+    mcIp:'connect.axohosts.fr:25883',
+    maintenance:false,maintMsg:'Serveur en maintenance.',
+    heroDesc:'Serveur Minecraft Survie communautaire francophone. Aventure, construction et entraide au rendez-vous.'
+  },
   pages:[
-    {id:'accueil',catId:'general',title:'Accueil',icon:'🏠',order:0,
-     desc:'Bienvenue sur le Wiki officiel du Dragon SMP',
-     content:`## Bienvenue sur le Dragon SMP
-
-Le **Dragon SMP** est un serveur Minecraft Survie communautaire francophone où l'aventure, la construction et l'entraide sont au cœur de l'expérience.
-
-### Se connecter
-
-**IP :** \`connect.axohosts.fr:25883\`
-**Version :** Java 1.21+
-
-1. Lance Minecraft → Multijoueur
-2. Ajouter un serveur
-3. Entre l'IP et connecte-toi !
-
-> Rejoins notre **Discord** pour ne rien rater des events et te présenter à la communauté 🐉`
-    },
-    {id:'reglement',catId:'general',title:'Règlement',icon:'📋',order:1,
+    {id:'reglement',title:'Règlement',icon:'📋',isCore:true,
+     showToc:true,showCmdSearch:false,
      desc:'Les règles à respecter sur le serveur',
-     content:`## Règlement du Dragon SMP
-
-Le respect de ces règles est **obligatoire**. Toute infraction entraîne un avertissement, un kick ou un ban.
-
-### Règles générales
-
-**1. Respect mutuel**
-Aucune insulte, discrimination ou harcèlement. Tout le monde doit se sentir bienvenu.
-
-**2. Anti-triche**
-Hacks, cheats et exploits sont strictement interdits.
-
-**3. Anti-grief**
-Détruire les constructions d'autrui est interdit.
-
-**4. PvP fair-play**
-Uniquement avec accord mutuel, hors zones PvP dédiées.
-
-**5. Respect du staff**
-Les décisions de l'équipe sont finales.
-
-### Sanctions
-
-| Infraction | Sanction |
-|---|---|
-| 1er avertissement | Warn |
-| 2ème avertissement | Kick |
-| 3ème | Ban temporaire |
-| Infraction grave | Ban définitif |`
+     toc:[{id:'general',name:'Général',chapters:[]}],
+     content:`## Règlement du Dragon SMP\n\nLe respect de ces règles est **obligatoire** pour tous les joueurs.\n\n## Règles générales\n\n**1. Respect mutuel** — Aucune insulte, discrimination ou harcèlement.\n\n**2. Anti-triche** — Hacks, cheats et exploits sont interdits.\n\n**3. Anti-grief** — Ne détruis pas les constructions des autres sans accord.\n\n**4. PvP fair-play** — Uniquement avec accord mutuel, sauf zones PvP dédiées.\n\n**5. Respect du staff** — Les décisions de l'équipe sont finales.\n\n## Sanctions\n\n| Infraction | Sanction |\n|---|---|\n| 1er avertissement | Warn |\n| 2ème | Kick |\n| 3ème | Ban temporaire |\n| Grave | Ban définitif |`
     },
-    {id:'commandes',catId:'guides',title:'Commandes',icon:'⌨️',order:0,
-     desc:'Toutes les commandes disponibles',
-     content:`## Commandes utiles
-
-### Téléportation
-
-\`/spawn\` — Retour au spawn
-\`/home\` — Retour chez toi
-\`/sethome\` — Définit ton home
-\`/tpa [joueur]\` — Demande de TP
-\`/rtp\` — Téléportation aléatoire
-
-### Économie
-
-\`/money\` — Voir ton solde
-\`/pay [joueur] [montant]\` — Payer quelqu'un
-\`/baltop\` — Classement des richesses
-
-### Protection
-
-\`/claim\` — Protéger une chunk
-\`/unclaim\` — Retirer la protection
-\`/trust [joueur]\` — Donner accès`
+    {id:'wiki',title:'Wiki',icon:'📖',isCore:true,
+     showToc:true,showCmdSearch:true,
+     desc:'Documentation complète du serveur',
+     toc:[
+       {id:'debutant',name:'Débutant',chapters:[]},
+       {id:'avance',name:'Avancé',chapters:[]}
+     ],
+     content:`## Bienvenue sur le Wiki\n\nCe wiki contient toute la documentation du **Dragon SMP**.\n\n## Premiers pas\n\n### Se connecter\n\nIP : \`connect.axohosts.fr:25883\` — Java 1.21+\n\n### Commandes de base\n\nUtilise la barre de recherche à droite pour trouver une commande rapidement.\n\n## Économie\n\nLa monnaie du serveur s'appelle les **Écailles**. Gagne-en en vendant des ressources au spawn shop ou en participant aux events.\n\n## Protection\n\nProtège ta base avec le système de claim intégré. Tape \`/claim\` pour protéger la chunk sur laquelle tu te trouves.`
     }
   ],
-  settings:{
-    maintenance:false,
-    maintMsg:'Le serveur est actuellement en maintenance.',
-    mcHost:'163.5.141.232',
-    mcPort:25816,
-    mcIp:'connect.axohosts.fr:25883'
-  }
+  commands:[
+    {id:'cmd1',cmd:'/home',alts:'/retour, /spawn perso',desc:'Retourne à ton point de home défini.',keywords:'home retour base'},
+    {id:'cmd2',cmd:'/sethome',alts:'/home set',desc:'Définit ton point de retour à ta position actuelle.',keywords:'sethome définir set home base'},
+    {id:'cmd3',cmd:'/tpa [joueur]',alts:'/tp demande',desc:'Envoie une demande de téléportation à un joueur.',keywords:'tpa tp téléportation joueur'},
+    {id:'cmd4',cmd:'/money',alts:'/balance, /bal',desc:'Affiche ton solde en Écailles.',keywords:'money argent solde balance économie'},
+    {id:'cmd5',cmd:'/pay [joueur] [montant]',alts:'/donner argent',desc:'Envoie des Écailles à un autre joueur.',keywords:'pay payer argent donner transfert'},
+    {id:'cmd6',cmd:'/claim',alts:'/protéger chunk',desc:'Protège la chunk sur laquelle tu te trouves.',keywords:'claim protéger chunk protection base griéf'}
+  ]
 };
 
-/* ── Persistance ─────────────────────────────────────────────── */
+/* ── Persistance ─────────────────────────────────────────── */
 let DATA = null;
 
 async function loadData(){
@@ -590,304 +551,378 @@ async function loadData(){
     try{
       const r = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`,
         {headers:{'X-Master-Key':apiKey}});
-      if(r.ok){
-        const j = await r.json();
-        DATA = j.record;
-        localStorage.setItem('dsmp_cache', JSON.stringify(DATA));
-        return;
-      }
+      if(r.ok){DATA=(await r.json()).record;
+        localStorage.setItem('dsmp_cache',JSON.stringify(DATA));return;}
     }catch{}
   }
-  // Fallback cache local
-  const cached = localStorage.getItem('dsmp_cache');
-  if(cached){ try{ DATA = JSON.parse(cached); return; }catch{} }
-  // Défaut
-  DATA = JSON.parse(JSON.stringify(DEFAULTS));
+  const c=localStorage.getItem('dsmp_cache');
+  if(c){try{DATA=JSON.parse(c);return}catch{}}
+  DATA=JSON.parse(JSON.stringify(DEFAULTS));
 }
 
-async function saveData(){
-  if(!DATA) return;
-  localStorage.setItem('dsmp_cache', JSON.stringify(DATA));
-  const binId  = localStorage.getItem('dsmp_bin_id');
-  const apiKey = localStorage.getItem('dsmp_api_key');
-  if(binId && apiKey){
-    try{
-      await fetch(`https://api.jsonbin.io/v3/b/${binId}`,{
-        method:'PUT',
-        headers:{'Content-Type':'application/json','X-Master-Key':apiKey},
-        body:JSON.stringify(DATA)
-      });
-    }catch{}
-  }
-}
+/* ── Init ────────────────────────────────────────────────── */
+let _curPage = 'presentation';
 
-/* ── Init ────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', async ()=>{
   await loadData();
-  buildSidebar();
-  setupSearch();
+  applySettings();
+  buildNavTabs();
+  buildDynamicPages();
+  setupCmdSearch();
   setupBurger();
   startMC();
 
   const hash = location.hash.replace('#','');
-  goTo(hash || getFirstId());
+  if(hash && hash !== 'presentation') navTo(hash);
+  else showPresentation();
 });
 
 window.addEventListener('hashchange',()=>{
   const id = location.hash.replace('#','');
-  if(id) goTo(id);
+  if(id) id==='presentation' ? showPresentation() : navTo(id);
 });
 
-function getFirstId(){
-  if(!DATA?.pages?.length) return null;
-  const acc = DATA.pages.find(p=>p.id==='accueil');
-  return acc ? acc.id : DATA.pages[0].id;
+/* ── Settings ────────────────────────────────────────────── */
+function applySettings(){
+  const s = DATA?.settings || DEFAULTS.settings;
+  const ip = s.mcIp || 'connect.axohosts.fr:25883';
+  document.getElementById('hdr-ip-txt').textContent = ip;
+  document.getElementById('hero-ip-txt').textContent = ip;
+  if(document.getElementById('hero-desc'))
+    document.getElementById('hero-desc').textContent = s.heroDesc || DEFAULTS.settings.heroDesc;
 }
 
-/* ── Sidebar ─────────────────────────────────────────────────── */
-function buildSidebar(){
-  const nav = document.getElementById('sb-nav');
-  if(!nav || !DATA) return;
+/* ── Navigation ──────────────────────────────────────────── */
+function buildNavTabs(){
+  const nav = document.getElementById('hdr-nav');
+  const custom = (DATA?.pages||[]).filter(p=>!p.isCore);
+  // Supprime les anciens onglets custom
+  nav.querySelectorAll('.nav-tab-custom').forEach(el=>el.remove());
+  custom.forEach(p=>{
+    const btn = document.createElement('button');
+    btn.className='nav-tab nav-tab-custom';
+    btn.dataset.page=p.id;
+    btn.textContent=`${p.icon||'📄'} ${p.title}`;
+    btn.onclick=()=>navTo(p.id);
+    nav.appendChild(btn);
+  });
+}
 
-  const cats = [...(DATA.categories||[])].sort((a,b)=>(a.order||0)-(b.order||0));
-  let html = '';
-
-  cats.forEach(cat=>{
-    const pages = (DATA.pages||[])
-      .filter(p=>p.catId===cat.id)
-      .sort((a,b)=>(a.order||0)-(b.order||0));
-    if(!pages.length) return;
-
-    const isOpen = pages.some(p=>p.id===_curId);
-    html += `<div class="cat-block${isOpen?' open':''}" data-cat="${cat.id}">
-      <div class="cat-head" onclick="toggleCat('${cat.id}')">
-        <div class="cat-head-l">
-          <span class="cat-icon">${cat.icon||'📁'}</span>
-          <span class="cat-label">${e(cat.name)}</span>
-        </div>
-        <span class="cat-arrow">▶</span>
+function buildDynamicPages(){
+  const container = document.getElementById('dynamic-pages');
+  container.innerHTML='';
+  const pages = DATA?.pages || [];
+  pages.forEach(p=>{
+    const div = document.createElement('div');
+    div.className='page-view';
+    div.id=`page-${p.id}`;
+    div.innerHTML=`
+      <div class="page-head">
+        <h1 class="page-title">${p.icon||''} ${e(p.title)}</h1>
+        ${p.desc?`<p class="page-desc">${e(p.desc)}</p>`:''}
       </div>
-      <div class="cat-pages">`;
-    pages.forEach(p=>{
-      html += `<div class="pg-link${p.id===_curId?' active':''}" data-id="${p.id}" onclick="goTo('${p.id}')">
-        <span class="pg-link-ico">${p.icon||'📄'}</span>${e(p.title)}
-      </div>`;
-    });
-    html += `</div></div><div class="sidebar-div"></div>`;
-  });
-
-  if(!html) html = `<div style="padding:1rem .85rem;color:var(--txt3);font-size:.82rem">Aucune page disponible.</div>`;
-  nav.innerHTML = html;
-}
-
-function toggleCat(id){
-  document.querySelector(`.cat-block[data-cat="${id}"]`)?.classList.toggle('open');
-}
-
-/* ── Navigation ──────────────────────────────────────────────── */
-let _curId = null;
-
-function goTo(id){
-  const page = DATA?.pages?.find(p=>p.id===id||p.slug===id);
-  if(!page) return;
-  _curId = page.id;
-  location.hash = page.id;
-
-  document.querySelectorAll('.pg-link').forEach(el=>{
-    el.classList.toggle('active', el.dataset.id===page.id);
-  });
-  document.querySelectorAll('.cat-block').forEach(bl=>{
-    if(bl.querySelector('.pg-link.active')) bl.classList.add('open');
-  });
-
-  renderPage(page);
-  closeSidebar();
-}
-
-function renderPage(page){
-  const el = document.getElementById('wiki-content');
-  if(!el) return;
-  el.innerHTML = `<div class="pv">
-    <div class="pv-head">
-      <h1 class="pv-title">${page.icon||''} ${e(page.title)}</h1>
-      ${page.desc?`<p class="pv-desc">${e(page.desc)}</p>`:''}
-    </div>
-    <div class="wc">${mdToHtml(page.content||'')}</div>
-  </div>`;
-}
-
-/* ── Markdown ────────────────────────────────────────────────── */
-function mdToHtml(raw){
-  if(!raw) return '';
-  let s = raw;
-
-  // Protège les blocs de code
-  const blocks=[];
-  s = s.replace(/```([\s\S]*?)```/g,(_,c)=>{blocks.push(c);return`\x00B${blocks.length-1}\x00`});
-
-  // Escape HTML
-  s = s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
-  // Inline code
-  s = s.replace(/`([^`\n]+)`/g,'<code>$1</code>');
-
-  // Images
-  s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" loading="lazy">');
-
-  // Liens
-  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
-
-  // Blockquote
-  s = s.replace(/^&gt; (.+)$/gm,'<blockquote><p>$1</p></blockquote>');
-
-  // HR
-  s = s.replace(/^---$/gm,'<hr>');
-
-  // Tableaux
-  s = s.replace(/(\|.+\|\n)(\|[-| :]+\|\n)((?:\|.+\|?\n?)*)/g,(_,h,__,b)=>{
-    const ths = h.split('|').filter(c=>c.trim()).map(c=>`<th>${c.trim()}</th>`).join('');
-    const trs = b.trim().split('\n').map(row=>{
-      const tds = row.split('|').filter(c=>c.trim()).map(c=>`<td>${c.trim()}</td>`).join('');
-      return `<tr>${tds}</tr>`;
-    }).join('');
-    return `<div class="table-wrap"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
-  });
-
-  // Titres
-  s = s.replace(/^### (.+)$/gm,'<h3>$1</h3>');
-  s = s.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  s = s.replace(/^# (.+)$/gm,  '<h1>$1</h1>');
-
-  // Gras / italique
-  s = s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  s = s.replace(/\*(.+?)\*/g,'<em>$1</em>');
-
-  // Listes
-  s = s.replace(/((?:^- .+\n?)+)/gm,m=>{
-    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^- /,'')}</li>`).join('');
-    return `<ul>${li}</ul>`;
-  });
-  s = s.replace(/((?:^\d+\. .+\n?)+)/gm,m=>{
-    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('');
-    return `<ol>${li}</ol>`;
-  });
-
-  // Paragraphes
-  s = s.replace(/\n{2,}/g,'</p><p>');
-  s = `<p>${s}</p>`;
-  s = s.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|hr|div)[^>]*>)/g,'$1');
-  s = s.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|hr|div)>)\s*<\/p>/g,'$1');
-  s = s.replace(/<p>\s*<\/p>/g,'');
-
-  // Réinsère les blocs de code
-  s = s.replace(/\x00B(\d+)\x00/g,(_,i)=>{
-    const code = blocks[+i].replace(/^\n/,'').replace(/\n$/,'')
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return `<pre><code>${code}</code></pre>`;
-  });
-
-  return s.trim();
-}
-
-/* ── Recherche ───────────────────────────────────────────────── */
-function setupSearch(){
-  const inp = document.getElementById('s-input');
-  const drop = document.getElementById('s-drop');
-  if(!inp||!drop) return;
-
-  let t;
-  inp.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>doSearch(inp.value.trim()),180)});
-  inp.addEventListener('focus',()=>{if(inp.value.trim())doSearch(inp.value.trim())});
-  document.addEventListener('click',ev=>{
-    if(!ev.target.closest('.hdr-search')){drop.classList.remove('on');inp.value=''}
+      <div class="wc">${mdToHtml(p.content||'')}</div>`;
+    container.appendChild(div);
   });
 }
 
-function doSearch(q){
-  const drop = document.getElementById('s-drop');
-  if(!q){drop.classList.remove('on');return}
-  const ql=q.toLowerCase();
-  const cats={};
-  (DATA?.categories||[]).forEach(c=>cats[c.id]=c);
-  const res=(DATA?.pages||[]).filter(p=>
-    p.title.toLowerCase().includes(ql)||
-    (p.desc||'').toLowerCase().includes(ql)||
-    (p.content||'').toLowerCase().includes(ql)
-  ).slice(0,7);
-
-  if(!res.length){
-    drop.innerHTML=`<div class="s-empty">Aucun résultat pour « ${e(q)} »</div>`;
-  }else{
-    drop.innerHTML=res.map(p=>`
-      <div class="s-item" onclick="goTo('${p.id}');document.getElementById('s-drop').classList.remove('on');document.getElementById('s-input').value=''">
-        <span class="s-item-icon">${p.icon||'📄'}</span>
-        <div>
-          <div class="s-item-title">${e(p.title)}</div>
-          <div class="s-item-cat">${cats[p.catId]?cats[p.catId].name:''}</div>
-        </div>
-      </div>`).join('');
+function showPresentation(){
+  _curPage='presentation';
+  location.hash='presentation';
+  setActiveTab('presentation');
+  document.querySelectorAll('.page-view').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-presentation')?.classList.add('active');
+  // Sur desktop, cache les sidebars ; sur mobile le burger reste
+  if(window.innerWidth > 768){
+    const sl = document.getElementById('sb-left');
+    const sr = document.getElementById('sb-right');
+    if(sl) sl.style.display = 'none';
+    if(sr) sr.style.display = 'none';
   }
-  drop.classList.add('on');
+  closeBurger();
 }
 
-/* ── Burger / sidebar mobile ─────────────────────────────────── */
-function setupBurger(){
-  const btn = document.getElementById('burger');
-  const ovl = document.getElementById('overlay');
-  if(btn) btn.addEventListener('click',toggleSidebar);
-  if(ovl) ovl.addEventListener('click',closeSidebar);
+function navTo(id){
+  const page = (DATA?.pages||[]).find(p=>p.id===id);
+  if(!page) return;
+
+  _curPage = id;
+  location.hash = id;
+  setActiveTab(id);
+
+  document.querySelectorAll('.page-view').forEach(el=>el.classList.remove('active'));
+  const el = document.getElementById(`page-${id}`);
+  if(el) el.classList.add('active');
+
+  const sbLeft  = document.getElementById('sb-left');
+  const sbRight = document.getElementById('sb-right');
+  const mobile  = window.innerWidth <= 768;
+
+  // Sidebar gauche TOC
+  if(sbLeft){
+    if(mobile){
+      // Sur mobile : toujours disponible via burger, on reconstruit la TOC
+      sbLeft.style.display = '';
+      buildTOC(page);
+    } else {
+      // Sur desktop : afficher ou cacher selon la config de la page
+      sbLeft.style.display = page.showToc ? '' : 'none';
+      if(page.showToc) buildTOC(page);
+    }
+  }
+
+  // Sidebar droite commandes (desktop seulement)
+  if(sbRight){
+    sbRight.style.display = (!mobile && page.showCmdSearch) ? '' : 'none';
+    if(!mobile && page.showCmdSearch) showAllCmds();
+  }
+
+  closeBurger();
+  window.scrollTo(0,0);
 }
-function toggleSidebar(){
-  document.getElementById('sidebar')?.classList.toggle('open');
-  document.getElementById('burger')?.classList.toggle('open');
-  document.getElementById('overlay')?.classList.toggle('on');
-}
-function closeSidebar(){
-  document.getElementById('sidebar')?.classList.remove('open');
-  document.getElementById('burger')?.classList.remove('open');
-  document.getElementById('overlay')?.classList.remove('on');
+
+function setActiveTab(id){
+  document.querySelectorAll('.nav-tab').forEach(t=>{
+    t.classList.toggle('active', t.dataset.page===id);
+  });
 }
 
-/* ── Statut MC ───────────────────────────────────────────────── */
-function startMC(){updateMC();setInterval(updateMC,60000)}
+/* ── Table des matières auto ─────────────────────────────── */
+function buildTOC(page){
+  const el = document.getElementById('toc-content');
+  if(!el) return;
 
-async function updateMC(){
-  const dot=document.getElementById('mc-dot');
-  const txt=document.getElementById('mc-txt');
-  const ip=document.getElementById('mc-ip');
-  if(!dot||!txt||!DATA) return;
+  // Génère auto depuis les ## dans le contenu
+  const content = page.content || '';
+  const headings = [];
+  content.split('\n').forEach(line=>{
+    const m2 = line.match(/^## (.+)$/);
+    const m3 = line.match(/^### (.+)$/);
+    if(m2) headings.push({level:2,text:m2[1],id:slugify(m2[1])});
+    if(m3) headings.push({level:3,text:m3[1],id:slugify(m3[1])});
+  });
 
-  const s=DATA.settings;
-  if(ip) ip.textContent=s.mcIp||'connect.axohosts.fr:25883';
-
-  if(s.maintenance){
-    dot.className='mc-dot maint';
-    txt.textContent='Maintenance';
+  if(!headings.length){
+    el.innerHTML='<div style="padding:.75rem .85rem;color:var(--txt3);font-size:.8rem">Pas de chapitres</div>';
     return;
   }
 
+  let html = `<div class="toc-title">Sur cette page</div>`;
+  headings.forEach((h,i)=>{
+    const indent = h.level===3 ? 'padding-left:1.8rem' : '';
+    html += `<div class="toc-link" style="${indent}" data-target="${h.id}" onclick="scrollToHeading('${h.id}',this)">
+      <span class="toc-num">${h.level===2?'#':'·'}</span>
+      ${e(h.text)}
+    </div>`;
+  });
+
+  el.innerHTML = html;
+
+  // Injecte les IDs dans les headings du DOM
+  setTimeout(()=>{
+    const wc = document.querySelector(`.page-view.active .wc`);
+    if(!wc) return;
+    const els = wc.querySelectorAll('h2,h3');
+    els.forEach(heading=>{
+      const id = slugify(heading.textContent);
+      heading.id = id;
+    });
+    setupScrollSpy();
+  },100);
+}
+
+function scrollToHeading(id, linkEl){
+  const target = document.getElementById(id);
+  if(!target) return;
+  const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H'))||56;
+  const y = target.getBoundingClientRect().top + window.scrollY - offset - 20;
+  window.scrollTo({top:y,behavior:'smooth'});
+  document.querySelectorAll('.toc-link').forEach(l=>l.classList.remove('active'));
+  linkEl?.classList.add('active');
+}
+
+function setupScrollSpy(){
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        document.querySelectorAll('.toc-link').forEach(l=>{
+          l.classList.toggle('active', l.dataset.target===id);
+        });
+      }
+    });
+  },{rootMargin:`-${(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H'))||56)+30}px 0px -60% 0px`});
+
+  document.querySelectorAll('.page-view.active .wc h2, .page-view.active .wc h3')
+    .forEach(el=>observer.observe(el));
+}
+
+/* ── Recherche commandes ─────────────────────────────────── */
+function setupCmdSearch(){
+  const inp = document.getElementById('cmd-input');
+  if(!inp) return;
+  let t;
+  inp.addEventListener('input',()=>{
+    clearTimeout(t);
+    t=setTimeout(()=>doSearch(inp.value.trim()),200);
+  });
+  inp.addEventListener('focus',()=>{
+    if(!inp.value.trim()) showAllCmds();
+  });
+}
+
+function showAllCmds(){
+  const cmds = DATA?.commands || DEFAULTS.commands;
+  renderCmds(cmds);
+}
+
+function doSearch(q){
+  if(!q){showAllCmds();return}
+  const ql=q.toLowerCase();
+  const cmds=(DATA?.commands||DEFAULTS.commands).filter(c=>
+    c.cmd.toLowerCase().includes(ql)||
+    (c.alts||'').toLowerCase().includes(ql)||
+    (c.desc||'').toLowerCase().includes(ql)||
+    (c.keywords||'').toLowerCase().includes(ql)
+  );
+  renderCmds(cmds, q);
+}
+
+function renderCmds(cmds, q=''){
+  const el=document.getElementById('cmd-results');
+  if(!el)return;
+  if(!cmds.length){
+    el.innerHTML=`<div class="cmd-empty">Aucune commande trouvée pour « ${e(q)} »</div>`;
+    return;
+  }
+  el.innerHTML=cmds.map(c=>`
+    <div class="cmd-card">
+      <div class="cmd-main">${e(c.cmd)}</div>
+      ${c.alts?`<div class="cmd-alt">Aussi : ${e(c.alts)}</div>`:''}
+      <div class="cmd-info">${e(c.desc)}</div>
+    </div>`).join('');
+}
+
+/* ── IP copiable ─────────────────────────────────────────── */
+function copyIP(el){
+  const ip = DATA?.settings?.mcIp || 'connect.axohosts.fr:25883';
+  navigator.clipboard?.writeText(ip).then(()=>{
+    el.classList.add('copied');
+    setTimeout(()=>el.classList.remove('copied'),2000);
+  }).catch(()=>{
+    // Fallback
+    const ta=document.createElement('textarea');
+    ta.value=ip;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    el.classList.add('copied');
+    setTimeout(()=>el.classList.remove('copied'),2000);
+  });
+}
+
+/* ── Statut MC ───────────────────────────────────────────── */
+function startMC(){updateMC();setInterval(updateMC,60000)}
+async function updateMC(){
+  const s=DATA?.settings||DEFAULTS.settings;
+  if(s.maintenance){
+    document.getElementById('mc-players').textContent='🔧';
+    return;
+  }
   try{
-    const r=await fetch(`https://api.mcstatus.io/v2/status/java/${s.mcHost||'163.5.141.232'}:${s.mcPort||25816}`);
+    const r=await fetch(`https://api.mcstatus.io/v2/status/java/${s.mcHost}:${s.mcPort}`);
     const j=await r.json();
-    if(j.online){
-      dot.className='mc-dot on';
-      txt.textContent=`En ligne · ${j.players?.online||0}/${j.players?.max||0} joueurs`;
-    }else throw 0;
+    if(j.online) document.getElementById('mc-players').textContent=`${j.players?.online||0}/${j.players?.max||0}`;
+    else throw 0;
   }catch{
-    dot.className='mc-dot off';
-    txt.textContent='Hors ligne';
+    document.getElementById('mc-players').textContent='Hors ligne';
   }
 }
 
-/* ── Utils ───────────────────────────────────────────────────── */
+/* ── Burger ──────────────────────────────────────────────── */
+function setupBurger(){
+  const btn = document.getElementById('burger');
+  const ovl = document.getElementById('overlay');
+  if(btn) btn.addEventListener('click', toggleBurger);
+  if(ovl) ovl.addEventListener('click', closeBurger);
+}
+function toggleBurger(){
+  const sb  = document.getElementById('sb-left');
+  const btn = document.getElementById('burger');
+  const ovl = document.getElementById('overlay');
+  const isOpen = sb?.classList.contains('open');
+  if(isOpen){ closeBurger(); }
+  else {
+    sb?.classList.add('open');
+    btn?.classList.add('open');
+    ovl?.classList.add('on');
+    // Empêche le scroll du body quand le tiroir est ouvert
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeBurger(){
+  document.getElementById('sb-left')?.classList.remove('open');
+  document.getElementById('burger')?.classList.remove('open');
+  document.getElementById('overlay')?.classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+/* ── Markdown ────────────────────────────────────────────── */
+function mdToHtml(raw){
+  if(!raw)return'';
+  let s=raw;
+  const blocks=[];
+  s=s.replace(/```([\s\S]*?)```/g,(_,c)=>{blocks.push(c);return`\x00B${blocks.length-1}\x00`});
+  s=s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s=s.replace(/`([^`\n]+)`/g,'<code>$1</code>');
+  s=s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" loading="lazy">');
+  s=s.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s=s.replace(/^&gt; (.+)$/gm,'<blockquote><p>$1</p></blockquote>');
+  s=s.replace(/^---$/gm,'<hr>');
+  s=s.replace(/(\|.+\|\n)(\|[-| :]+\|\n)((?:\|.+\|?\n?)*)/g,(_,h,__,b)=>{
+    const ths=h.split('|').filter(c=>c.trim()).map(c=>`<th>${c.trim()}</th>`).join('');
+    const trs=b.trim().split('\n').map(row=>{
+      const tds=row.split('|').filter(c=>c.trim()).map(c=>`<td>${c.trim()}</td>`).join('');
+      return`<tr>${tds}</tr>`;
+    }).join('');
+    return`<div class="tbl"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+  });
+  s=s.replace(/^### (.+)$/gm,'<h3>$1</h3>');
+  s=s.replace(/^## (.+)$/gm,'<h2>$1</h2>');
+  s=s.replace(/^# (.+)$/gm,'<h1>$1</h1>');
+  s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  s=s.replace(/\*(.+?)\*/g,'<em>$1</em>');
+  s=s.replace(/((?:^- .+\n?)+)/gm,m=>{
+    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^- /,'')}</li>`).join('');
+    return`<ul>${li}</ul>`;
+  });
+  s=s.replace(/((?:^\d+\. .+\n?)+)/gm,m=>{
+    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('');
+    return`<ol>${li}</ol>`;
+  });
+  s=s.replace(/\n{2,}/g,'</p><p>');
+  s=`<p>${s}</p>`;
+  s=s.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|hr|div)[^>]*>)/g,'$1');
+  s=s.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|hr|div)>)\s*<\/p>/g,'$1');
+  s=s.replace(/<p>\s*<\/p>/g,'');
+  s=s.replace(/\x00B(\d+)\x00/g,(_,i)=>{
+    const code=blocks[+i].replace(/^\n/,'').replace(/\n$/,'')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return`<pre><code>${code}</code></pre>`;
+  });
+  return s.trim();
+}
+
+/* ── Utils ───────────────────────────────────────────────── */
 function e(s){
-  return String(s||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function slugify(s){
+  return String(s||'').toLowerCase()
+    .replace(/[àáâã]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
+    .replace(/[òóôõ]/g,'o').replace(/[ùúûü]/g,'u').replace(/ç/g,'c')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 }
 function toast(msg,type='ok'){
-  const t=document.getElementById('toast');
-  if(!t)return;
+  const t=document.getElementById('toast');if(!t)return;
   t.textContent=msg;t.className=`on ${type}`;
   setTimeout(()=>t.className='',3000);
 }
