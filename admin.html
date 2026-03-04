@@ -829,22 +829,28 @@ async function toggleMaint() {
 function renderPages() {
   const el = document.getElementById('pages-list');
   if (!el || !DATA) return;
-  const pages = DATA.pages.filter(p => !p.isSpecial);
-  if (!pages.length) { el.innerHTML = '<p style="color:var(--txt3)">Aucune page.</p>'; return; }
-  el.innerHTML = pages.map(p => `
+  const allPages = DATA.pages;
+  if (!allPages.length) { el.innerHTML = '<p style="color:var(--txt3)">Aucune page.</p>'; return; }
+  el.innerHTML = allPages.map(p => {
+    const isPresentation = p.id === 'presentation';
+    const badge = isPresentation
+      ? `<span style="font-size:.65rem;background:rgba(200,150,60,.12);color:var(--gold);border:1px solid rgba(200,150,60,.2);border-radius:10px;padding:.1rem .45rem;margin-left:.35rem">Accueil</span>`
+      : (p.isSpecial ? '<span style="font-size:.65rem;color:var(--txt3)">fixe</span>' : '');
+    return `
     <div class="lrow">
       <div class="lrow-l">
         <span class="lrow-icon">${p.icon || '📄'}</span>
         <div>
-          <div class="lrow-name">${e(p.title)}</div>
-          <div class="lrow-meta">#${p.id} · TOC:${p.showToc ? '✓' : '✗'} · Cmds:${p.showCmds ? '✓' : '✗'}</div>
+          <div class="lrow-name">${e(p.title)} ${badge}</div>
+          <div class="lrow-meta">${isPresentation ? 'Texte et description de la page d'accueil' : '#'+p.id+' · TOC:'+( p.showToc ? '✓' : '✗')+' · Cmds:'+(p.showCmds ? '✓' : '✗')}</div>
         </div>
       </div>
       <div class="lrow-r">
         <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️ Éditer</button>
-        <button class="btn btn-red btn-sm" onclick="delPage('${p.id}')">🗑</button>
+        ${!p.isSpecial ? `<button class="btn btn-red btn-sm" onclick="delPage('${p.id}')">🗑</button>` : ''}
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function newPage() {
@@ -862,6 +868,29 @@ function newPage() {
 function editPage(id) {
   const p = DATA.pages.find(p => p.id === id);
   if (!p) return;
+
+  // Cas spécial : page présentation (pas de markdown, juste texte + sous-titre)
+  if (id === 'presentation') {
+    document.getElementById('edit-pg-id').value = 'presentation';
+    document.getElementById('pged-title').textContent = '✏️ Page d'accueil';
+    document.getElementById('pg-title').value = p.title || 'Présentation';
+    document.getElementById('pg-icon').value = p.icon || '🏠';
+    document.getElementById('pg-desc').value = DATA.settings.heroSub || '';
+    document.getElementById('pg-toc').checked = false;
+    document.getElementById('pg-cmds').checked = false;
+    // Contenu = texte affiché sous le titre héro
+    rteSetContent(DATA.settings.heroSub || '');
+    // Cache les toggles TOC/Cmds qui n'ont pas de sens ici
+    document.getElementById('pg-toc').parentElement.parentElement.style.display = 'none';
+    document.getElementById('pg-cmds').parentElement.parentElement.style.display = 'none';
+    showP('pg-editor', document.getElementById('nav-pged'));
+    return;
+  }
+
+  // Ré-affiche les toggles si on venait de la présentation
+  document.getElementById('pg-toc').parentElement.parentElement.style.display = '';
+  document.getElementById('pg-cmds').parentElement.parentElement.style.display = '';
+
   document.getElementById('edit-pg-id').value = p.id;
   document.getElementById('pged-title').textContent = `✏️ ${p.title}`;
   document.getElementById('pg-title').value = p.title;
@@ -883,6 +912,20 @@ async function savePage() {
   const eid     = document.getElementById('edit-pg-id').value;
 
   if (!title) { toast('Titre requis !', 'err'); return; }
+
+  // Cas spécial : page présentation
+  if (eid === 'presentation') {
+    DATA.settings.heroSub = desc || rteGetMarkdown();
+    const idx = DATA.pages.findIndex(p => p.id === 'presentation');
+    if (idx !== -1) DATA.pages[idx] = { ...DATA.pages[idx], title, icon };
+    await saveData(); renderPages(); renderDash();
+    toast('✅ Page d'accueil mise à jour !');
+    showP('pages', document.querySelector('[data-p=pages]'));
+    // Ré-affiche les toggles
+    document.getElementById('pg-toc').parentElement.parentElement.style.display = '';
+    document.getElementById('pg-cmds').parentElement.parentElement.style.display = '';
+    return;
+  }
 
   if (eid) {
     const idx = DATA.pages.findIndex(p => p.id === eid);
