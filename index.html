@@ -263,26 +263,24 @@ body::after {
   border-radius:4px; padding:.08rem .38rem;
   font-family:'Courier New',monospace; font-size:.83rem; color:var(--ember);
 }
-/* Blocs code avec bouton copie */
-.wc pre {
-  position:relative;
-}
-.wc pre:hover .copy-btn { opacity:1 }
-.copy-btn {
-  position:absolute; top:.55rem; right:.6rem;
-  background:var(--bg4); border:1px solid var(--line2);
-  border-radius:5px; padding:.2rem .5rem;
-  font-size:.7rem; color:var(--txt2); cursor:pointer;
-  opacity:0; transition:all .15s; font-family:"Inter",sans-serif;
-  display:flex; align-items:center; gap:.25rem;
-}
-.copy-btn:hover { background:var(--bg3); color:var(--txt); border-color:rgba(217,79,30,.3) }
-.copy-btn.done { color:var(--ok); border-color:rgba(39,174,96,.3) }
 .wc pre {
   background:var(--bg2); border:1px solid var(--line2);
   border-radius:8px; padding:1rem 1.2rem;
   overflow-x:auto; margin:1rem 0;
+  cursor:pointer; transition:border-color .15s;
+  position:relative;
 }
+.wc pre:hover { border-color:rgba(217,79,30,.35) }
+/* Indicateur copie discret en haut à droite */
+.wc pre::after {
+  content:'📋';
+  position:absolute; top:.5rem; right:.65rem;
+  font-size:.75rem; opacity:0; transition:opacity .15s;
+  pointer-events:none;
+}
+.wc pre:hover::after { opacity:.5 }
+.wc pre.copied { border-color:rgba(39,174,96,.4) }
+.wc pre.copied::after { content:'✓'; color:var(--ok); opacity:1; font-size:.85rem }
 .wc pre code { background:none; border:none; padding:0; font-size:.84rem; color:var(--txt2) }
 .wc blockquote {
   border-left:3px solid var(--gold);
@@ -337,9 +335,11 @@ body::after {
 .cmd-list { display:flex; flex-direction:column; gap:.5rem }
 .cmd-card {
   background:var(--bg2); border:1px solid var(--line2);
-  border-radius:8px; padding:.7rem .85rem; transition:border-color .15s;
+  border-radius:8px; padding:.7rem .85rem; transition:all .15s;
+  cursor:pointer; user-select:none;
 }
-.cmd-card:hover { border-color:rgba(217,79,30,.3) }
+.cmd-card:hover { border-color:rgba(217,79,30,.3); background:var(--bg3) }
+.cmd-card.copied { border-color:rgba(39,174,96,.4) }
 .cmd-name {
   font-family:'Courier New',monospace; font-size:.85rem;
   color:var(--ember); font-weight:700; margin-bottom:.18rem;
@@ -747,23 +747,21 @@ function buildPages() {
 
 function injectCopyButtons() {
   document.querySelectorAll('.wc pre').forEach(pre => {
-    if (pre.querySelector('.copy-btn')) return; // déjà fait
-    const btn = document.createElement('button');
-    btn.className = 'copy-btn';
-    btn.innerHTML = '📋 Copier';
-    btn.onclick = () => {
+    if (pre.dataset.copyBound) return;
+    pre.dataset.copyBound = '1';
+    pre.title = 'Cliquer pour copier';
+    pre.onclick = () => {
       const code = pre.querySelector('code')?.innerText || pre.innerText;
-      navigator.clipboard?.writeText(code).catch(() => {
+      const doCopy = () => {
         const ta = document.createElement('textarea');
         ta.value = code; document.body.appendChild(ta);
         ta.select(); document.execCommand('copy');
         document.body.removeChild(ta);
-      });
-      btn.innerHTML = '✅ Copié !';
-      btn.classList.add('done');
-      setTimeout(() => { btn.innerHTML = '📋 Copier'; btn.classList.remove('done'); }, 2000);
+      };
+      (navigator.clipboard?.writeText(code) ?? Promise.reject()).catch(doCopy);
+      pre.classList.add('copied');
+      setTimeout(() => pre.classList.remove('copied'), 2000);
     };
-    pre.appendChild(btn);
   });
 }
 
@@ -1056,11 +1054,31 @@ function renderCmds(cmds, q = '') {
     return;
   }
   el.innerHTML = cmds.map(c => `
-    <div class="cmd-card">
-      <div class="cmd-name">${e(c.cmd)}</div>
+    <div class="cmd-card" onclick="copyCmd(this,'${e(c.cmd)}')" title="Cliquer pour copier">
+      <div class="cmd-name" id="cmdname-${e(c.id)}">${e(c.cmd)}</div>
       ${c.alts ? `<div class="cmd-alts">Aussi : ${e(c.alts)}</div>` : ''}
       <div class="cmd-desc">${e(c.desc)}</div>
     </div>`).join('');
+}
+
+function copyCmd(card, cmd) {
+  const doCopy = () => {
+    const ta = document.createElement('textarea');
+    ta.value = cmd; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  };
+  (navigator.clipboard?.writeText(cmd) ?? Promise.reject()).catch(doCopy);
+  card.classList.add('copied');
+  const nameEl = card.querySelector('.cmd-name');
+  const orig = nameEl.textContent;
+  nameEl.textContent = '✓ Copié !';
+  nameEl.style.color = 'var(--ok)';
+  setTimeout(() => {
+    card.classList.remove('copied');
+    nameEl.textContent = orig;
+    nameEl.style.color = '';
+  }, 1800);
 }
 
 /* ─── IP ────────────────────────────────────────────────── */
