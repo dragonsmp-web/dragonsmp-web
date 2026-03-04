@@ -809,18 +809,29 @@ function scrollTo2(id, el) {
 }
 
 function setupScrollSpy(pageId) {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        document.querySelectorAll('.toc-entry').forEach(t => {
-          t.classList.toggle('active', t.dataset.tgt === id);
-        });
-      }
-    });
-  }, { rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H')) + 30}px 0px -60% 0px` });
+  // On utilise scroll event plutôt qu'IntersectionObserver
+  // pour un suivi précis sans glissement sur les sections courtes
+  const headings = [...document.querySelectorAll(`#wc-${pageId} h2, #wc-${pageId} h3`)];
+  if (!headings.length) return;
 
-  document.querySelectorAll(`#wc-${pageId} h2, #wc-${pageId} h3`).forEach(h => obs.observe(h));
+  function onScroll() {
+    const H = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--H')) || 54;
+    const offset = H + 40;
+    let active = headings[0];
+    for (const h of headings) {
+      if (h.getBoundingClientRect().top <= offset) active = h;
+      else break;
+    }
+    document.querySelectorAll('.toc-entry').forEach(t => {
+      t.classList.toggle('active', t.dataset.tgt === active.id);
+    });
+  }
+
+  // Nettoie l'ancien listener si on recharge la page
+  if (window._scrollSpyHandler) window.removeEventListener('scroll', window._scrollSpyHandler);
+  window._scrollSpyHandler = onScroll;
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // init
 }
 
 /* ─── Recherche globale ─────────────────────────────────── */
