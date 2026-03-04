@@ -2,326 +2,431 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#080a0d">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dragon SMP — Admin</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --fire:#d94f1e;--ember:#f07030;--gold:#d4a843;--gold2:#8a6820;
-  --bg0:#080a0d;--bg1:#0d1017;--bg2:#131820;--bg3:#1a2030;--bg4:#222a3a;
-  --ln:rgba(212,168,67,.12);--ln2:rgba(255,255,255,.07);
-  --txt:#d0d8e8;--txt2:#7080a0;--txt3:#384060;
-  --ok:#2ecc71;--bad:#e74c3c;--warn:#e67e22;
-  --H:56px;--SW:210px;--R:8px;
+/* ════════════════════════════════════════════
+   DRAGON SMP — ADMIN V5
+════════════════════════════════════════════ */
+:root {
+  --fire:  #d94f1e;
+  --ember: #f07030;
+  --gold:  #c8963c;
+  --goldl: #e8b84b;
+  --bg:    #0a0c10;
+  --bg1:   #0f1318;
+  --bg2:   #151b24;
+  --bg3:   #1c2434;
+  --bg4:   #232d40;
+  --ln:    rgba(200,150,60,.15);
+  --ln2:   rgba(255,255,255,.07);
+  --txt:   #cdd8ea;
+  --txt2:  #6878a0;
+  --txt3:  #303d55;
+  --ok:    #27ae60;
+  --bad:   #c0392b;
+  --warn:  #d68910;
+  --H:     54px;
+  --SW:    220px;
+  --R:     8px;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{font-family:'DM Sans',sans-serif;background:var(--bg0);color:var(--txt);
-  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 70% 50% at 50% 100%,rgba(217,79,30,.07) 0%,transparent 65%)}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
+html { -webkit-text-size-adjust:100% }
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--bg); color:var(--txt);
+  min-height:100vh; -webkit-font-smoothing:antialiased;
+}
+a { color:inherit; text-decoration:none }
+button { font-family:inherit; cursor:pointer; border:none; background:none }
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 100%,rgba(217,79,30,.07) 0%,transparent 60%);
+}
 
 /* ── LOGIN ── */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:1.5rem;position:relative;z-index:1}
-.login-card{background:var(--bg2);border:1px solid var(--ln);border-radius:12px;
-  padding:2.25rem 2rem 2.5rem;width:100%;max-width:360px;
-  box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.l-icon{font-size:2.5rem;text-align:center;margin-bottom:.75rem}
-.l-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold);
-  text-align:center;margin-bottom:.25rem}
-.l-sub{color:var(--txt3);font-size:.82rem;text-align:center;margin-bottom:1.5rem}
-.step-dots{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:1.5rem}
-.sdot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:.7rem;font-weight:700;border:1px solid var(--ln2);color:var(--txt3);
-  background:var(--bg3);transition:all .25s}
-.sdot.cur{border-color:var(--fire);color:var(--ember);background:rgba(217,79,30,.12)}
-.sdot.done{border-color:var(--ok);color:var(--ok);background:rgba(46,204,113,.08)}
-.sdot-line{flex:1;max-width:28px;height:1px;background:var(--ln2)}
-.lstep{display:none}.lstep.on{display:block}
-.lerr{color:var(--bad);font-size:.8rem;min-height:1.1rem;margin-bottom:.5rem}
-
-/* ── FORMS ── */
-.fg{margin-bottom:.9rem}
-.fg label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:1.5px;color:var(--txt3);margin-bottom:.35rem}
-.fg input,.fg select,.fg textarea{
-  width:100%;background:var(--bg3);border:1px solid var(--ln2);
-  border-radius:6px;padding:.58rem .8rem;color:var(--txt);
-  font-size:16px;transition:all .2s;-webkit-appearance:none;appearance:none;
+.login-page {
+  min-height:100vh; display:flex;
+  align-items:center; justify-content:center;
+  padding:1.5rem; position:relative; z-index:1;
 }
-.fg input:focus,.fg select:focus,.fg textarea:focus{
-  border-color:rgba(217,79,30,.6);box-shadow:0 0 0 3px rgba(217,79,30,.08);background:var(--bg4)}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--txt3)}
-.fg textarea{resize:vertical;min-height:220px;font-family:'Courier New',monospace!important;
-  font-size:14px!important;line-height:1.55}
-.fg select option{background:var(--bg3)}
-.fg-2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.fg-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem}
-
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.48rem 1rem;border:none;
-  border-radius:6px;font-size:.875rem;font-weight:600;cursor:pointer;
-  transition:all .2s;-webkit-tap-highlight-color:transparent}
-.btn-fire{background:var(--fire);color:#fff}
-.btn-fire:hover{background:#bf4118;transform:translateY(-1px);box-shadow:0 4px 16px rgba(217,79,30,.3)}
-.btn-ghost{background:transparent;color:var(--txt2);border:1px solid var(--ln2)}
-.btn-ghost:hover{background:var(--bg3);color:var(--txt)}
-.btn-red{background:rgba(231,76,60,.1);color:var(--bad);border:1px solid rgba(231,76,60,.2)}
-.btn-red:hover{background:rgba(231,76,60,.2)}
-.btn-sm{padding:.3rem .75rem;font-size:.78rem}
-.btn-full{width:100%;justify-content:center}
+.login-card {
+  background:var(--bg2); border:1px solid var(--ln);
+  border-radius:14px; padding:2.25rem 2rem 2.5rem;
+  width:100%; max-width:360px;
+  box-shadow:0 24px 64px rgba(0,0,0,.5);
+}
+.l-icon { font-size:2.5rem; text-align:center; margin-bottom:.75rem }
+.l-title {
+  font-family:'Cinzel',serif; font-size:1.2rem; color:var(--goldl);
+  text-align:center; margin-bottom:.25rem;
+}
+.l-sub { color:var(--txt3); font-size:.82rem; text-align:center; margin-bottom:1.5rem }
+.sdots { display:flex; align-items:center; justify-content:center; gap:.5rem; margin-bottom:1.5rem }
+.sdot {
+  width:26px; height:26px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.7rem; font-weight:700;
+  border:1px solid var(--ln2); color:var(--txt3); background:var(--bg3);
+  transition:all .25s;
+}
+.sdot.cur  { border-color:var(--fire); color:var(--ember); background:rgba(217,79,30,.12) }
+.sdot.done { border-color:var(--ok);   color:var(--ok);   background:rgba(39,174,96,.08) }
+.sdot-line { flex:1; max-width:28px; height:1px; background:var(--ln2) }
+.lstep { display:none } .lstep.on { display:block }
+.lerr { color:var(--bad); font-size:.8rem; min-height:1.1rem; margin-bottom:.5rem }
 
 /* ── ADMIN LAYOUT ── */
-.adm-wrap{display:none;position:relative;z-index:1}
-.adm-wrap.on{display:block}
+.adm { display:none; position:relative; z-index:1; min-height:100vh }
+.adm.on { display:block }
 
-.hdr{position:fixed;top:0;left:0;right:0;z-index:800;height:var(--H);
-  background:rgba(8,10,13,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:.75rem;padding:0 1rem}
-.hdr-logo{font-family:'Cinzel',serif;font-weight:900;font-size:.95rem;letter-spacing:2px;
-  color:var(--gold);flex-shrink:0}
-.hdr-logo em{color:var(--fire);font-style:normal}
-.hdr-status{display:flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:600;color:var(--ok)}
-.hdr-status::before{content:'';width:7px;height:7px;border-radius:50%;
-  background:var(--ok);box-shadow:0 0 6px var(--ok)}
+/* Header */
+.hdr {
+  position:fixed; top:0; left:0; right:0; z-index:900;
+  height:var(--H); background:rgba(10,12,16,.97);
+  backdrop-filter:blur(20px); border-bottom:1px solid var(--ln);
+  display:flex; align-items:center; gap:1rem; padding:0 1.5rem;
+}
+.hdr-logo {
+  font-family:'Cinzel',serif; font-weight:900; font-size:.95rem;
+  color:var(--goldl); letter-spacing:2px; flex-shrink:0;
+}
+.hdr-logo em { color:var(--fire); font-style:normal }
+.hdr-conn {
+  display:flex; align-items:center; gap:.35rem;
+  font-size:.78rem; font-weight:600; color:var(--ok);
+}
+.hdr-conn::before {
+  content:''; width:7px; height:7px; border-radius:50%;
+  background:var(--ok); box-shadow:0 0 6px var(--ok);
+}
 
-.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;
-  color:var(--txt);padding:.4rem;flex-shrink:0}
-.burger span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:all .3s}
-.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* Body layout */
+.adm-body { display:flex; padding-top:var(--H); min-height:100vh }
 
-.adm-body{display:flex;padding-top:var(--H);min-height:100vh}
+/* Sidebar */
+.adm-sb {
+  width:var(--SW); min-width:var(--SW); flex-shrink:0;
+  background:var(--bg1); border-right:1px solid var(--ln2);
+  padding:1rem 0;
+  position:sticky; top:var(--H);
+  height:calc(100vh - var(--H));
+  overflow-y:auto;
+}
+.adm-nav {
+  display:flex; align-items:center; gap:.55rem;
+  padding:.58rem 1rem; cursor:pointer;
+  color:var(--txt2); font-size:.85rem; font-weight:500;
+  border-left:2px solid transparent; transition:all .15s;
+}
+.adm-nav:hover { color:var(--txt); background:rgba(255,255,255,.03) }
+.adm-nav.on { color:var(--ember); background:rgba(217,79,30,.08); border-left-color:var(--fire) }
+.adm-sep { height:1px; background:var(--ln2); margin:.6rem 1rem }
 
-/* Sidebar admin */
-.adm-sb{width:var(--SW);min-width:var(--SW);flex-shrink:0;background:var(--bg1);
-  border-right:1px solid var(--ln2);padding:1rem 0;
-  position:sticky;top:var(--H);height:calc(100vh - var(--H));overflow-y:auto;
-  transition:transform .3s cubic-bezier(.4,0,.2,1)}
-.adm-nav{display:flex;align-items:center;gap:.6rem;padding:.62rem 1rem;cursor:pointer;
-  color:var(--txt2);font-size:.875rem;font-weight:500;border-left:2px solid transparent;transition:all .15s;
-  -webkit-tap-highlight-color:transparent}
-.adm-nav:hover{color:var(--txt);background:rgba(255,255,255,.03)}
-.adm-nav.on{color:var(--ember);background:rgba(217,79,30,.08);border-left-color:var(--fire)}
-.adm-sep{height:1px;background:var(--ln2);margin:.5rem 1rem}
+/* Main */
+.adm-main { flex:1; padding:2.25rem 2.5rem; min-width:0; overflow-y:auto }
+.adm-panel { display:none; animation:fadeUp .22s ease }
+.adm-panel.on { display:block }
+@keyframes fadeUp { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:translateY(0)} }
+.adm-title {
+  font-family:'Cinzel',serif; font-size:1.2rem; color:var(--goldl);
+  margin-bottom:1.5rem; padding-bottom:.85rem;
+  border-bottom:1px solid var(--ln2);
+}
 
-.adm-main{flex:1;padding:2rem 2.5rem;min-width:0;overflow-y:auto}
-.adm-panel{display:none;animation:fadeUp .22s ease both}
-.adm-panel.on{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.adm-title{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--gold);
-  margin-bottom:1.5rem;padding-bottom:.9rem;border-bottom:1px solid var(--ln2)}
+/* ── FORMS ── */
+.fg { margin-bottom:.9rem }
+.fg label {
+  display:block; font-size:.7rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:1.5px;
+  color:var(--txt3); margin-bottom:.35rem;
+}
+.finput {
+  width:100%; background:var(--bg3); border:1px solid var(--ln2);
+  border-radius:7px; padding:.58rem .85rem;
+  color:var(--txt); font-size:.9rem; outline:none;
+  transition:all .2s; font-family:'Inter',sans-serif;
+}
+.finput:focus {
+  border-color:rgba(217,79,30,.55);
+  box-shadow:0 0 0 3px rgba(217,79,30,.07);
+  background:var(--bg4);
+}
+.finput::placeholder { color:var(--txt3) }
+select.finput option { background:var(--bg3) }
+.fg-2 { display:grid; grid-template-columns:1fr 1fr; gap:.85rem }
+.fg-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.85rem }
 
-/* Overlay */
-.overlay{display:none;position:fixed;inset:0;z-index:750;background:rgba(0,0,0,.8)}
-.overlay.on{display:block}
+/* ── BUTTONS ── */
+.btn {
+  display:inline-flex; align-items:center; gap:.4rem;
+  padding:.48rem 1.1rem; border-radius:7px;
+  font-size:.875rem; font-weight:600; cursor:pointer;
+  transition:all .2s; font-family:'Inter',sans-serif;
+}
+.btn-fire { background:var(--fire); color:#fff }
+.btn-fire:hover { background:#bf4118; transform:translateY(-1px); box-shadow:0 4px 16px rgba(217,79,30,.3) }
+.btn-ghost { background:transparent; color:var(--txt2); border:1px solid var(--ln2) }
+.btn-ghost:hover { background:var(--bg3); color:var(--txt) }
+.btn-red { background:rgba(192,57,43,.1); color:var(--bad); border:1px solid rgba(192,57,43,.2) }
+.btn-red:hover { background:rgba(192,57,43,.22) }
+.btn-sm { padding:.3rem .75rem; font-size:.78rem }
 
-/* Stats */
-.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.7rem;margin-bottom:1.5rem}
-.stat-c{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:.9rem}
-.stat-c .n{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--fire)}
-.stat-c .l{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--txt3);margin-top:.15rem}
+/* ── STATS ── */
+.stat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:.7rem; margin-bottom:1.5rem }
+.stat-c { background:var(--bg2); border:1px solid var(--ln2); border-radius:var(--R); padding:.9rem }
+.stat-n { font-family:'Cinzel',serif; font-size:1.6rem; color:var(--fire) }
+.stat-l { font-size:.68rem; text-transform:uppercase; letter-spacing:1px; color:var(--txt3); margin-top:.15rem }
 
-/* Info / alert boxes */
-.info-box{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:1rem 1.2rem;margin-bottom:1rem}
-.info-box p{color:var(--txt2);font-size:.875rem;line-height:1.7}
-.tag{font-size:.72rem;padding:.13rem .5rem;border-radius:20px;font-weight:700;display:inline-block;margin-top:.4rem}
-.tag-ok{background:rgba(46,204,113,.1);color:var(--ok);border:1px solid rgba(46,204,113,.2)}
-.tag-warn{background:rgba(230,126,34,.1);color:var(--warn);border:1px solid rgba(230,126,34,.2)}
+/* ── CARDS ── */
+.info-card { background:var(--bg2); border:1px solid var(--ln2); border-radius:var(--R); padding:1.1rem 1.25rem; margin-bottom:1rem }
+.info-card p { color:var(--txt2); font-size:.875rem; line-height:1.7 }
+.badge { display:inline-block; font-size:.72rem; font-weight:700; padding:.12rem .5rem; border-radius:20px; margin-top:.35rem }
+.badge-ok   { background:rgba(39,174,96,.1);  color:var(--ok);  border:1px solid rgba(39,174,96,.2) }
+.badge-warn { background:rgba(214,137,16,.1); color:var(--warn);border:1px solid rgba(214,137,16,.2) }
 
-/* List rows */
-.list{display:flex;flex-direction:column;gap:.55rem}
-.li-row{display:flex;align-items:center;justify-content:space-between;
-  background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);
-  padding:.8rem 1rem;gap:.75rem;flex-wrap:wrap}
-.li-l{display:flex;align-items:center;gap:.6rem;min-width:0;flex:1}
-.li-icon{font-size:1rem;flex-shrink:0}
-.li-name{font-weight:600;font-size:.875rem}
-.li-meta{font-size:.72rem;color:var(--txt3);margin-top:.1rem}
-.li-r{display:flex;gap:.35rem;flex-shrink:0}
+/* ── LIST ROWS ── */
+.list { display:flex; flex-direction:column; gap:.55rem }
+.lrow {
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--bg2); border:1px solid var(--ln2);
+  border-radius:var(--R); padding:.8rem 1.1rem; gap:.75rem;
+}
+.lrow-l { display:flex; align-items:center; gap:.65rem; min-width:0; flex:1 }
+.lrow-icon { font-size:1rem; flex-shrink:0 }
+.lrow-name { font-weight:600; font-size:.88rem }
+.lrow-meta { font-size:.72rem; color:var(--txt3); margin-top:.08rem }
+.lrow-r { display:flex; gap:.35rem; flex-shrink:0 }
 
-/* Éditeur */
-.ed-bar{display:flex;flex-wrap:wrap;gap:.3rem;padding:.5rem;
-  background:var(--bg3);border:1px solid var(--ln2);border-bottom:none;border-radius:6px 6px 0 0}
-.ed-bar button{background:var(--bg4);border:1px solid var(--ln2);border-radius:4px;
-  color:var(--txt2);padding:.22rem .5rem;font-size:.76rem;font-weight:700;transition:all .15s}
-.ed-bar button:hover{background:rgba(217,79,30,.1);color:var(--ember);border-color:var(--fire)}
-.ed-sep{width:1px;background:var(--ln2);margin:2px}
-.ed-area{border-radius:0 0 6px 6px!important;border-top:none!important}
+/* ── TOGGLE ── */
+.toggle-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.6rem 0; border-bottom:1px solid var(--ln2);
+}
+.toggle-row:last-child { border-bottom:none }
+.toggle-lbl { font-size:.85rem; color:var(--txt2) }
+.sw { position:relative; width:38px; height:22px; flex-shrink:0 }
+.sw input { opacity:0; width:0; height:0; position:absolute }
+.sw-track {
+  position:absolute; inset:0; background:var(--bg4);
+  border-radius:22px; transition:.2s; border:1px solid var(--ln2);
+}
+.sw-track::before {
+  content:''; position:absolute; width:16px; height:16px;
+  border-radius:50%; background:var(--txt3); bottom:2px; left:2px; transition:.2s;
+}
+.sw input:checked + .sw-track { background:var(--fire); border-color:var(--fire) }
+.sw input:checked + .sw-track::before { transform:translateX(16px); background:#fff }
 
-/* Prévisualisation */
-.prev-label{font-size:.67rem;text-transform:uppercase;letter-spacing:2px;
-  color:var(--txt3);font-weight:700;margin:.9rem 0 .4rem}
-.prev-box{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);
-  padding:1.2rem;min-height:80px}
+/* ── MAINTENANCE ── */
+.maint-row {
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--bg2); border:1px solid var(--ln2);
+  border-radius:var(--R); padding:1rem 1.25rem;
+  margin-bottom:1rem; gap:1rem;
+}
+.maint-info h4 { font-weight:700; font-size:.9rem; margin-bottom:.2rem }
+.maint-info p { font-size:.8rem; color:var(--txt3) }
 
-/* Maint toggle */
-.maint-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;
-  background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:1rem 1.2rem;margin-bottom:1rem}
-.maint-info h4{font-weight:700;margin-bottom:.2rem;font-size:.9rem}
-.maint-info p{font-size:.8rem;color:var(--txt3)}
+/* ── DANGER ── */
+.danger { background:rgba(192,57,43,.04); border:1px solid rgba(192,57,43,.15); border-radius:var(--R); padding:1.1rem 1.25rem }
+.danger-title { font-weight:700; color:var(--bad); font-size:.88rem; margin-bottom:.85rem }
 
-/* Danger */
-.danger-box{background:rgba(231,76,60,.04);border:1px solid rgba(231,76,60,.15);
-  border-radius:var(--R);padding:1rem 1.2rem}
-.danger-title{font-weight:700;color:var(--bad);margin-bottom:.85rem;font-size:.88rem}
+/* ════════════════════════════════════════════
+   RICH TEXT EDITOR — style LibreOffice
+════════════════════════════════════════════ */
+.rte-wrap {
+  border:1px solid var(--ln2); border-radius:var(--R);
+  overflow:hidden; background:var(--bg2);
+}
 
-/* Toggle switch */
-.toggle-row{display:flex;align-items:center;justify-content:space-between;
-  padding:.6rem 0;border-bottom:1px solid var(--ln2)}
-.toggle-row:last-child{border-bottom:none}
-.toggle-label{font-size:.875rem;color:var(--txt2)}
-.toggle{position:relative;width:38px;height:22px;flex-shrink:0}
-.toggle input{opacity:0;width:0;height:0;position:absolute}
-.toggle-slider{position:absolute;inset:0;background:var(--bg4);border-radius:22px;
-  transition:.2s;border:1px solid var(--ln2)}
-.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;
-  border-radius:50%;background:var(--txt3);bottom:2px;left:2px;transition:.2s}
-.toggle input:checked + .toggle-slider{background:var(--fire);border-color:var(--fire)}
-.toggle input:checked + .toggle-slider::before{transform:translateX(16px);background:#fff}
+/* Barre d'outils */
+.rte-toolbar {
+  background:var(--bg3); border-bottom:1px solid var(--ln2);
+  padding:.45rem .6rem;
+  display:flex; flex-wrap:wrap; align-items:center; gap:.2rem;
+}
+.rte-btn {
+  background:transparent; border:1px solid transparent;
+  border-radius:5px; padding:.28rem .45rem;
+  color:var(--txt2); font-size:.8rem; cursor:pointer;
+  transition:all .15s; min-width:28px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Inter',sans-serif; font-weight:600;
+}
+.rte-btn:hover { background:rgba(255,255,255,.08); color:var(--txt); border-color:var(--ln2) }
+.rte-btn.active { background:rgba(217,79,30,.15); color:var(--ember); border-color:rgba(217,79,30,.3) }
+.rte-sep { width:1px; height:20px; background:var(--ln2); margin:0 .15rem }
+
+/* Sélecteur de taille de titre */
+.rte-hsel {
+  background:var(--bg4); border:1px solid var(--ln2);
+  border-radius:5px; padding:.28rem .5rem;
+  color:var(--txt2); font-size:.78rem; cursor:pointer;
+  outline:none; font-family:'Inter',sans-serif;
+}
+.rte-hsel:focus { border-color:rgba(217,79,30,.4) }
+.rte-hsel option { background:var(--bg3) }
+
+/* Zone d'écriture WYSIWYG */
+.rte-area {
+  min-height:320px; padding:1.25rem 1.5rem;
+  background:var(--bg2); color:var(--txt);
+  font-family:'Inter',sans-serif; font-size:.9rem; line-height:1.8;
+  outline:none; overflow-y:auto;
+}
+.rte-area:empty::before {
+  content:attr(data-placeholder);
+  color:var(--txt3); pointer-events:none;
+}
+/* Styles dans l'éditeur */
+.rte-area h1 { font-family:'Cinzel',serif; font-size:1.4rem; color:var(--goldl); margin:1.5rem 0 .6rem }
+.rte-area h2 {
+  font-family:'Cinzel',serif; font-size:1.1rem; color:var(--ember);
+  margin:1.5rem 0 .6rem; padding-left:.7rem; border-left:3px solid var(--fire);
+}
+.rte-area h3 { font-size:.95rem; font-weight:700; color:var(--txt); margin:1.1rem 0 .4rem }
+.rte-area p { color:var(--txt2); margin-bottom:.6rem }
+.rte-area strong { color:var(--txt); font-weight:700 }
+.rte-area em { color:var(--goldl); font-style:italic }
+.rte-area ul, .rte-area ol { padding-left:1.5rem; margin-bottom:.6rem }
+.rte-area li { color:var(--txt2); margin-bottom:.2rem }
+.rte-area a { color:var(--ember); text-decoration:underline }
+.rte-area code {
+  background:var(--bg4); border:1px solid var(--ln2);
+  border-radius:4px; padding:.1rem .4rem;
+  font-family:'Courier New',monospace; font-size:.83rem; color:var(--ember);
+}
+.rte-area pre {
+  background:var(--bg3); border:1px solid var(--ln2);
+  border-radius:var(--R); padding:1rem; overflow-x:auto; margin:1rem 0;
+  font-family:'Courier New',monospace; font-size:.84rem; color:var(--txt2);
+}
+.rte-area blockquote {
+  border-left:3px solid var(--gold);
+  background:rgba(200,150,60,.05);
+  padding:.75rem 1rem; border-radius:0 var(--R) var(--R) 0; margin:1rem 0;
+}
+.rte-area hr { border:none; border-top:1px solid var(--ln2); margin:1.5rem 0 }
+.rte-area img { max-width:100%; border-radius:var(--R); margin:.5rem 0 }
+.rte-area table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.875rem }
+.rte-area th { padding:.5rem .85rem; background:var(--bg3); border:1px solid var(--ln2); color:var(--ember); font-weight:700; text-align:left }
+.rte-area td { padding:.5rem .85rem; border:1px solid var(--ln2); color:var(--txt2) }
+
+/* Barre du bas : stats + actions rapides */
+.rte-footer {
+  background:var(--bg3); border-top:1px solid var(--ln2);
+  padding:.35rem .75rem;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:.72rem; color:var(--txt3);
+}
 
 /* Toast */
-#toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
-  padding:.65rem 1.1rem;border-radius:var(--R);background:var(--bg3);border:1px solid var(--ln2);
-  font-size:.83rem;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.4);
-  transform:translateY(60px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
-#toast.on{transform:translateY(0);opacity:1}
-#toast.ok{border-color:rgba(46,204,113,.4);color:var(--ok)}
-#toast.err{border-color:rgba(231,76,60,.4);color:var(--bad)}
-#toast.info{border-color:rgba(212,168,67,.4);color:var(--gold)}
-
-/* Wiki content preview */
-.wc h2{font-family:'Cinzel',serif;font-size:1rem;color:var(--ember);margin:1.25rem 0 .5rem;padding-left:.6rem;border-left:2px solid var(--fire)}
-.wc h3{font-size:.88rem;font-weight:700;color:var(--txt);margin:.9rem 0 .3rem}
-.wc p{color:var(--txt2);margin-bottom:.5rem;font-size:.85rem;line-height:1.7}
-.wc ul,.wc ol{padding-left:1.3rem;margin-bottom:.5rem}
-.wc li{color:var(--txt2);font-size:.85rem;margin-bottom:.2rem}
-.wc strong{color:var(--txt);font-weight:700}
-.wc em{color:var(--gold);font-style:italic}
-.wc code{background:var(--bg4);border:1px solid var(--ln2);border-radius:4px;
-  padding:.08rem .35rem;font-family:'Courier New',monospace;font-size:.8rem;color:var(--ember)}
-.wc pre{background:var(--bg3);border:1px solid var(--ln2);border-radius:var(--R);
-  padding:.9rem;overflow-x:auto;margin:.6rem 0}
-.wc pre code{background:none;border:none;padding:0;font-size:.8rem;color:var(--txt2)}
-.wc blockquote{border-left:2px solid var(--gold2);background:rgba(212,168,67,.04);
-  padding:.6rem .9rem;border-radius:0 var(--R) var(--R) 0;margin:.6rem 0}
-.wc blockquote p{margin:0;font-style:italic}
-.wc hr{border:none;border-top:1px solid var(--ln2);margin:1rem 0}
-.wc table{width:100%;border-collapse:collapse;font-size:.82rem;margin:.6rem 0}
-.wc th{padding:.4rem .7rem;background:var(--bg4);border:1px solid var(--ln2);color:var(--ember);font-weight:700;text-align:left}
-.wc td{padding:.4rem .7rem;border:1px solid var(--ln2);color:var(--txt2)}
-
-/* Responsive */
-@media(max-width:768px){
-  .burger{display:flex!important}
-
-  /* Sidebar admin en tiroir */
-  .adm-sb{
-    display:block!important;
-    position:fixed;top:var(--H);left:0;bottom:0;z-index:800;
-    width:var(--SW);height:calc(100vh - var(--H));
-    transform:translateX(-100%);
-    box-shadow:4px 0 24px rgba(0,0,0,.5);
-    transition:transform .3s cubic-bezier(.4,0,.2,1);
-  }
-  .adm-sb.open{transform:translateX(0)}
-
-  .adm-main{padding:1.25rem 1rem 3rem}
-  .fg-2,.fg-3{grid-template-columns:1fr}
-  .li-row{flex-direction:column;align-items:flex-start}
-  .li-r{width:100%}.li-r .btn{flex:1;justify-content:center}
-  .stat-row{grid-template-columns:repeat(2,1fr)}
-  .adm-title{font-size:1.1rem}
+#toast {
+  position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
+  padding:.65rem 1.15rem; border-radius:var(--R);
+  background:var(--bg3); border:1px solid var(--ln2);
+  font-size:.83rem; font-weight:500;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+  transform:translateY(60px); opacity:0;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1); pointer-events:none;
 }
-@media(min-width:769px){.burger{display:none!important}}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(217,79,30,.2);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(217,79,30,.4)}
+#toast.on { transform:translateY(0); opacity:1 }
+#toast.ok  { border-color:rgba(39,174,96,.4);  color:var(--ok) }
+#toast.err { border-color:rgba(192,57,43,.4); color:var(--bad) }
+#toast.info{ border-color:rgba(200,150,60,.4); color:var(--gold) }
+
+::-webkit-scrollbar { width:5px; height:5px }
+::-webkit-scrollbar-track { background:transparent }
+::-webkit-scrollbar-thumb { background:rgba(217,79,30,.2); border-radius:3px }
+::-webkit-scrollbar-thumb:hover { background:rgba(217,79,30,.4) }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="login-wrap" id="login-wrap">
+<!-- ═══ LOGIN ═══ -->
+<div class="login-page" id="login-page">
   <div class="login-card">
     <div class="l-icon">🔐</div>
     <h2 class="l-title">Panel Admin</h2>
     <p class="l-sub">Dragon SMP — Accès restreint</p>
-    <div class="step-dots">
-      <div class="sdot cur" id="sd1">1</div><div class="sdot-line"></div>
+    <div class="sdots">
+      <div class="sdot cur" id="sd1">1</div>
+      <div class="sdot-line"></div>
       <div class="sdot" id="sd2">2</div>
     </div>
     <div class="lstep on" id="ls1">
-      <div class="fg"><label>Premier mot de passe</label>
-        <input type="password" id="pw1" placeholder="••••••••" onkeydown="if(event.key==='Enter')s1()"></div>
+      <div class="fg">
+        <label>Premier mot de passe</label>
+        <input class="finput" type="password" id="pw1" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')s1()">
+      </div>
       <div class="lerr" id="e1"></div>
-      <button class="btn btn-fire btn-full" onclick="s1()">Continuer →</button>
+      <button class="btn btn-fire" style="width:100%;justify-content:center" onclick="s1()">Continuer →</button>
     </div>
     <div class="lstep" id="ls2">
-      <div class="fg"><label>Deuxième mot de passe</label>
-        <input type="password" id="pw2" placeholder="••••••••" onkeydown="if(event.key==='Enter')s2()"></div>
+      <div class="fg">
+        <label>Deuxième mot de passe</label>
+        <input class="finput" type="password" id="pw2" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')s2()">
+      </div>
       <div class="lerr" id="e2"></div>
-      <button class="btn btn-fire btn-full" onclick="s2()">Se connecter</button>
-      <button class="btn btn-ghost btn-full" style="margin-top:.4rem" onclick="resetLogin()">← Retour</button>
+      <button class="btn btn-fire" style="width:100%;justify-content:center" onclick="s2()">Se connecter</button>
+      <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:.4rem" onclick="resetLogin()">← Retour</button>
     </div>
     <div style="margin-top:1.25rem;text-align:center">
-      <a href="index.html" style="color:var(--txt3);font-size:.8rem">← Retour au wiki</a>
+      <a href="index.html" style="color:var(--txt3);font-size:.8rem">← Retour au site</a>
     </div>
   </div>
 </div>
 
-<!-- ADMIN -->
-<div class="adm-wrap" id="adm-wrap">
+<!-- ═══ ADMIN ═══ -->
+<div class="adm" id="adm">
+
   <header class="hdr">
-    <button class="burger" id="burger"><span></span><span></span><span></span></button>
     <div class="hdr-logo">🐉 Dragon<em>SMP</em> <span style="color:var(--txt3);font-weight:300;font-size:.8rem">/ Admin</span></div>
-    <div style="display:flex;align-items:center;gap:.6rem;margin-left:auto">
-      <span class="hdr-status">Connecté</span>
+    <div style="display:flex;align-items:center;gap:.65rem;margin-left:auto">
+      <span class="hdr-conn">Connecté</span>
       <button class="btn btn-ghost btn-sm" onclick="logout()">Déconnexion</button>
       <a href="index.html" class="btn btn-ghost btn-sm">← Site</a>
     </div>
   </header>
 
-  <div class="overlay" id="overlay"></div>
-
   <div class="adm-body">
-    <aside class="adm-sb" id="adm-sb">
-      <div class="adm-nav on" data-p="dashboard" onclick="showP('dashboard',this)">📊 Dashboard</div>
+
+    <!-- Sidebar -->
+    <aside class="adm-sb">
+      <div class="adm-nav on"  data-p="dash"       onclick="showP('dash',this)">📊 Dashboard</div>
       <div class="adm-sep"></div>
-      <div class="adm-nav" data-p="pages" onclick="showP('pages',this)">📄 Pages</div>
-      <div class="adm-nav" data-p="page-editor" onclick="showP('page-editor',this)" id="nav-pg-ed">✏️ Éditeur page</div>
+      <div class="adm-nav"     data-p="pages"      onclick="showP('pages',this)">📄 Pages</div>
+      <div class="adm-nav"     data-p="pg-editor"  onclick="showP('pg-editor',this)" id="nav-pged">✏️ Éditeur de page</div>
       <div class="adm-sep"></div>
-      <div class="adm-nav" data-p="commands" onclick="showP('commands',this)">⌨️ Commandes</div>
-      <div class="adm-nav" data-p="cmd-editor" onclick="showP('cmd-editor',this)" id="nav-cmd-ed">➕ Ajouter commande</div>
+      <div class="adm-nav"     data-p="commands"   onclick="showP('commands',this)">⌨️ Commandes</div>
+      <div class="adm-nav"     data-p="cmd-editor" onclick="showP('cmd-editor',this)" id="nav-cmded">➕ Ajouter commande</div>
       <div class="adm-sep"></div>
-      <div class="adm-nav" data-p="settings" onclick="showP('settings',this)">⚙️ Paramètres</div>
+      <div class="adm-nav"     data-p="settings"   onclick="showP('settings',this)">⚙️ Paramètres</div>
     </aside>
 
     <main class="adm-main">
 
       <!-- ── DASHBOARD ── -->
-      <div class="adm-panel on" id="p-dashboard">
+      <div class="adm-panel on" id="p-dash">
         <h2 class="adm-title">📊 Dashboard</h2>
-        <div class="stat-row" id="dash-stats"></div>
+        <div class="stat-grid" id="dash-stats"></div>
         <div class="maint-row">
           <div class="maint-info">
             <h4 id="maint-h">🔧 Maintenance</h4>
-            <p id="maint-p">Chargement...</p>
+            <p id="maint-p">Chargement…</p>
           </div>
-          <button class="btn btn-sm" id="maint-btn" onclick="toggleMaint()">...</button>
+          <button class="btn btn-sm" id="maint-btn" onclick="toggleMaint()">…</button>
         </div>
-        <div class="info-box">
-          <p>Panel admin du <strong style="color:var(--ember)">Dragon SMP</strong>.<br>
-          Crée tes <strong>pages</strong> (elles apparaissent dans le menu du site), ajoute tes <strong>commandes</strong> pour la barre de recherche.</p>
-          <span class="tag" id="db-tag">Vérification...</span>
+        <div class="info-card">
+          <p>Bienvenue dans le panel admin du <strong style="color:var(--ember)">Dragon SMP</strong>.<br>
+          Édite les pages existantes ou crée-en de nouvelles. Gère les commandes de la barre de recherche.</p>
+          <span class="badge" id="db-badge">Vérification…</span>
         </div>
       </div>
 
@@ -335,63 +440,116 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       </div>
 
       <!-- ── ÉDITEUR PAGE ── -->
-      <div class="adm-panel" id="p-page-editor">
-        <h2 class="adm-title" id="pg-ed-title">✏️ Éditeur de page</h2>
+      <div class="adm-panel" id="p-pg-editor">
+        <h2 class="adm-title" id="pged-title">✏️ Éditeur de page</h2>
         <input type="hidden" id="edit-pg-id">
 
-        <div class="fg-2">
-          <div class="fg"><label>Titre *</label>
-            <input type="text" id="pg-title" placeholder="Ex: Économie"></div>
-          <div class="fg"><label>Icône (emoji)</label>
-            <input type="text" id="pg-icon" placeholder="💰" maxlength="4"></div>
-        </div>
-        <div class="fg"><label>Description courte</label>
-          <input type="text" id="pg-desc" placeholder="Résumé en une phrase..."></div>
-
-        <!-- Options de la page -->
-        <div class="info-box" style="margin-bottom:1rem">
-          <p style="font-weight:600;margin-bottom:.6rem;color:var(--txt)">Options de la page</p>
-          <div class="toggle-row">
-            <span class="toggle-label">Afficher la sidebar gauche (table des matières auto)</span>
-            <label class="toggle"><input type="checkbox" id="pg-showtoc" checked><span class="toggle-slider"></span></label>
+        <div class="fg-3">
+          <div class="fg" style="grid-column:span 2">
+            <label>Titre *</label>
+            <input class="finput" type="text" id="pg-title" placeholder="Ex: Économie">
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label">Afficher la barre de recherche commandes (droite)</span>
-            <label class="toggle"><input type="checkbox" id="pg-showcmd"><span class="toggle-slider"></span></label>
+          <div class="fg">
+            <label>Icône (emoji)</label>
+            <input class="finput" type="text" id="pg-icon" placeholder="💰" maxlength="4">
           </div>
         </div>
 
         <div class="fg">
-          <label>Contenu Markdown</label>
-          <div class="ed-bar">
-            <button onclick="ins('## ','')">H2</button>
-            <button onclick="ins('### ','')">H3</button>
-            <div class="ed-sep"></div>
-            <button onclick="ins('**','**')"><b>G</b></button>
-            <button onclick="ins('*','*')"><i>I</i></button>
-            <button onclick="ins('`','`')">code</button>
-            <div class="ed-sep"></div>
-            <button onclick="ins('- ','')">• liste</button>
-            <button onclick="ins('1. ','')">1. liste</button>
-            <button onclick="ins('> ','')">❝</button>
-            <div class="ed-sep"></div>
-            <button onclick="ins('\n---\n','')">— sépar.</button>
-            <button onclick="ins('\n```\n','\n```')">bloc code</button>
-            <div class="ed-sep"></div>
-            <button onclick="insLink()">🔗 lien</button>
-            <button onclick="insImg()">🖼 image</button>
+          <label>Description courte (sous le titre)</label>
+          <input class="finput" type="text" id="pg-desc" placeholder="Une phrase de description…">
+        </div>
+
+        <!-- Options -->
+        <div class="info-card" style="margin-bottom:1rem">
+          <p style="font-weight:600;color:var(--txt);margin-bottom:.65rem">Options d'affichage</p>
+          <div class="toggle-row">
+            <span class="toggle-lbl">Afficher la table des matières (sidebar gauche, auto-générée depuis les titres)</span>
+            <label class="sw"><input type="checkbox" id="pg-toc" checked><span class="sw-track"></span></label>
           </div>
-          <textarea class="ed-area fg" id="pg-content"
-            placeholder="## Titre de section&#10;&#10;Ton contenu en Markdown..."></textarea>
+          <div class="toggle-row">
+            <span class="toggle-lbl">Afficher la barre de recherche commandes (sidebar droite)</span>
+            <label class="sw"><input type="checkbox" id="pg-cmds"><span class="sw-track"></span></label>
+          </div>
         </div>
 
-        <div class="prev-label">👁 Prévisualisation</div>
-        <div class="prev-box wc" id="pg-prev">
-          <span style="color:var(--txt3);font-size:.82rem">Commence à écrire…</span>
+        <!-- Éditeur riche -->
+        <div class="fg">
+          <label>Contenu</label>
+          <div class="rte-wrap">
+
+            <!-- Toolbar -->
+            <div class="rte-toolbar" id="rte-toolbar">
+              <!-- Titres -->
+              <select class="rte-hsel" onchange="rteHeading(this.value);this.value=''">
+                <option value="">Paragraphe</option>
+                <option value="h2">Titre H2</option>
+                <option value="h3">Titre H3</option>
+                <option value="h1">Titre H1</option>
+              </select>
+
+              <div class="rte-sep"></div>
+
+              <!-- Formatage texte -->
+              <button class="rte-btn" onclick="rteExec('bold')" title="Gras (Ctrl+B)"><b>G</b></button>
+              <button class="rte-btn" onclick="rteExec('italic')" title="Italique (Ctrl+I)"><i>I</i></button>
+              <button class="rte-btn" onclick="rteExec('underline')" title="Souligné (Ctrl+U)"><u>S</u></button>
+              <button class="rte-btn" onclick="rteStrike()" title="Barré"><s>abc</s></button>
+
+              <div class="rte-sep"></div>
+
+              <!-- Alignements -->
+              <button class="rte-btn" onclick="rteExec('justifyLeft')" title="Aligner à gauche">⬅</button>
+              <button class="rte-btn" onclick="rteExec('justifyCenter')" title="Centrer">⬛</button>
+              <button class="rte-btn" onclick="rteExec('justifyRight')" title="Aligner à droite">➡</button>
+
+              <div class="rte-sep"></div>
+
+              <!-- Listes -->
+              <button class="rte-btn" onclick="rteExec('insertUnorderedList')" title="Liste à puces">• Liste</button>
+              <button class="rte-btn" onclick="rteExec('insertOrderedList')" title="Liste numérotée">1. Liste</button>
+
+              <div class="rte-sep"></div>
+
+              <!-- Blocs spéciaux -->
+              <button class="rte-btn" onclick="rteInsertBlock('blockquote')" title="Citation">❝</button>
+              <button class="rte-btn" onclick="rteInsertCode()" title="Bloc de code">{'</>}'}</button>
+              <button class="rte-btn" onclick="rteInlineCode()" title="Code en ligne">`code`</button>
+              <button class="rte-btn" onclick="rteInsertHR()" title="Séparateur">— sépar.</button>
+
+              <div class="rte-sep"></div>
+
+              <!-- Insertion -->
+              <button class="rte-btn" onclick="rteInsertLink()" title="Insérer un lien">🔗 Lien</button>
+              <button class="rte-btn" onclick="rteInsertImage()" title="Insérer une image">🖼 Image</button>
+              <button class="rte-btn" onclick="rteInsertTable()" title="Insérer un tableau">⊞ Tableau</button>
+
+              <div class="rte-sep"></div>
+
+              <!-- Vue -->
+              <button class="rte-btn" id="btn-source" onclick="toggleSource()" title="Voir/modifier le Markdown source">📝 Source</button>
+            </div>
+
+            <!-- Zone WYSIWYG -->
+            <div class="rte-area" id="rte-editor"
+              contenteditable="true"
+              data-placeholder="Commence à écrire ton contenu ici…&#10;&#10;Utilise la barre d'outils pour formater le texte, ajouter des titres, des listes, des images…"
+              spellcheck="true"></div>
+
+            <!-- Zone source Markdown (cachée par défaut) -->
+            <textarea id="rte-source" style="display:none;width:100%;min-height:320px;padding:1.25rem 1.5rem;background:var(--bg2);color:var(--txt);font-family:'Courier New',monospace;font-size:.84rem;line-height:1.55;border:none;outline:none;resize:vertical"
+              placeholder="Markdown source…"></textarea>
+
+            <!-- Footer -->
+            <div class="rte-footer">
+              <span id="rte-stats">0 mots</span>
+              <span>Ctrl+B : gras · Ctrl+I : italique · Ctrl+K : lien</span>
+            </div>
+          </div>
         </div>
 
-        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.25rem">
-          <button class="btn btn-fire" onclick="savePage()">💾 Sauvegarder</button>
+        <div style="display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.25rem">
+          <button class="btn btn-fire" onclick="savePage()">💾 Sauvegarder la page</button>
           <button class="btn btn-ghost" onclick="showP('pages',document.querySelector('[data-p=pages]'))">✕ Annuler</button>
         </div>
       </div>
@@ -408,26 +566,35 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
       <!-- ── ÉDITEUR COMMANDE ── -->
       <div class="adm-panel" id="p-cmd-editor">
-        <h2 class="adm-title" id="cmd-ed-title">➕ Nouvelle commande</h2>
+        <h2 class="adm-title" id="cmded-title">➕ Nouvelle commande</h2>
         <input type="hidden" id="edit-cmd-id">
 
         <div class="fg-2">
-          <div class="fg"><label>Commande principale *</label>
-            <input type="text" id="cmd-main" placeholder="Ex: /home"></div>
-          <div class="fg"><label>Alternatives (séparées par virgules)</label>
-            <input type="text" id="cmd-alts" placeholder="Ex: /retour, /spawn perso"></div>
-        </div>
-        <div class="fg"><label>Description *</label>
-          <input type="text" id="cmd-desc" placeholder="Ce que fait cette commande..."></div>
-        <div class="fg">
-          <label>Mots-clés de recherche (séparés par espaces)</label>
-          <input type="text" id="cmd-kw" placeholder="Ex: home retour base téléportation spawn">
-          <div style="font-size:.72rem;color:var(--txt3);margin-top:.3rem">
-            💡 Ces mots permettent de trouver la commande même sans taper son nom exact. Ajoutes-en autant que tu veux.
+          <div class="fg">
+            <label>Commande principale *</label>
+            <input class="finput" type="text" id="cmd-main" placeholder="Ex: /home">
+          </div>
+          <div class="fg">
+            <label>Alias / alternatives</label>
+            <input class="finput" type="text" id="cmd-alts" placeholder="Ex: /h, /retour">
           </div>
         </div>
 
-        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">
+        <div class="fg">
+          <label>Description *</label>
+          <input class="finput" type="text" id="cmd-desc" placeholder="Ce que fait cette commande en une phrase…">
+        </div>
+
+        <div class="fg">
+          <label>Mots-clés (séparés par des virgules)</label>
+          <input class="finput" type="text" id="cmd-kw" placeholder="Ex: home, retour base, aller maison, tp home">
+          <div style="font-size:.72rem;color:var(--txt3);margin-top:.35rem;line-height:1.6">
+            💡 Séparés par des <strong style="color:var(--txt2)">virgules</strong> — chaque mot-clé peut contenir des espaces.<br>
+            Ex : <code style="background:var(--bg3);padding:.05rem .3rem;border-radius:3px">home, retour maison, set home, poser home</code>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:.65rem;flex-wrap:wrap;margin-top:.75rem">
           <button class="btn btn-fire" onclick="saveCmd()">💾 Sauvegarder</button>
           <button class="btn btn-ghost" onclick="showP('commands',document.querySelector('[data-p=commands]'))">✕ Annuler</button>
         </div>
@@ -438,43 +605,53 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <h2 class="adm-title">⚙️ Paramètres</h2>
 
         <!-- JSONbin -->
-        <div class="info-box" style="margin-bottom:1rem">
-          <p><strong style="color:var(--gold)">☁️ Base de données — JSONbin.io</strong><br>
-          Entre ton <strong>Bin ID</strong> et ta <strong>Master Key</strong> pour que les données soient sauvegardées dans le cloud.
-          Ton Bin ID : <code style="color:var(--ember);background:var(--bg3);padding:.1rem .3rem;border-radius:3px">69a5edf2d0ea881f40e853ae</code></p>
+        <div class="info-card" style="margin-bottom:1rem">
+          <p><strong style="color:var(--goldl)">☁️ Base de données — JSONbin.io</strong><br>
+          Ton <strong>Bin ID</strong> : <code style="color:var(--ember);background:var(--bg3);padding:.08rem .35rem;border-radius:3px;font-size:.82rem">69a5edf2d0ea881f40e853ae</code><br>
+          Entre ta <strong>Master Key API</strong> pour activer la synchronisation cloud.</p>
         </div>
-        <div class="fg-2" style="max-width:560px">
-          <div class="fg"><label>Bin ID</label>
-            <input type="text" id="set-bin" placeholder="69a5edf2d0ea881f40e853ae"></div>
-          <div class="fg"><label>Master Key API</label>
-            <input type="password" id="set-key" placeholder="$2a$10$..."></div>
+        <div class="fg-2" style="max-width:580px">
+          <div class="fg">
+            <label>Bin ID</label>
+            <input class="finput" type="text" id="set-bin" placeholder="69a5edf2d0ea881f40e853ae">
+          </div>
+          <div class="fg">
+            <label>Master Key API</label>
+            <input class="finput" type="password" id="set-key" placeholder="$2a$10$…">
+          </div>
         </div>
-        <button class="btn btn-fire btn-sm" onclick="saveDB()" style="margin-bottom:1.5rem">💾 Enregistrer config DB</button>
+        <button class="btn btn-fire btn-sm" onclick="saveDB()" style="margin-bottom:1.75rem">💾 Enregistrer la config DB</button>
 
         <!-- Site -->
-        <div class="info-box" style="margin-bottom:1rem">
-          <p><strong style="color:var(--gold)">🌐 Paramètres du site</strong></p>
+        <div class="info-card" style="margin-bottom:1rem">
+          <p><strong style="color:var(--goldl)">🌐 Paramètres du site</strong></p>
         </div>
-        <div style="max-width:560px">
-          <div class="fg"><label>Description page d'accueil</label>
-            <input type="text" id="set-hero-desc" placeholder="Description du serveur..."></div>
-          <div class="fg-2">
-            <div class="fg"><label>IP interne (ping MC)</label>
-              <input type="text" id="set-mc-host" placeholder="163.5.141.232"></div>
-            <div class="fg"><label>Port</label>
-              <input type="number" id="set-mc-port" placeholder="25816"></div>
+        <div style="max-width:580px">
+          <div class="fg">
+            <label>Texte de présentation (page d'accueil)</label>
+            <input class="finput" type="text" id="set-sub" placeholder="Description du serveur…">
           </div>
-          <div class="fg"><label>IP affichée aux joueurs</label>
-            <input type="text" id="set-mc-ip" placeholder="connect.axohosts.fr:25883"></div>
-          <div class="fg"><label>Message de maintenance</label>
-            <input type="text" id="set-maint-msg" placeholder="Le serveur est en maintenance..."></div>
-          <button class="btn btn-fire btn-sm" onclick="saveSettings()" style="margin-bottom:1.5rem">💾 Enregistrer</button>
+          <div class="fg-2">
+            <div class="fg">
+              <label>IP pour le ping (interne)</label>
+              <input class="finput" type="text" id="set-host" placeholder="163.5.141.232">
+            </div>
+            <div class="fg">
+              <label>Port</label>
+              <input class="finput" type="number" id="set-port" placeholder="25816">
+            </div>
+          </div>
+          <div class="fg">
+            <label>IP affichée aux joueurs</label>
+            <input class="finput" type="text" id="set-ip" placeholder="163.5.141.232:25816">
+          </div>
+          <button class="btn btn-fire btn-sm" onclick="saveSettings()" style="margin-bottom:1.75rem">💾 Enregistrer</button>
         </div>
 
         <!-- Danger -->
-        <div class="danger-box">
+        <div class="danger">
           <p class="danger-title">⚠️ Zone dangereuse</p>
-          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+          <div style="display:flex;gap:.65rem;flex-wrap:wrap">
             <button class="btn btn-ghost btn-sm" onclick="exportData()">📤 Exporter JSON</button>
             <button class="btn btn-red btn-sm" onclick="confirmReset()">🗑 Réinitialiser tout</button>
           </div>
@@ -490,404 +667,666 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <script>
 'use strict';
 
-/* ── MDP ── */
-const H1='14a4112514a4112514a4112514a41125';
-const H2='2d2438242d2438242d2438242d243824';
+/* ─── Auth ──────────────────────────────────────────────── */
+const H1 = '14a4112514a4112514a4112514a41125';
+const H2 = '2d2438242d2438242d2438242d243824';
 
-function sh(s){
-  let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;
-  return Math.abs(h).toString(16).padStart(8,'0').repeat(4);
+function sh(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h).toString(16).padStart(8, '0').repeat(4);
 }
 
-/* ── Defaults ── */
-const DEFAULTS={
-  settings:{mcHost:'163.5.141.232',mcPort:25816,mcIp:'connect.axohosts.fr:25883',
-    maintenance:false,maintMsg:'Serveur en maintenance.',
-    heroDesc:'Serveur Minecraft Survie communautaire francophone.'},
-  pages:[
-    {id:'reglement',title:'Règlement',icon:'📋',isCore:true,showToc:true,showCmdSearch:false,
-     desc:'Les règles à respecter',
-     content:`## Règlement\n\n**1. Respect mutuel** — Aucune insulte ni harcèlement.\n\n**2. Anti-triche** — Hacks et exploits interdits.\n\n**3. Anti-grief** — Ne détruis pas les constructions des autres.\n\n**4. PvP fair-play** — Avec accord mutuel uniquement.\n\n**5. Respect du staff** — Les décisions sont finales.`},
-    {id:'wiki',title:'Wiki',icon:'📖',isCore:true,showToc:true,showCmdSearch:true,
-     desc:'Documentation complète',
-     content:`## Bienvenue sur le Wiki\n\nDocumentation complète du **Dragon SMP**.\n\n## Premiers pas\n\nIP : \`connect.axohosts.fr:25883\` — Java 1.21+\n\n## Économie\n\nLa monnaie s'appelle les **Écailles**.\n\n## Protection\n\nProtège ta base avec \`/claim\`.`}
+function s1() {
+  if (sh(document.getElementById('pw1').value) === H1) {
+    document.getElementById('ls1').classList.remove('on');
+    document.getElementById('ls2').classList.add('on');
+    document.getElementById('sd1').className = 'sdot done';
+    document.getElementById('sd2').className = 'sdot cur';
+    setTimeout(() => document.getElementById('pw2').focus(), 50);
+  } else { serr('e1', 'Mot de passe incorrect'); document.getElementById('pw1').value = '' }
+}
+function s2() {
+  if (sh(document.getElementById('pw2').value) === H2) {
+    document.getElementById('sd2').className = 'sdot done';
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('adm').classList.add('on');
+    initAdmin();
+  } else { serr('e2', 'Mot de passe incorrect'); document.getElementById('pw2').value = '' }
+}
+function resetLogin() {
+  document.getElementById('ls1').classList.add('on');
+  document.getElementById('ls2').classList.remove('on');
+  document.getElementById('sd1').className = 'sdot cur';
+  document.getElementById('sd2').className = 'sdot';
+  ['pw1','pw2'].forEach(id => document.getElementById(id).value = '');
+}
+function logout() {
+  resetLogin();
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('adm').classList.remove('on');
+}
+function serr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = '❌ ' + msg;
+  setTimeout(() => el.textContent = '', 3000);
+}
+
+/* ─── Data ──────────────────────────────────────────────── */
+const DEFAULTS = {
+  settings: {
+    mcHost: '163.5.141.232', mcPort: 25816,
+    mcIp: '163.5.141.232:25816', maintenance: false,
+    heroSub: 'Serveur Minecraft Survie communautaire francophone. Aventure, construction et entraide au rendez-vous.'
+  },
+  pages: [
+    { id:'presentation', title:'Présentation', icon:'🏠', isSpecial:true, showToc:false, showCmds:false },
+    { id:'reglement', title:'Règlement', icon:'📋', showToc:true, showCmds:false,
+      desc:'Les règles à respecter sur le serveur Dragon SMP.',
+      content:`## Introduction\n\nBienvenue sur le **Dragon SMP**. Ce règlement s'applique à tous les joueurs.\n\n## Comportement\n\n### Respect mutuel\n\nAucune insulte ni harcèlement.\n\n## Jeu équitable\n\n### Anti-triche\n\nHacks et exploits interdits.\n\n### Anti-grief\n\nNe détruis pas les constructions des autres.`
+    },
+    { id:'wiki', title:'Wiki', icon:'📖', showToc:true, showCmds:true,
+      desc:'Documentation complète du serveur Dragon SMP.',
+      content:`## Premiers pas\n\nBienvenue dans le Wiki du **Dragon SMP** !\n\n### Rejoindre\n\n**IP :** \`163.5.141.232:25816\` — Java 1.21+\n\n## Économie\n\nLa monnaie s'appelle les **Écailles**.\n\n## Protection\n\nProtège ton terrain avec \`/claim\`.`
+    }
   ],
-  commands:[
-    {id:'c1',cmd:'/home',alts:'/retour',desc:'Retourne à ton home.',keywords:'home retour base'},
-    {id:'c2',cmd:'/sethome',alts:'/home set',desc:'Définit ton home.',keywords:'sethome set home définir base'},
-    {id:'c3',cmd:'/tpa [joueur]',alts:'/tp demande',desc:'Demande de TP à un joueur.',keywords:'tpa tp téléportation joueur'},
-    {id:'c4',cmd:'/money',alts:'/balance, /bal',desc:'Voir ton solde.',keywords:'money argent solde balance'},
-    {id:'c5',cmd:'/pay [joueur] [montant]',alts:'',desc:'Envoie des Écailles.',keywords:'pay payer argent donner'},
-    {id:'c6',cmd:'/claim',alts:'',desc:'Protège ta chunk.',keywords:'claim protéger chunk protection'}
+  commands: [
+    { id:'c1',  cmd:'/home',             alts:'/h',            desc:'Retourne à ton home.',              kw:'home,retour,base,maison' },
+    { id:'c2',  cmd:'/sethome',          alts:'/sh, /set home',desc:'Définit ton home.',                 kw:'sethome,set home,définir home,poser home' },
+    { id:'c3',  cmd:'/spawn',            alts:'/s',            desc:'Retourne au spawn.',                kw:'spawn,retour spawn,point départ' },
+    { id:'c4',  cmd:'/tpa [joueur]',     alts:'',              desc:'Demande de TP à un joueur.',        kw:'tpa,tp joueur,téléportation,rejoindre' },
+    { id:'c5',  cmd:'/money',            alts:'/balance, /bal',desc:'Voir ton solde en Écailles.',       kw:'money,argent,solde,balance,écailles' },
+    { id:'c6',  cmd:'/pay [joueur] [n]', alts:'',              desc:'Envoie des Écailles.',              kw:'pay,payer,donner argent,écailles' },
+    { id:'c7',  cmd:'/claim',            alts:'',              desc:'Protège ta chunk.',                 kw:'claim,protéger,protection,terrain,chunk' },
+    { id:'c8',  cmd:'/warp [nom]',       alts:'',              desc:'TP vers un warp.',                  kw:'warp,téléportation,destination,shop' }
   ]
 };
 
-let DATA=null;
+let DATA = null;
 
-async function loadData(){
-  const binId=localStorage.getItem('dsmp_bin_id');
-  const apiKey=localStorage.getItem('dsmp_api_key');
-  if(binId&&apiKey){
-    try{const r=await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`,
-      {headers:{'X-Master-Key':apiKey}});
-      if(r.ok){DATA=(await r.json()).record;
-        localStorage.setItem('dsmp_cache',JSON.stringify(DATA));return;}
-    }catch{}
+async function loadData() {
+  const binId = localStorage.getItem('dsmp_bin_id');
+  const apiKey = localStorage.getItem('dsmp_api_key');
+  if (binId && apiKey) {
+    try {
+      const r = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, { headers: { 'X-Master-Key': apiKey } });
+      if (r.ok) { DATA = (await r.json()).record; localStorage.setItem('dsmp_cache', JSON.stringify(DATA)); return; }
+    } catch {}
   }
-  const c=localStorage.getItem('dsmp_cache');
-  if(c){try{DATA=JSON.parse(c);return}catch{}}
-  DATA=JSON.parse(JSON.stringify(DEFAULTS));
+  try { const c = localStorage.getItem('dsmp_cache'); if (c) { DATA = JSON.parse(c); return; } } catch {}
+  DATA = JSON.parse(JSON.stringify(DEFAULTS));
 }
 
-async function saveData(){
-  if(!DATA)return;
-  localStorage.setItem('dsmp_cache',JSON.stringify(DATA));
-  const binId=localStorage.getItem('dsmp_bin_id');
-  const apiKey=localStorage.getItem('dsmp_api_key');
-  if(binId&&apiKey){try{
-    await fetch(`https://api.jsonbin.io/v3/b/${binId}`,{method:'PUT',
-      headers:{'Content-Type':'application/json','X-Master-Key':apiKey},
-      body:JSON.stringify(DATA)});
-  }catch{}}
+async function saveData() {
+  if (!DATA) return;
+  localStorage.setItem('dsmp_cache', JSON.stringify(DATA));
+  const binId = localStorage.getItem('dsmp_bin_id');
+  const apiKey = localStorage.getItem('dsmp_api_key');
+  if (binId && apiKey) {
+    try {
+      await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
+        body: JSON.stringify(DATA)
+      });
+    } catch {}
+  }
 }
 
-/* ── Login ── */
-function serr(id,msg){const el=document.getElementById(id);el.textContent='❌ '+msg;setTimeout(()=>el.textContent='',3000)}
-function s1(){
-  if(sh(document.getElementById('pw1').value)===H1){
-    document.getElementById('ls1').classList.remove('on');
-    document.getElementById('ls2').classList.add('on');
-    document.getElementById('sd1').className='sdot done';
-    document.getElementById('sd2').className='sdot cur';
-    setTimeout(()=>document.getElementById('pw2').focus(),50);
-  }else{serr('e1','Mot de passe incorrect');document.getElementById('pw1').value=''}
-}
-function s2(){
-  if(sh(document.getElementById('pw2').value)===H2){
-    document.getElementById('sd2').className='sdot done';
-    document.getElementById('login-wrap').style.display='none';
-    document.getElementById('adm-wrap').classList.add('on');
-    initAdmin();
-  }else{serr('e2','Mot de passe incorrect');document.getElementById('pw2').value=''}
-}
-function resetLogin(){
-  document.getElementById('ls1').classList.add('on');
-  document.getElementById('ls2').classList.remove('on');
-  document.getElementById('sd1').className='sdot cur';
-  document.getElementById('sd2').className='sdot';
-  ['pw1','pw2'].forEach(id=>document.getElementById(id).value='');
-}
-function logout(){resetLogin();document.getElementById('login-wrap').style.display='flex';document.getElementById('adm-wrap').classList.remove('on')}
-
-/* ── Init ── */
-async function initAdmin(){
+/* ─── Init ──────────────────────────────────────────────── */
+async function initAdmin() {
   await loadData();
-  setupBurger();
   renderDash();
   renderPages();
   renderCmds();
   loadSettings();
 }
 
-/* ── Nav ── */
-function showP(id,el){
-  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.adm-nav').forEach(n=>n.classList.remove('on'));
-  document.getElementById('p-'+id)?.classList.add('on');
-  if(el)el.classList.add('on');
-  closeSB();
+/* ─── Navigation ────────────────────────────────────────── */
+function showP(id, el) {
+  document.querySelectorAll('.adm-panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.adm-nav').forEach(n => n.classList.remove('on'));
+  document.getElementById('p-' + id)?.classList.add('on');
+  if (el) el.classList.add('on');
 }
 
-/* ── Burger ── */
-function setupBurger(){
-  document.getElementById('burger')?.addEventListener('click',()=>{
-    const sb  = document.getElementById('adm-sb');
-    const btn = document.getElementById('burger');
-    const ovl = document.getElementById('overlay');
-    if(sb?.classList.contains('open')){
-      closeSB();
-    } else {
-      sb?.classList.add('open');
-      btn?.classList.add('open');
-      ovl?.classList.add('on');
-      document.body.style.overflow = 'hidden';
-    }
-  });
-  document.getElementById('overlay')?.addEventListener('click',closeSB);
-}
-function closeSB(){
-  document.getElementById('adm-sb')?.classList.remove('open');
-  document.getElementById('burger')?.classList.remove('open');
-  document.getElementById('overlay')?.classList.remove('on');
-  document.body.style.overflow = '';
-}
+/* ─── Dashboard ─────────────────────────────────────────── */
+function renderDash() {
+  const el = document.getElementById('dash-stats');
+  if (!el || !DATA) return;
+  const customPages = DATA.pages.filter(p => !p.isSpecial).length;
+  el.innerHTML = `
+    <div class="stat-c"><div class="stat-n">${DATA.pages.filter(p=>!p.isSpecial).length}</div><div class="stat-l">Pages</div></div>
+    <div class="stat-c"><div class="stat-n">${DATA.commands.length}</div><div class="stat-l">Commandes</div></div>
+    <div class="stat-c"><div class="stat-n">${DATA.pages.filter(p=>p.showCmds).length}</div><div class="stat-l">Pages avec cmds</div></div>`;
 
-/* ── Dashboard ── */
-function renderDash(){
-  const el=document.getElementById('dash-stats');
-  if(!el||!DATA)return;
-  el.innerHTML=`
-    <div class="stat-c"><div class="n">${DATA.pages.length}</div><div class="l">Pages</div></div>
-    <div class="stat-c"><div class="n">${DATA.commands.length}</div><div class="l">Commandes</div></div>
-    <div class="stat-c"><div class="n">${DATA.pages.filter(p=>!p.isCore).length}</div><div class="l">Pages custom</div></div>`;
-  const tag=document.getElementById('db-tag');
-  const binId=localStorage.getItem('dsmp_bin_id');
-  if(tag){tag.className=binId?'tag tag-ok':'tag tag-warn';
-    tag.textContent=binId?'✅ JSONbin configuré':'⚠️ localStorage uniquement — configure JSONbin dans Paramètres'}
+  const badge = document.getElementById('db-badge');
+  const binId = localStorage.getItem('dsmp_bin_id');
+  if (badge) {
+    badge.className = binId ? 'badge badge-ok' : 'badge badge-warn';
+    badge.textContent = binId ? '✅ JSONbin configuré' : '⚠️ localStorage uniquement — configure JSONbin dans Paramètres';
+  }
   updateMaintUI();
 }
-function updateMaintUI(){
-  if(!DATA)return;
-  const on=DATA.settings.maintenance;
-  const h=document.getElementById('maint-h');
-  const p=document.getElementById('maint-p');
-  const b=document.getElementById('maint-btn');
-  if(h)h.textContent=on?'🔧 Maintenance activée':'✅ Serveur accessible';
-  if(p)p.textContent=on?'Le site affiche maintenance aux visiteurs':'Affichage normal du statut';
-  if(b){b.textContent=on?'Désactiver':'Activer';b.className=`btn btn-sm ${on?'btn-ghost':'btn-fire'}`}
+
+function updateMaintUI() {
+  if (!DATA) return;
+  const on = DATA.settings.maintenance;
+  const h = document.getElementById('maint-h');
+  const p = document.getElementById('maint-p');
+  const b = document.getElementById('maint-btn');
+  if (h) h.textContent = on ? '🔧 Maintenance activée' : '✅ Serveur accessible';
+  if (p) p.textContent = on ? 'Le statut MC affiche maintenance' : 'Affichage normal';
+  if (b) { b.textContent = on ? 'Désactiver' : 'Activer'; b.className = `btn btn-sm ${on ? 'btn-ghost' : 'btn-fire'}` }
 }
-async function toggleMaint(){
-  DATA.settings.maintenance=!DATA.settings.maintenance;
-  await saveData();updateMaintUI();
-  toast(DATA.settings.maintenance?'🔧 Maintenance activée':'✅ Désactivée');
+async function toggleMaint() {
+  DATA.settings.maintenance = !DATA.settings.maintenance;
+  await saveData(); updateMaintUI();
+  toast(DATA.settings.maintenance ? '🔧 Maintenance activée' : '✅ Désactivée');
 }
 
-/* ── Pages ── */
-function renderPages(){
-  const el=document.getElementById('pages-list');
-  if(!el||!DATA)return;
-  if(!DATA.pages.length){el.innerHTML='<p style="color:var(--txt3)">Aucune page.</p>';return}
-  el.innerHTML=DATA.pages.map(p=>`
-    <div class="li-row">
-      <div class="li-l">
-        <span class="li-icon">${p.icon||'📄'}</span>
+/* ─── Pages ─────────────────────────────────────────────── */
+function renderPages() {
+  const el = document.getElementById('pages-list');
+  if (!el || !DATA) return;
+  const pages = DATA.pages.filter(p => !p.isSpecial);
+  if (!pages.length) { el.innerHTML = '<p style="color:var(--txt3)">Aucune page.</p>'; return; }
+  el.innerHTML = pages.map(p => `
+    <div class="lrow">
+      <div class="lrow-l">
+        <span class="lrow-icon">${p.icon || '📄'}</span>
         <div>
-          <div class="li-name">${e(p.title)} ${p.isCore?'<span style="font-size:.68rem;color:var(--txt3);font-weight:400">(page fixe)</span>':''}</div>
-          <div class="li-meta">#${p.id} · TOC:${p.showToc?'✓':'✗'} · Cmds:${p.showCmdSearch?'✓':'✗'}</div>
+          <div class="lrow-name">${e(p.title)}</div>
+          <div class="lrow-meta">#${p.id} · TOC:${p.showToc ? '✓' : '✗'} · Cmds:${p.showCmds ? '✓' : '✗'}</div>
         </div>
       </div>
-      <div class="li-r">
-        <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️</button>
-        ${!p.isCore?`<button class="btn btn-red btn-sm" onclick="delPage('${p.id}')">🗑</button>`:''}
+      <div class="lrow-r">
+        <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️ Éditer</button>
+        <button class="btn btn-red btn-sm" onclick="delPage('${p.id}')">🗑</button>
       </div>
     </div>`).join('');
 }
 
-function newPage(){
-  document.getElementById('edit-pg-id').value='';
-  document.getElementById('pg-ed-title').textContent='✏️ Nouvelle page';
-  ['pg-title','pg-icon','pg-desc','pg-content'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('pg-showtoc').checked=true;
-  document.getElementById('pg-showcmd').checked=false;
-  document.getElementById('pg-prev').innerHTML='<span style="color:var(--txt3);font-size:.82rem">Commence à écrire…</span>';
-  showP('page-editor',document.getElementById('nav-pg-ed'));
+function newPage() {
+  document.getElementById('edit-pg-id').value = '';
+  document.getElementById('pged-title').textContent = '✏️ Nouvelle page';
+  document.getElementById('pg-title').value = '';
+  document.getElementById('pg-icon').value = '';
+  document.getElementById('pg-desc').value = '';
+  document.getElementById('pg-toc').checked = true;
+  document.getElementById('pg-cmds').checked = false;
+  rteSetContent('');
+  showP('pg-editor', document.getElementById('nav-pged'));
 }
 
-function editPage(id){
-  const p=DATA.pages.find(p=>p.id===id);if(!p)return;
-  document.getElementById('edit-pg-id').value=p.id;
-  document.getElementById('pg-ed-title').textContent=`✏️ ${p.title}`;
-  document.getElementById('pg-title').value=p.title;
-  document.getElementById('pg-icon').value=p.icon||'';
-  document.getElementById('pg-desc').value=p.desc||'';
-  document.getElementById('pg-content').value=p.content||'';
-  document.getElementById('pg-showtoc').checked=!!p.showToc;
-  document.getElementById('pg-showcmd').checked=!!p.showCmdSearch;
-  doPgPrev();
-  showP('page-editor',document.getElementById('nav-pg-ed'));
+function editPage(id) {
+  const p = DATA.pages.find(p => p.id === id);
+  if (!p) return;
+  document.getElementById('edit-pg-id').value = p.id;
+  document.getElementById('pged-title').textContent = `✏️ ${p.title}`;
+  document.getElementById('pg-title').value = p.title;
+  document.getElementById('pg-icon').value = p.icon || '';
+  document.getElementById('pg-desc').value = p.desc || '';
+  document.getElementById('pg-toc').checked = !!p.showToc;
+  document.getElementById('pg-cmds').checked = !!p.showCmds;
+  rteSetContent(p.content || '');
+  showP('pg-editor', document.getElementById('nav-pged'));
 }
 
-async function savePage(){
-  const title=document.getElementById('pg-title').value.trim();
-  const icon=document.getElementById('pg-icon').value.trim();
-  const desc=document.getElementById('pg-desc').value.trim();
-  const content=document.getElementById('pg-content').value;
-  const showToc=document.getElementById('pg-showtoc').checked;
-  const showCmdSearch=document.getElementById('pg-showcmd').checked;
-  const eid=document.getElementById('edit-pg-id').value;
-  if(!title){toast('Titre requis !','err');return}
-  if(eid){
-    const idx=DATA.pages.findIndex(p=>p.id===eid);
-    if(idx!==-1)DATA.pages[idx]={...DATA.pages[idx],title,icon,desc,content,showToc,showCmdSearch};
+async function savePage() {
+  const title   = document.getElementById('pg-title').value.trim();
+  const icon    = document.getElementById('pg-icon').value.trim();
+  const desc    = document.getElementById('pg-desc').value.trim();
+  const showToc = document.getElementById('pg-toc').checked;
+  const showCmds= document.getElementById('pg-cmds').checked;
+  const content = rteGetMarkdown();
+  const eid     = document.getElementById('edit-pg-id').value;
+
+  if (!title) { toast('Titre requis !', 'err'); return; }
+
+  if (eid) {
+    const idx = DATA.pages.findIndex(p => p.id === eid);
+    if (idx !== -1) DATA.pages[idx] = { ...DATA.pages[idx], title, icon, desc, content, showToc, showCmds };
     toast('✅ Page modifiée !');
-  }else{
-    const id=gid(title);
-    if(DATA.pages.find(p=>p.id===id)){toast('Cette page existe déjà !','err');return}
-    DATA.pages.push({id,title,icon,desc,content,showToc,showCmdSearch,isCore:false,slug:id});
+  } else {
+    const id = gid(title);
+    if (DATA.pages.find(p => p.id === id)) { toast('Cette page existe déjà !', 'err'); return; }
+    DATA.pages.push({ id, title, icon, desc, content, showToc, showCmds, isSpecial: false });
     toast('✅ Page créée !');
   }
-  await saveData();renderPages();renderDash();
-  showP('pages',document.querySelector('[data-p=pages]'));
+  await saveData(); renderPages(); renderDash();
+  showP('pages', document.querySelector('[data-p=pages]'));
 }
 
-async function delPage(id){
-  if(!confirm('Supprimer cette page ?'))return;
-  DATA.pages=DATA.pages.filter(p=>p.id!==id);
-  await saveData();renderPages();renderDash();
-  toast('🗑 Page supprimée.','info');
+async function delPage(id) {
+  if (!confirm('Supprimer cette page ?')) return;
+  DATA.pages = DATA.pages.filter(p => p.id !== id);
+  await saveData(); renderPages(); renderDash();
+  toast('🗑 Page supprimée.', 'info');
 }
 
-/* ── Commandes ── */
-function renderCmds(){
-  const el=document.getElementById('cmd-list');
-  const cnt=document.getElementById('cmd-count');
-  if(!el||!DATA)return;
-  const cmds=DATA.commands||[];
-  if(cnt)cnt.textContent=`${cmds.length} commande(s)`;
-  if(!cmds.length){el.innerHTML='<p style="color:var(--txt3)">Aucune commande. Ajoutes-en depuis "Ajouter commande".</p>';return}
-  el.innerHTML=cmds.map(c=>`
-    <div class="li-row">
-      <div class="li-l">
-        <span class="li-icon">⌨️</span>
+/* ─── Commandes ─────────────────────────────────────────── */
+function renderCmds() {
+  const el  = document.getElementById('cmd-list');
+  const cnt = document.getElementById('cmd-count');
+  if (!el || !DATA) return;
+  const cmds = DATA.commands || [];
+  if (cnt) cnt.textContent = `${cmds.length} commande(s)`;
+  if (!cmds.length) { el.innerHTML = '<p style="color:var(--txt3)">Aucune commande.</p>'; return; }
+  el.innerHTML = cmds.map(c => `
+    <div class="lrow">
+      <div class="lrow-l">
+        <span class="lrow-icon">⌨️</span>
         <div>
-          <div class="li-name" style="font-family:'Courier New',monospace;color:var(--ember)">${e(c.cmd)}</div>
-          <div class="li-meta">${c.desc?e(c.desc.substring(0,60))+'...':''}</div>
+          <div class="lrow-name" style="font-family:'Courier New',monospace;color:var(--ember)">${e(c.cmd)}</div>
+          <div class="lrow-meta">${e((c.desc || '').substring(0, 70))}</div>
         </div>
       </div>
-      <div class="li-r">
+      <div class="lrow-r">
         <button class="btn btn-ghost btn-sm" onclick="editCmd('${c.id}')">✏️</button>
         <button class="btn btn-red btn-sm" onclick="delCmd('${c.id}')">🗑</button>
       </div>
     </div>`).join('');
 }
 
-function newCmd(){
-  document.getElementById('edit-cmd-id').value='';
-  document.getElementById('cmd-ed-title').textContent='➕ Nouvelle commande';
-  ['cmd-main','cmd-alts','cmd-desc','cmd-kw'].forEach(id=>document.getElementById(id).value='');
-  showP('cmd-editor',document.getElementById('nav-cmd-ed'));
+function newCmd() {
+  document.getElementById('edit-cmd-id').value = '';
+  document.getElementById('cmded-title').textContent = '➕ Nouvelle commande';
+  ['cmd-main','cmd-alts','cmd-desc','cmd-kw'].forEach(id => document.getElementById(id).value = '');
+  showP('cmd-editor', document.getElementById('nav-cmded'));
 }
 
-function editCmd(id){
-  const c=(DATA.commands||[]).find(c=>c.id===id);if(!c)return;
-  document.getElementById('edit-cmd-id').value=c.id;
-  document.getElementById('cmd-ed-title').textContent=`✏️ ${c.cmd}`;
-  document.getElementById('cmd-main').value=c.cmd;
-  document.getElementById('cmd-alts').value=c.alts||'';
-  document.getElementById('cmd-desc').value=c.desc||'';
-  document.getElementById('cmd-kw').value=c.keywords||'';
-  showP('cmd-editor',document.getElementById('nav-cmd-ed'));
+function editCmd(id) {
+  const c = (DATA.commands || []).find(c => c.id === id);
+  if (!c) return;
+  document.getElementById('edit-cmd-id').value = c.id;
+  document.getElementById('cmded-title').textContent = `✏️ ${c.cmd}`;
+  document.getElementById('cmd-main').value = c.cmd;
+  document.getElementById('cmd-alts').value = c.alts || '';
+  document.getElementById('cmd-desc').value = c.desc || '';
+  document.getElementById('cmd-kw').value = c.kw || '';
+  showP('cmd-editor', document.getElementById('nav-cmded'));
 }
 
-async function saveCmd(){
-  const cmd=document.getElementById('cmd-main').value.trim();
-  const alts=document.getElementById('cmd-alts').value.trim();
-  const desc=document.getElementById('cmd-desc').value.trim();
-  const keywords=document.getElementById('cmd-kw').value.trim();
-  const eid=document.getElementById('edit-cmd-id').value;
-  if(!cmd){toast('La commande est requise !','err');return}
-  if(!desc){toast('La description est requise !','err');return}
-  if(!DATA.commands)DATA.commands=[];
-  if(eid){
-    const idx=DATA.commands.findIndex(c=>c.id===eid);
-    if(idx!==-1)DATA.commands[idx]={...DATA.commands[idx],cmd,alts,desc,keywords};
+async function saveCmd() {
+  const cmd  = document.getElementById('cmd-main').value.trim();
+  const alts = document.getElementById('cmd-alts').value.trim();
+  const desc = document.getElementById('cmd-desc').value.trim();
+  const kw   = document.getElementById('cmd-kw').value.trim();
+  const eid  = document.getElementById('edit-cmd-id').value;
+
+  if (!cmd)  { toast('Commande requise !',    'err'); return; }
+  if (!desc) { toast('Description requise !', 'err'); return; }
+
+  if (!DATA.commands) DATA.commands = [];
+  if (eid) {
+    const idx = DATA.commands.findIndex(c => c.id === eid);
+    if (idx !== -1) DATA.commands[idx] = { ...DATA.commands[idx], cmd, alts, desc, kw };
     toast('✅ Commande modifiée !');
-  }else{
-    DATA.commands.push({id:'cmd_'+Date.now(),cmd,alts,desc,keywords});
+  } else {
+    DATA.commands.push({ id: 'c_' + Date.now(), cmd, alts, desc, kw });
     toast('✅ Commande ajoutée !');
   }
-  await saveData();renderCmds();renderDash();
-  showP('commands',document.querySelector('[data-p=commands]'));
+  await saveData(); renderCmds(); renderDash();
+  showP('commands', document.querySelector('[data-p=commands]'));
 }
 
-async function delCmd(id){
-  if(!confirm('Supprimer cette commande ?'))return;
-  DATA.commands=DATA.commands.filter(c=>c.id!==id);
-  await saveData();renderCmds();renderDash();
-  toast('🗑 Commande supprimée.','info');
+async function delCmd(id) {
+  if (!confirm('Supprimer cette commande ?')) return;
+  DATA.commands = DATA.commands.filter(c => c.id !== id);
+  await saveData(); renderCmds(); renderDash();
+  toast('🗑 Supprimée.', 'info');
 }
 
-/* ── Éditeur toolbar ── */
-function ins(b,a){
-  const ta=document.getElementById('pg-content');
-  const s=ta.selectionStart,en=ta.selectionEnd;
-  const sel=ta.value.substring(s,en);
-  ta.value=ta.value.substring(0,s)+b+sel+a+ta.value.substring(en);
-  ta.focus();ta.setSelectionRange(s+b.length,s+b.length+sel.length);
-  doPgPrev();
+/* ─── Paramètres ────────────────────────────────────────── */
+function loadSettings() {
+  if (!DATA) return;
+  const s = DATA.settings;
+  const sv = (id, v) => { const el = document.getElementById(id); if (el && v !== undefined) el.value = v };
+  sv('set-host', s.mcHost); sv('set-port', s.mcPort);
+  sv('set-ip', s.mcIp); sv('set-sub', s.heroSub);
+  sv('set-bin', localStorage.getItem('dsmp_bin_id') || '');
 }
-function insLink(){const url=prompt('URL :','https://');if(!url)return;const t=prompt('Texte :','cliquez ici');ins(`[${t||'lien'}](${url})`,'');}
-function insImg(){const url=prompt('URL image :','https://');if(!url)return;const a=prompt('Alt :','image');ins(`![${a||'image'}](${url})`,'');}
-function doPgPrev(){
-  const c=document.getElementById('pg-content').value;
-  document.getElementById('pg-prev').innerHTML=mdToHtml(c)||'<span style="color:var(--txt3)">Aucun contenu.</span>';
+function saveDB() {
+  const b = document.getElementById('set-bin').value.trim();
+  const k = document.getElementById('set-key').value.trim();
+  if (!b || !k) { toast('Remplis les deux champs !', 'err'); return; }
+  localStorage.setItem('dsmp_bin_id', b); localStorage.setItem('dsmp_api_key', k);
+  toast('✅ Config DB sauvegardée ! Recharge la page.', 'info'); renderDash();
 }
-document.addEventListener('DOMContentLoaded',()=>{
-  const ta=document.getElementById('pg-content');
-  if(ta){let d;ta.addEventListener('input',()=>{clearTimeout(d);d=setTimeout(doPgPrev,400)})}
+async function saveSettings() {
+  if (!DATA) return;
+  DATA.settings.mcHost = document.getElementById('set-host').value.trim();
+  DATA.settings.mcPort = parseInt(document.getElementById('set-port').value) || 25816;
+  DATA.settings.mcIp   = document.getElementById('set-ip').value.trim();
+  DATA.settings.heroSub= document.getElementById('set-sub').value.trim();
+  await saveData(); toast('✅ Paramètres sauvegardés !');
+}
+function exportData() {
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'dragonsmp-backup.json'; a.click();
+  toast('📤 Export réussi !', 'info');
+}
+async function confirmReset() {
+  if (!confirm('⚠️ Réinitialiser TOUTES les données ?')) return;
+  localStorage.removeItem('dsmp_cache');
+  DATA = JSON.parse(JSON.stringify(DEFAULTS));
+  await saveData(); renderDash(); renderPages(); renderCmds(); loadSettings();
+  toast('Réinitialisé.', 'info');
+}
+
+/* ═══════════════════════════════════════════════════════
+   RICH TEXT EDITOR (WYSIWYG ↔ Markdown)
+════════════════════════════════════════════════════════ */
+let _sourceMode = false;
+
+function rteExec(cmd, value = null) {
+  document.getElementById('rte-editor').focus();
+  document.execCommand(cmd, false, value);
+  updateRteStats();
+}
+
+function rteHeading(tag) {
+  if (!tag) return;
+  const ed = document.getElementById('rte-editor');
+  ed.focus();
+  document.execCommand('formatBlock', false, tag);
+  updateRteStats();
+}
+
+function rteStrike() {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+  const s = document.createElement('s');
+  try { range.surroundContents(s); } catch {}
+  updateRteStats();
+}
+
+function rteInsertBlock(tag) {
+  const ed = document.getElementById('rte-editor');
+  ed.focus();
+  document.execCommand('formatBlock', false, tag);
+}
+
+function rteInlineCode() {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+  const txt = range.toString() || 'code';
+  const code = document.createElement('code');
+  code.textContent = txt;
+  range.deleteContents();
+  range.insertNode(code);
+  updateRteStats();
+}
+
+function rteInsertCode() {
+  const ed = document.getElementById('rte-editor');
+  ed.focus();
+  const pre = document.createElement('pre');
+  pre.textContent = '# Votre code ici';
+  const sel = window.getSelection();
+  if (sel.rangeCount) {
+    const range = sel.getRangeAt(0);
+    range.insertNode(pre);
+    range.setStartAfter(pre); range.collapse(true);
+    sel.removeAllRanges(); sel.addRange(range);
+  }
+  updateRteStats();
+}
+
+function rteInsertHR() {
+  const ed = document.getElementById('rte-editor');
+  ed.focus();
+  document.execCommand('insertHorizontalRule', false, null);
+}
+
+function rteInsertLink() {
+  const url = prompt('URL du lien :', 'https://');
+  if (!url) return;
+  const txt = window.getSelection().toString() || prompt('Texte du lien :', 'cliquez ici');
+  if (!txt) return;
+  document.getElementById('rte-editor').focus();
+  document.execCommand('insertHTML', false, `<a href="${url}" target="_blank">${txt}</a>`);
+  updateRteStats();
+}
+
+function rteInsertImage() {
+  const url = prompt('URL de l\'image :', 'https://');
+  if (!url) return;
+  const alt = prompt('Description (alt) :', 'image');
+  document.getElementById('rte-editor').focus();
+  document.execCommand('insertHTML', false, `<img src="${url}" alt="${alt || 'image'}">`);
+  updateRteStats();
+}
+
+function rteInsertTable() {
+  const cols = parseInt(prompt('Nombre de colonnes :', '3')) || 3;
+  const rows = parseInt(prompt('Nombre de lignes :', '3')) || 3;
+  let html = '<table><thead><tr>';
+  for (let c = 0; c < cols; c++) html += `<th>Colonne ${c+1}</th>`;
+  html += '</tr></thead><tbody>';
+  for (let r = 0; r < rows; r++) {
+    html += '<tr>';
+    for (let c = 0; c < cols; c++) html += '<td>Cellule</td>';
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  document.getElementById('rte-editor').focus();
+  document.execCommand('insertHTML', false, html);
+  updateRteStats();
+}
+
+/* ── Source Markdown ── */
+function toggleSource() {
+  const ed  = document.getElementById('rte-editor');
+  const src = document.getElementById('rte-source');
+  const btn = document.getElementById('btn-source');
+  _sourceMode = !_sourceMode;
+
+  if (_sourceMode) {
+    // WYSIWYG → Source
+    src.value = htmlToMd(ed.innerHTML);
+    ed.style.display = 'none';
+    src.style.display = 'block';
+    btn.classList.add('active');
+    btn.textContent = '👁 WYSIWYG';
+  } else {
+    // Source → WYSIWYG
+    ed.innerHTML = mdToHtml(src.value);
+    src.style.display = 'none';
+    ed.style.display = 'block';
+    btn.classList.remove('active');
+    btn.textContent = '📝 Source';
+  }
+}
+
+function rteSetContent(md) {
+  const ed  = document.getElementById('rte-editor');
+  const src = document.getElementById('rte-source');
+  if (_sourceMode) {
+    src.value = md;
+  } else {
+    ed.innerHTML = md ? mdToHtml(md) : '';
+    src.value = md;
+  }
+  updateRteStats();
+}
+
+function rteGetMarkdown() {
+  if (_sourceMode) {
+    return document.getElementById('rte-source').value;
+  }
+  return htmlToMd(document.getElementById('rte-editor').innerHTML);
+}
+
+function updateRteStats() {
+  const ed = document.getElementById('rte-editor');
+  if (!ed) return;
+  const txt = ed.innerText || '';
+  const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+  const chars = txt.length;
+  const el = document.getElementById('rte-stats');
+  if (el) el.textContent = `${words} mot${words > 1 ? 's' : ''} · ${chars} caractère${chars > 1 ? 's' : ''}`;
+}
+
+// Raccourcis clavier
+document.addEventListener('keydown', ev => {
+  const ed = document.getElementById('rte-editor');
+  if (!ed || document.activeElement !== ed) return;
+  if (ev.ctrlKey || ev.metaKey) {
+    if (ev.key === 'k' || ev.key === 'K') { ev.preventDefault(); rteInsertLink(); }
+  }
+  updateRteStats();
 });
 
-/* ── Paramètres ── */
-function loadSettings(){
-  if(!DATA)return;
-  const s=DATA.settings;
-  const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!==undefined)el.value=v};
-  sv('set-mc-host',s.mcHost);sv('set-mc-port',s.mcPort);
-  sv('set-mc-ip',s.mcIp);sv('set-maint-msg',s.maintMsg);
-  sv('set-hero-desc',s.heroDesc);
-  sv('set-bin',localStorage.getItem('dsmp_bin_id')||'');
-}
-function saveDB(){
-  const b=document.getElementById('set-bin').value.trim();
-  const k=document.getElementById('set-key').value.trim();
-  if(!b||!k){toast('Remplis les deux champs !','err');return}
-  localStorage.setItem('dsmp_bin_id',b);localStorage.setItem('dsmp_api_key',k);
-  toast('✅ Config DB sauvegardée ! Recharge la page.','info');
-  renderDash();
-}
-async function saveSettings(){
-  if(!DATA)return;
-  DATA.settings.mcHost=document.getElementById('set-mc-host').value.trim();
-  DATA.settings.mcPort=parseInt(document.getElementById('set-mc-port').value)||25816;
-  DATA.settings.mcIp=document.getElementById('set-mc-ip').value.trim();
-  DATA.settings.maintMsg=document.getElementById('set-maint-msg').value.trim();
-  DATA.settings.heroDesc=document.getElementById('set-hero-desc').value.trim();
-  await saveData();toast('✅ Paramètres sauvegardés !');
-}
-function exportData(){
-  const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='dragonsmp-backup.json';a.click();toast('📤 Export réussi !','info');
-}
-async function confirmReset(){
-  if(!confirm('⚠️ Réinitialiser TOUTES les données ?'))return;
-  localStorage.removeItem('dsmp_cache');DATA=JSON.parse(JSON.stringify(DEFAULTS));
-  await saveData();renderDash();renderPages();renderCmds();loadSettings();
-  toast('Réinitialisé.','info');
+document.addEventListener('DOMContentLoaded', () => {
+  const ed = document.getElementById('rte-editor');
+  if (ed) {
+    ed.addEventListener('input', updateRteStats);
+    ed.addEventListener('keydown', () => setTimeout(updateRteStats, 10));
+  }
+});
+
+/* ─── HTML ↔ Markdown ───────────────────────────────────── */
+function htmlToMd(html) {
+  let s = html;
+  // Nettoie les divs/spans inutiles de contenteditable
+  s = s.replace(/<div>/gi, '\n').replace(/<\/div>/gi, '');
+  s = s.replace(/<span[^>]*>/gi, '').replace(/<\/span>/gi, '');
+  s = s.replace(/<br\s*\/?>/gi, '\n');
+
+  // Titres
+  s = s.replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n');
+  s = s.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n');
+  s = s.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n');
+
+  // Formatage
+  s = s.replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**');
+  s = s.replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**');
+  s = s.replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*');
+  s = s.replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*');
+  s = s.replace(/<u[^>]*>(.*?)<\/u>/gi, '$1');
+  s = s.replace(/<s[^>]*>(.*?)<\/s>/gi, '~~$1~~');
+
+  // Liens
+  s = s.replace(/<a[^>]+href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
+
+  // Images
+  s = s.replace(/<img[^>]+src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/gi, '![$2]($1)');
+  s = s.replace(/<img[^>]+src="([^"]*)"[^>]*>/gi, '![]($1)');
+
+  // Code
+  s = s.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, (_, c) => '```\n' + c.replace(/<[^>]+>/g,'').trim() + '\n```\n\n');
+  s = s.replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`');
+
+  // Blockquote
+  s = s.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (_, c) => {
+    return c.replace(/<[^>]+>/g,'').trim().split('\n').map(l => '> ' + l).join('\n') + '\n\n';
+  });
+
+  // HR
+  s = s.replace(/<hr\s*\/?>/gi, '\n---\n\n');
+
+  // Tables
+  s = s.replace(/<table[\s\S]*?<\/table>/gi, tbl => {
+    let md = '';
+    const rows = [...tbl.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)];
+    rows.forEach((row, idx) => {
+      const cells = [...row[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)];
+      const line = '| ' + cells.map(c => c[1].replace(/<[^>]+>/g,'').trim()).join(' | ') + ' |';
+      md += line + '\n';
+      if (idx === 0) md += '|' + cells.map(() => '---|').join('') + '\n';
+    });
+    return md + '\n';
+  });
+
+  // Listes
+  s = s.replace(/<ul[^>]*>([\s\S]*?)<\/ul>/gi, (_, items) => {
+    return items.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, c) => '- ' + c.replace(/<[^>]+>/g,'').trim() + '\n') + '\n';
+  });
+  s = s.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (_, items) => {
+    let i = 0;
+    return items.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, c) => `${++i}. ` + c.replace(/<[^>]+>/g,'').trim() + '\n') + '\n';
+  });
+
+  // Paragraphes
+  s = s.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, '$1\n\n');
+
+  // Nettoie les balises restantes
+  s = s.replace(/<[^>]+>/g, '');
+
+  // Désecode HTML entities
+  s = s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&nbsp;/g,' ');
+
+  // Normalise les sauts de ligne
+  s = s.replace(/\n{3,}/g, '\n\n').trim();
+  return s;
 }
 
-/* ── Markdown ── */
-function mdToHtml(raw){
-  if(!raw)return'';let s=raw;
-  const blocks=[];
-  s=s.replace(/```([\s\S]*?)```/g,(_,c)=>{blocks.push(c);return`\x00B${blocks.length-1}\x00`});
-  s=s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  s=s.replace(/`([^`\n]+)`/g,'<code>$1</code>');
-  s=s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" loading="lazy">');
-  s=s.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
-  s=s.replace(/^&gt; (.+)$/gm,'<blockquote><p>$1</p></blockquote>');
-  s=s.replace(/^---$/gm,'<hr>');
-  s=s.replace(/^### (.+)$/gm,'<h3>$1</h3>');
-  s=s.replace(/^## (.+)$/gm,'<h2>$1</h2>');
-  s=s.replace(/^# (.+)$/gm,'<h1>$1</h1>');
-  s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  s=s.replace(/\*(.+?)\*/g,'<em>$1</em>');
-  s=s.replace(/((?:^- .+\n?)+)/gm,m=>{const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^- /,'')}</li>`).join('');return`<ul>${li}</ul>`});
-  s=s.replace(/((?:^\d+\. .+\n?)+)/gm,m=>{const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('');return`<ol>${li}</ol>`});
-  s=s.replace(/\n{2,}/g,'</p><p>');s=`<p>${s}</p>`;
-  s=s.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|hr|div)[^>]*>)/g,'$1');
-  s=s.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|hr|div)>)\s*<\/p>/g,'$1');
-  s=s.replace(/<p>\s*<\/p>/g,'');
-  s=s.replace(/\x00B(\d+)\x00/g,(_,i)=>{
-    const code=blocks[+i].replace(/^\n/,'').replace(/\n$/,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return`<pre><code>${code}</code></pre>`;});
+function mdToHtml(raw) {
+  if (!raw) return '';
+  let s = raw;
+  const blocks = [];
+  s = s.replace(/```([\s\S]*?)```/g, (_, c) => { blocks.push(c); return `\x00B${blocks.length-1}\x00` });
+  s = s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s = s.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  s = s.replace(/^&gt; (.+)$/gm, '<blockquote><p>$1</p></blockquote>');
+  s = s.replace(/^---$/gm, '<hr>');
+  s = s.replace(/(\|.+\|\n)(\|[-| :]+\|\n)((?:\|.+\|?\n?)*)/g, (_, h, __, b) => {
+    const ths = h.split('|').filter(c=>c.trim()).map(c=>`<th>${c.trim()}</th>`).join('');
+    const trs = b.trim().split('\n').map(row=>{
+      const tds = row.split('|').filter(c=>c.trim()).map(c=>`<td>${c.trim()}</td>`).join('');
+      return `<tr>${tds}</tr>`;
+    }).join('');
+    return `<table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
+  });
+  s = s.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  s = s.replace(/^## (.+)$/gm,  '<h2>$1</h2>');
+  s = s.replace(/^# (.+)$/gm,   '<h1>$1</h1>');
+  s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\*(.+?)\*/g,     '<em>$1</em>');
+  s = s.replace(/((?:^- .+\n?)+)/gm, m => {
+    const li = m.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('');
+    return `<ul>${li}</ul>`;
+  });
+  s = s.replace(/((?:^\d+\. .+\n?)+)/gm, m => {
+    const li = m.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('');
+    return `<ol>${li}</ol>`;
+  });
+  s = s.replace(/\n{2,}/g, '</p><p>');
+  s = `<p>${s}</p>`;
+  s = s.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|hr|table)[^>]*>)/g, '$1');
+  s = s.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|hr|table)>)\s*<\/p>/g, '$1');
+  s = s.replace(/<p>\s*<\/p>/g, '');
+  s = s.replace(/\x00B(\d+)\x00/g, (_, i) => {
+    const code = blocks[+i].replace(/^\n/,'').replace(/\n$/, '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return `<pre>${code}</pre>`;
+  });
   return s.trim();
 }
 
-/* ── Utils ── */
-function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function gid(t){return t.toLowerCase().replace(/[àáâã]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõ]/g,'o').replace(/[ùúûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'page-'+Date.now()}
-function toast(msg,type='ok'){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.className=`on ${type}`;setTimeout(()=>t.className='',3500)}
+/* ─── Utils ─────────────────────────────────────────────── */
+function e(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function gid(t) {
+  return t.toLowerCase()
+    .replace(/[àáâã]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
+    .replace(/[òóô]/g,'o').replace(/[ùúûü]/g,'u').replace(/ç/g,'c')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'page-' + Date.now();
+}
+function toast(msg, type = 'ok') {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg; t.className = `on ${type}`;
+  setTimeout(() => t.className = '', 3500);
+}
 </script>
 </body>
 </html>
