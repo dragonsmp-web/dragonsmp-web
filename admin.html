@@ -9,88 +9,68 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ════════════════════════════════════════════════════
-   DRAGON SMP WIKI V3 — admin.html
-════════════════════════════════════════════════════ */
 :root{
-  --lava:#d94f1e;--ember:#f07030;--gold:#d4a843;--gold2:#9a7828;
-  --bg0:#080a0d;--bg1:#0e1118;--bg2:#141820;--bg3:#1c2230;--bg4:#242c3c;
-  --line:rgba(212,168,67,.12);--line2:rgba(255,255,255,.06);
-  --txt:#cdd5e0;--txt2:#7888a0;--txt3:#3a4458;
+  --fire:#d94f1e;--ember:#f07030;--gold:#d4a843;--gold2:#8a6820;
+  --bg0:#080a0d;--bg1:#0d1017;--bg2:#131820;--bg3:#1a2030;--bg4:#222a3a;
+  --ln:rgba(212,168,67,.12);--ln2:rgba(255,255,255,.07);
+  --txt:#d0d8e8;--txt2:#7080a0;--txt3:#384060;
   --ok:#2ecc71;--bad:#e74c3c;--warn:#e67e22;
-  --H:58px;--SW:210px;--R:8px;
+  --H:56px;--SW:210px;--R:8px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%}
 body{font-family:'DM Sans',sans-serif;background:var(--bg0);color:var(--txt);
   min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-button,input,select,textarea{font-family:inherit;outline:none}
-
+button{font-family:inherit;cursor:pointer}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size:200px;opacity:.5}
+  background:radial-gradient(ellipse 70% 50% at 50% 100%,rgba(217,79,30,.07) 0%,transparent 65%)}
 
 /* ── LOGIN ── */
-.login-page{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:1.5rem;position:relative;z-index:1;
-}
-.login-card{
-  background:var(--bg2);border:1px solid var(--line);
-  border-radius:12px;padding:2.25rem 2rem 2.5rem;
-  width:100%;max-width:360px;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
-}
-.login-icon{font-size:2.5rem;text-align:center;margin-bottom:.75rem}
-.login-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold);
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:1.5rem;position:relative;z-index:1}
+.login-card{background:var(--bg2);border:1px solid var(--ln);border-radius:12px;
+  padding:2.25rem 2rem 2.5rem;width:100%;max-width:360px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.l-icon{font-size:2.5rem;text-align:center;margin-bottom:.75rem}
+.l-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold);
   text-align:center;margin-bottom:.25rem}
-.login-sub{color:var(--txt3);font-size:.82rem;text-align:center;margin-bottom:1.5rem}
-
+.l-sub{color:var(--txt3);font-size:.82rem;text-align:center;margin-bottom:1.5rem}
 .step-dots{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:1.5rem}
-.sdot{
-  width:26px;height:26px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.7rem;font-weight:700;
-  border:1px solid var(--line2);color:var(--txt3);background:var(--bg3);
-  transition:all .25s;
-}
-.sdot.cur{border-color:var(--lava);color:var(--ember);background:rgba(217,79,30,.12)}
+.sdot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:700;border:1px solid var(--ln2);color:var(--txt3);
+  background:var(--bg3);transition:all .25s}
+.sdot.cur{border-color:var(--fire);color:var(--ember);background:rgba(217,79,30,.12)}
 .sdot.done{border-color:var(--ok);color:var(--ok);background:rgba(46,204,113,.08)}
-.sdot-line{flex:1;max-width:28px;height:1px;background:var(--line2)}
-
+.sdot-line{flex:1;max-width:28px;height:1px;background:var(--ln2)}
 .lstep{display:none}.lstep.on{display:block}
 .lerr{color:var(--bad);font-size:.8rem;min-height:1.1rem;margin-bottom:.5rem}
 
 /* ── FORMS ── */
 .fg{margin-bottom:.9rem}
-.fg label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;
+.fg label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;
   letter-spacing:1.5px;color:var(--txt3);margin-bottom:.35rem}
 .fg input,.fg select,.fg textarea{
-  width:100%;background:var(--bg3);border:1px solid var(--line2);
+  width:100%;background:var(--bg3);border:1px solid var(--ln2);
   border-radius:6px;padding:.58rem .8rem;color:var(--txt);
-  font-size:16px;/* no zoom iOS */
-  transition:all .2s;-webkit-appearance:none;appearance:none;
+  font-size:16px;transition:all .2s;-webkit-appearance:none;appearance:none;
 }
 .fg input:focus,.fg select:focus,.fg textarea:focus{
-  border-color:rgba(217,79,30,.6);
-  box-shadow:0 0 0 3px rgba(217,79,30,.08);
-  background:var(--bg4);
-}
+  border-color:rgba(217,79,30,.6);box-shadow:0 0 0 3px rgba(217,79,30,.08);background:var(--bg4)}
 .fg input::placeholder,.fg textarea::placeholder{color:var(--txt3)}
-.fg textarea{resize:vertical;min-height:240px;font-family:'Courier New',monospace!important;
+.fg textarea{resize:vertical;min-height:220px;font-family:'Courier New',monospace!important;
   font-size:14px!important;line-height:1.55}
 .fg select option{background:var(--bg3)}
 .fg-2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.fg-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem}
 
 /* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:.4rem;
-  padding:.48rem 1rem;border:none;border-radius:6px;
-  font-size:.875rem;font-weight:600;cursor:pointer;
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.48rem 1rem;border:none;
+  border-radius:6px;font-size:.875rem;font-weight:600;cursor:pointer;
   transition:all .2s;-webkit-tap-highlight-color:transparent}
-.btn-fire{background:var(--lava);color:#fff}
+.btn-fire{background:var(--fire);color:#fff}
 .btn-fire:hover{background:#bf4118;transform:translateY(-1px);box-shadow:0 4px 16px rgba(217,79,30,.3)}
-.btn-ghost{background:transparent;color:var(--txt2);border:1px solid var(--line2)}
+.btn-ghost{background:transparent;color:var(--txt2);border:1px solid var(--ln2)}
 .btn-ghost:hover{background:var(--bg3);color:var(--txt)}
 .btn-red{background:rgba(231,76,60,.1);color:var(--bad);border:1px solid rgba(231,76,60,.2)}
 .btn-red:hover{background:rgba(231,76,60,.2)}
@@ -98,187 +78,169 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .btn-full{width:100%;justify-content:center}
 
 /* ── ADMIN LAYOUT ── */
-.adm-wrap{display:none;min-height:100vh;flex-direction:column;position:relative;z-index:1}
-.adm-wrap.on{display:flex}
+.adm-wrap{display:none;position:relative;z-index:1}
+.adm-wrap.on{display:block}
 
-/* Header */
-.hdr{
-  position:fixed;top:0;left:0;right:0;z-index:900;
-  height:var(--H);background:rgba(8,10,13,.95);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-  display:flex;align-items:center;gap:.75rem;padding:0 1rem;
-}
-.hdr-logo{font-family:'Cinzel',serif;font-weight:900;font-size:1rem;
-  letter-spacing:2px;color:var(--gold);flex-shrink:0}
-.hdr-logo em{color:var(--lava);font-style:normal}
-.hdr-status{display:flex;align-items:center;gap:.35rem;
-  font-size:.78rem;font-weight:600;color:var(--ok);margin-left:auto}
+.hdr{position:fixed;top:0;left:0;right:0;z-index:800;height:var(--H);
+  background:rgba(8,10,13,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:.75rem;padding:0 1rem}
+.hdr-logo{font-family:'Cinzel',serif;font-weight:900;font-size:.95rem;letter-spacing:2px;
+  color:var(--gold);flex-shrink:0}
+.hdr-logo em{color:var(--fire);font-style:normal}
+.hdr-status{display:flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:600;color:var(--ok)}
 .hdr-status::before{content:'';width:7px;height:7px;border-radius:50%;
   background:var(--ok);box-shadow:0 0 6px var(--ok)}
 
-/* Burger */
-.burger{display:none;flex-direction:column;gap:5px;
-  background:none;border:none;cursor:pointer;color:var(--txt);
-  padding:.4rem;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;
+  color:var(--txt);padding:.4rem;flex-shrink:0}
 .burger span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:all .3s}
 .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-/* Body layout */
-.adm-body{display:flex;padding-top:var(--H);flex:1}
+.adm-body{display:flex;padding-top:var(--H);min-height:100vh}
 
-/* Sidebar */
-.adm-sb{
-  width:var(--SW);min-width:var(--SW);flex-shrink:0;
-  background:var(--bg1);border-right:1px solid var(--line2);
-  padding:1rem 0;transition:transform .3s cubic-bezier(.4,0,.2,1);
-}
-.adm-nav{
-  display:flex;align-items:center;gap:.6rem;
-  padding:.62rem 1rem;cursor:pointer;color:var(--txt2);
-  font-size:.875rem;font-weight:500;
-  border-left:2px solid transparent;transition:all .15s;
-  -webkit-tap-highlight-color:transparent;
-}
+/* Sidebar admin */
+.adm-sb{width:var(--SW);min-width:var(--SW);flex-shrink:0;background:var(--bg1);
+  border-right:1px solid var(--ln2);padding:1rem 0;
+  position:sticky;top:var(--H);height:calc(100vh - var(--H));overflow-y:auto;
+  transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.adm-nav{display:flex;align-items:center;gap:.6rem;padding:.62rem 1rem;cursor:pointer;
+  color:var(--txt2);font-size:.875rem;font-weight:500;border-left:2px solid transparent;transition:all .15s;
+  -webkit-tap-highlight-color:transparent}
 .adm-nav:hover{color:var(--txt);background:rgba(255,255,255,.03)}
-.adm-nav.on{color:var(--ember);background:rgba(217,79,30,.08);border-left-color:var(--lava)}
-.adm-nav-sep{height:1px;background:var(--line2);margin:.5rem 1rem}
+.adm-nav.on{color:var(--ember);background:rgba(217,79,30,.08);border-left-color:var(--fire)}
+.adm-sep{height:1px;background:var(--ln2);margin:.5rem 1rem}
 
-/* Main */
-.adm-main{flex:1;padding:2rem 2.5rem;overflow-y:auto;min-width:0}
+.adm-main{flex:1;padding:2rem 2.5rem;min-width:0;overflow-y:auto}
 .adm-panel{display:none;animation:fadeUp .22s ease both}
 .adm-panel.on{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.adm-title{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--gold);
+  margin-bottom:1.5rem;padding-bottom:.9rem;border-bottom:1px solid var(--ln2)}
 
-.adm-title{
-  font-family:'Cinzel',serif;font-size:1.25rem;color:var(--gold);
-  margin-bottom:1.5rem;padding-bottom:.9rem;border-bottom:1px solid var(--line2);
-}
-
-/* Overlay mobile */
-.overlay{display:none;position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.75)}
+/* Overlay */
+.overlay{display:none;position:fixed;inset:0;z-index:750;background:rgba(0,0,0,.8)}
 .overlay.on{display:block}
 
 /* Stats */
-.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.75rem;margin-bottom:1.5rem}
-.stat-c{background:var(--bg2);border:1px solid var(--line2);border-radius:var(--R);padding:1rem}
-.stat-c .n{font-family:'Cinzel',serif;font-size:1.75rem;color:var(--lava)}
-.stat-c .l{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--txt3);margin-top:.2rem}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.7rem;margin-bottom:1.5rem}
+.stat-c{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:.9rem}
+.stat-c .n{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--fire)}
+.stat-c .l{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--txt3);margin-top:.15rem}
 
-/* Info box */
-.info-box{background:var(--bg2);border:1px solid var(--line2);border-radius:var(--R);padding:1.1rem 1.25rem;margin-bottom:1rem}
+/* Info / alert boxes */
+.info-box{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:1rem 1.2rem;margin-bottom:1rem}
 .info-box p{color:var(--txt2);font-size:.875rem;line-height:1.7}
-.info-box .tag{font-size:.75rem;padding:.15rem .5rem;border-radius:20px;font-weight:700;
-  display:inline-block;margin-top:.5rem}
+.tag{font-size:.72rem;padding:.13rem .5rem;border-radius:20px;font-weight:700;display:inline-block;margin-top:.4rem}
 .tag-ok{background:rgba(46,204,113,.1);color:var(--ok);border:1px solid rgba(46,204,113,.2)}
 .tag-warn{background:rgba(230,126,34,.1);color:var(--warn);border:1px solid rgba(230,126,34,.2)}
 
-/* List items */
-.list{display:flex;flex-direction:column;gap:.6rem}
-.li-row{
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--bg2);border:1px solid var(--line2);
-  border-radius:var(--R);padding:.8rem 1rem;gap:.75rem;
-  flex-wrap:wrap;
-}
-.li-left{display:flex;align-items:center;gap:.65rem;min-width:0}
-.li-icon{font-size:1.1rem;flex-shrink:0}
-.li-name{font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.li-meta{font-size:.74rem;color:var(--txt3);margin-top:.1rem}
-.li-right{display:flex;gap:.4rem;flex-shrink:0}
+/* List rows */
+.list{display:flex;flex-direction:column;gap:.55rem}
+.li-row{display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);
+  padding:.8rem 1rem;gap:.75rem;flex-wrap:wrap}
+.li-l{display:flex;align-items:center;gap:.6rem;min-width:0;flex:1}
+.li-icon{font-size:1rem;flex-shrink:0}
+.li-name{font-weight:600;font-size:.875rem}
+.li-meta{font-size:.72rem;color:var(--txt3);margin-top:.1rem}
+.li-r{display:flex;gap:.35rem;flex-shrink:0}
 
-/* Éditeur Markdown */
-.ed-bar{
-  display:flex;flex-wrap:wrap;gap:.3rem;
-  padding:.5rem;background:var(--bg3);
-  border:1px solid var(--line2);border-bottom:none;
-  border-radius:6px 6px 0 0;
-}
-.ed-bar button{
-  background:var(--bg4);border:1px solid var(--line2);border-radius:4px;
-  color:var(--txt2);padding:.22rem .5rem;cursor:pointer;
-  font-size:.78rem;font-weight:700;transition:all .15s;
-  -webkit-tap-highlight-color:transparent;
-}
-.ed-bar button:hover{background:rgba(217,79,30,.1);color:var(--ember);border-color:var(--lava)}
-.ed-sep{width:1px;background:var(--line2);margin:2px}
+/* Éditeur */
+.ed-bar{display:flex;flex-wrap:wrap;gap:.3rem;padding:.5rem;
+  background:var(--bg3);border:1px solid var(--ln2);border-bottom:none;border-radius:6px 6px 0 0}
+.ed-bar button{background:var(--bg4);border:1px solid var(--ln2);border-radius:4px;
+  color:var(--txt2);padding:.22rem .5rem;font-size:.76rem;font-weight:700;transition:all .15s}
+.ed-bar button:hover{background:rgba(217,79,30,.1);color:var(--ember);border-color:var(--fire)}
+.ed-sep{width:1px;background:var(--ln2);margin:2px}
 .ed-area{border-radius:0 0 6px 6px!important;border-top:none!important}
 
-/* Preview */
-.prev-label{font-size:.68rem;text-transform:uppercase;letter-spacing:2px;
+/* Prévisualisation */
+.prev-label{font-size:.67rem;text-transform:uppercase;letter-spacing:2px;
   color:var(--txt3);font-weight:700;margin:.9rem 0 .4rem}
-.prev-box{background:var(--bg2);border:1px solid var(--line2);
-  border-radius:var(--R);padding:1.25rem;min-height:100px}
+.prev-box{background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);
+  padding:1.2rem;min-height:80px}
 
-/* Maintenance toggle */
-.maint-row{
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:.75rem;
-  background:var(--bg2);border:1px solid var(--line2);
-  border-radius:var(--R);padding:1.1rem 1.25rem;
-}
-.maint-info h4{font-weight:700;margin-bottom:.2rem}
-.maint-info p{font-size:.82rem;color:var(--txt3)}
+/* Maint toggle */
+.maint-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;
+  background:var(--bg2);border:1px solid var(--ln2);border-radius:var(--R);padding:1rem 1.2rem;margin-bottom:1rem}
+.maint-info h4{font-weight:700;margin-bottom:.2rem;font-size:.9rem}
+.maint-info p{font-size:.8rem;color:var(--txt3)}
 
-/* Danger zone */
+/* Danger */
 .danger-box{background:rgba(231,76,60,.04);border:1px solid rgba(231,76,60,.15);
-  border-radius:var(--R);padding:1.1rem 1.25rem}
-.danger-title{font-weight:700;color:var(--bad);margin-bottom:.9rem;font-size:.9rem}
+  border-radius:var(--R);padding:1rem 1.2rem}
+.danger-title{font-weight:700;color:var(--bad);margin-bottom:.85rem;font-size:.88rem}
+
+/* Toggle switch */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;
+  padding:.6rem 0;border-bottom:1px solid var(--ln2)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-label{font-size:.875rem;color:var(--txt2)}
+.toggle{position:relative;width:38px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--bg4);border-radius:22px;
+  transition:.2s;border:1px solid var(--ln2)}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;
+  border-radius:50%;background:var(--txt3);bottom:2px;left:2px;transition:.2s}
+.toggle input:checked + .toggle-slider{background:var(--fire);border-color:var(--fire)}
+.toggle input:checked + .toggle-slider::before{transform:translateX(16px);background:#fff}
 
 /* Toast */
 #toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
-  padding:.7rem 1.2rem;border-radius:var(--R);background:var(--bg3);
-  border:1px solid var(--line2);font-size:.85rem;font-weight:500;
-  box-shadow:0 8px 30px rgba(0,0,0,.4);
-  transform:translateY(60px);opacity:0;
-  transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+  padding:.65rem 1.1rem;border-radius:var(--R);background:var(--bg3);border:1px solid var(--ln2);
+  font-size:.83rem;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.4);
+  transform:translateY(60px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
 #toast.on{transform:translateY(0);opacity:1}
 #toast.ok{border-color:rgba(46,204,113,.4);color:var(--ok)}
 #toast.err{border-color:rgba(231,76,60,.4);color:var(--bad)}
 #toast.info{border-color:rgba(212,168,67,.4);color:var(--gold)}
 
-/* Wiki content styles (for preview) */
-.wc h2{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--ember);margin:1.5rem 0 .6rem;padding-left:.75rem;border-left:3px solid var(--lava)}
-.wc h3{font-size:.9rem;font-weight:700;color:var(--txt);margin:1rem 0 .35rem}
-.wc p{color:var(--txt2);margin-bottom:.6rem;font-size:.875rem;line-height:1.75}
-.wc ul,.wc ol{padding-left:1.3rem;margin-bottom:.6rem}
-.wc li{color:var(--txt2);font-size:.875rem;margin-bottom:.25rem}
+/* Wiki content preview */
+.wc h2{font-family:'Cinzel',serif;font-size:1rem;color:var(--ember);margin:1.25rem 0 .5rem;padding-left:.6rem;border-left:2px solid var(--fire)}
+.wc h3{font-size:.88rem;font-weight:700;color:var(--txt);margin:.9rem 0 .3rem}
+.wc p{color:var(--txt2);margin-bottom:.5rem;font-size:.85rem;line-height:1.7}
+.wc ul,.wc ol{padding-left:1.3rem;margin-bottom:.5rem}
+.wc li{color:var(--txt2);font-size:.85rem;margin-bottom:.2rem}
 .wc strong{color:var(--txt);font-weight:700}
 .wc em{color:var(--gold);font-style:italic}
-.wc code{background:var(--bg4);border:1px solid var(--line2);border-radius:4px;
-  padding:.1rem .35rem;font-family:'Courier New',monospace;font-size:.82rem;color:var(--ember)}
-.wc pre{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--R);
-  padding:1rem;overflow-x:auto;margin:.75rem 0}
-.wc pre code{background:none;border:none;padding:0;font-size:.83rem;color:var(--txt2)}
-.wc blockquote{border-left:3px solid var(--gold2);background:rgba(212,168,67,.05);
-  padding:.75rem 1rem;border-radius:0 var(--R) var(--R) 0;margin:.75rem 0}
+.wc code{background:var(--bg4);border:1px solid var(--ln2);border-radius:4px;
+  padding:.08rem .35rem;font-family:'Courier New',monospace;font-size:.8rem;color:var(--ember)}
+.wc pre{background:var(--bg3);border:1px solid var(--ln2);border-radius:var(--R);
+  padding:.9rem;overflow-x:auto;margin:.6rem 0}
+.wc pre code{background:none;border:none;padding:0;font-size:.8rem;color:var(--txt2)}
+.wc blockquote{border-left:2px solid var(--gold2);background:rgba(212,168,67,.04);
+  padding:.6rem .9rem;border-radius:0 var(--R) var(--R) 0;margin:.6rem 0}
 .wc blockquote p{margin:0;font-style:italic}
-.wc hr{border:none;border-top:1px solid var(--line2);margin:1.25rem 0}
-.wc table{width:100%;border-collapse:collapse;font-size:.85rem;margin:.75rem 0}
-.wc th{padding:.45rem .75rem;background:var(--bg4);border:1px solid var(--line2);color:var(--ember);font-weight:700;text-align:left}
-.wc td{padding:.45rem .75rem;border:1px solid var(--line2);color:var(--txt2)}
+.wc hr{border:none;border-top:1px solid var(--ln2);margin:1rem 0}
+.wc table{width:100%;border-collapse:collapse;font-size:.82rem;margin:.6rem 0}
+.wc th{padding:.4rem .7rem;background:var(--bg4);border:1px solid var(--ln2);color:var(--ember);font-weight:700;text-align:left}
+.wc td{padding:.4rem .7rem;border:1px solid var(--ln2);color:var(--txt2)}
 
-/* ── RESPONSIVE ── */
+/* Responsive */
 @media(max-width:768px){
-  .burger{display:flex}
+  .burger{display:flex!important}
+
+  /* Sidebar admin en tiroir */
   .adm-sb{
-    position:fixed;top:var(--H);left:0;bottom:0;z-index:850;
-    transform:translateX(-100%);box-shadow:4px 0 24px rgba(0,0,0,.5);
-    height:calc(100vh - var(--H));
+    display:block!important;
+    position:fixed;top:var(--H);left:0;bottom:0;z-index:800;
+    width:var(--SW);height:calc(100vh - var(--H));
+    transform:translateX(-100%);
+    box-shadow:4px 0 24px rgba(0,0,0,.5);
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
   }
   .adm-sb.open{transform:translateX(0)}
+
   .adm-main{padding:1.25rem 1rem 3rem}
-  .adm-title{font-size:1.1rem}
-  .fg-2{grid-template-columns:1fr}
+  .fg-2,.fg-3{grid-template-columns:1fr}
   .li-row{flex-direction:column;align-items:flex-start}
-  .li-right{width:100%}
-  .li-right .btn{flex:1;justify-content:center}
+  .li-r{width:100%}.li-r .btn{flex:1;justify-content:center}
   .stat-row{grid-template-columns:repeat(2,1fr)}
+  .adm-title{font-size:1.1rem}
 }
 @media(min-width:769px){.burger{display:none!important}}
-
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(217,79,30,.2);border-radius:3px}
@@ -287,72 +249,60 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </head>
 <body>
 
-<!-- ══════════ LOGIN ══════════ -->
-<div class="login-page" id="login-page">
+<!-- LOGIN -->
+<div class="login-wrap" id="login-wrap">
   <div class="login-card">
-    <div class="login-icon">🔐</div>
-    <h2 class="login-title">Panel Admin</h2>
-    <p class="login-sub">Dragon SMP — Accès restreint</p>
-
+    <div class="l-icon">🔐</div>
+    <h2 class="l-title">Panel Admin</h2>
+    <p class="l-sub">Dragon SMP — Accès restreint</p>
     <div class="step-dots">
-      <div class="sdot cur" id="sd1">1</div>
-      <div class="sdot-line"></div>
+      <div class="sdot cur" id="sd1">1</div><div class="sdot-line"></div>
       <div class="sdot" id="sd2">2</div>
     </div>
-
-    <!-- Étape 1 -->
     <div class="lstep on" id="ls1">
-      <div class="fg">
-        <label>Premier mot de passe</label>
-        <input type="password" id="pw1" placeholder="••••••••"
-          onkeydown="if(event.key==='Enter')s1()">
-      </div>
+      <div class="fg"><label>Premier mot de passe</label>
+        <input type="password" id="pw1" placeholder="••••••••" onkeydown="if(event.key==='Enter')s1()"></div>
       <div class="lerr" id="e1"></div>
       <button class="btn btn-fire btn-full" onclick="s1()">Continuer →</button>
     </div>
-
-    <!-- Étape 2 -->
     <div class="lstep" id="ls2">
-      <div class="fg">
-        <label>Deuxième mot de passe</label>
-        <input type="password" id="pw2" placeholder="••••••••"
-          onkeydown="if(event.key==='Enter')s2()">
-      </div>
+      <div class="fg"><label>Deuxième mot de passe</label>
+        <input type="password" id="pw2" placeholder="••••••••" onkeydown="if(event.key==='Enter')s2()"></div>
       <div class="lerr" id="e2"></div>
       <button class="btn btn-fire btn-full" onclick="s2()">Se connecter</button>
       <button class="btn btn-ghost btn-full" style="margin-top:.4rem" onclick="resetLogin()">← Retour</button>
     </div>
-
     <div style="margin-top:1.25rem;text-align:center">
       <a href="index.html" style="color:var(--txt3);font-size:.8rem">← Retour au wiki</a>
     </div>
   </div>
 </div>
 
-<!-- ══════════ ADMIN PANEL ══════════ -->
+<!-- ADMIN -->
 <div class="adm-wrap" id="adm-wrap">
-
   <header class="hdr">
     <button class="burger" id="burger"><span></span><span></span><span></span></button>
-    <div class="hdr-logo">🐉 Dragon<em>SMP</em> <span style="color:var(--txt3);font-weight:400;font-size:.85rem;margin-left:.25rem">/ Admin</span></div>
+    <div class="hdr-logo">🐉 Dragon<em>SMP</em> <span style="color:var(--txt3);font-weight:300;font-size:.8rem">/ Admin</span></div>
     <div style="display:flex;align-items:center;gap:.6rem;margin-left:auto">
       <span class="hdr-status">Connecté</span>
       <button class="btn btn-ghost btn-sm" onclick="logout()">Déconnexion</button>
-      <a href="index.html" class="btn btn-ghost btn-sm">← Wiki</a>
+      <a href="index.html" class="btn btn-ghost btn-sm">← Site</a>
     </div>
   </header>
 
   <div class="overlay" id="overlay"></div>
 
   <div class="adm-body">
-    <!-- Sidebar -->
     <aside class="adm-sb" id="adm-sb">
-      <div class="adm-nav on" data-panel="dashboard" onclick="showP('dashboard',this)">📊 Dashboard</div>
-      <div class="adm-nav" data-panel="categories" onclick="showP('categories',this)">📁 Catégories</div>
-      <div class="adm-nav" data-panel="pages" onclick="showP('pages',this)">📄 Pages</div>
-      <div class="adm-nav" data-panel="editor" onclick="showP('editor',this)" id="nav-editor">✏️ Éditeur</div>
-      <div class="adm-nav-sep"></div>
-      <div class="adm-nav" data-panel="settings" onclick="showP('settings',this)">⚙️ Paramètres</div>
+      <div class="adm-nav on" data-p="dashboard" onclick="showP('dashboard',this)">📊 Dashboard</div>
+      <div class="adm-sep"></div>
+      <div class="adm-nav" data-p="pages" onclick="showP('pages',this)">📄 Pages</div>
+      <div class="adm-nav" data-p="page-editor" onclick="showP('page-editor',this)" id="nav-pg-ed">✏️ Éditeur page</div>
+      <div class="adm-sep"></div>
+      <div class="adm-nav" data-p="commands" onclick="showP('commands',this)">⌨️ Commandes</div>
+      <div class="adm-nav" data-p="cmd-editor" onclick="showP('cmd-editor',this)" id="nav-cmd-ed">➕ Ajouter commande</div>
+      <div class="adm-sep"></div>
+      <div class="adm-nav" data-p="settings" onclick="showP('settings',this)">⚙️ Paramètres</div>
     </aside>
 
     <main class="adm-main">
@@ -360,92 +310,59 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <!-- ── DASHBOARD ── -->
       <div class="adm-panel on" id="p-dashboard">
         <h2 class="adm-title">📊 Dashboard</h2>
-        <div class="stat-row" id="stats"></div>
-
-        <div class="maint-row" style="margin-bottom:1rem">
+        <div class="stat-row" id="dash-stats"></div>
+        <div class="maint-row">
           <div class="maint-info">
-            <h4 id="maint-title">🔧 Mode Maintenance</h4>
-            <p id="maint-desc">Chargement...</p>
+            <h4 id="maint-h">🔧 Maintenance</h4>
+            <p id="maint-p">Chargement...</p>
           </div>
-          <button class="btn" id="maint-btn" onclick="toggleMaint()">...</button>
+          <button class="btn btn-sm" id="maint-btn" onclick="toggleMaint()">...</button>
         </div>
-
         <div class="info-box">
-          <p>Bienvenue dans le panel admin du <strong style="color:var(--ember)">Dragon SMP Wiki</strong>.<br>
-          Crée d'abord tes <strong>catégories</strong>, puis ajoute des <strong>pages</strong> dans chacune.</p>
-          <span class="tag" id="db-tag">Chargement...</span>
-        </div>
-      </div>
-
-      <!-- ── CATÉGORIES ── -->
-      <div class="adm-panel" id="p-categories">
-        <h2 class="adm-title">📁 Catégories</h2>
-        <div style="margin-bottom:1.25rem">
-          <button class="btn btn-fire" onclick="newCat()">➕ Nouvelle catégorie</button>
-        </div>
-        <div class="list" id="cat-list"></div>
-      </div>
-
-      <!-- ── ÉDITEUR CATÉGORIE ── -->
-      <div class="adm-panel" id="p-cat-editor">
-        <h2 class="adm-title" id="cat-ed-title">➕ Nouvelle catégorie</h2>
-        <input type="hidden" id="cat-edit-id">
-        <div style="max-width:420px">
-          <div class="fg-2">
-            <div class="fg">
-              <label>Nom *</label>
-              <input type="text" id="cat-name" placeholder="Ex: Guides">
-            </div>
-            <div class="fg">
-              <label>Icône (emoji)</label>
-              <input type="text" id="cat-icon" placeholder="📚" maxlength="4">
-            </div>
-          </div>
-          <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.25rem">
-            <button class="btn btn-fire" onclick="saveCat()">💾 Sauvegarder</button>
-            <button class="btn btn-ghost" onclick="showP('categories',document.querySelector('[data-panel=categories]'))">✕ Annuler</button>
-          </div>
+          <p>Panel admin du <strong style="color:var(--ember)">Dragon SMP</strong>.<br>
+          Crée tes <strong>pages</strong> (elles apparaissent dans le menu du site), ajoute tes <strong>commandes</strong> pour la barre de recherche.</p>
+          <span class="tag" id="db-tag">Vérification...</span>
         </div>
       </div>
 
       <!-- ── PAGES ── -->
       <div class="adm-panel" id="p-pages">
-        <h2 class="adm-title">📄 Pages du wiki</h2>
-        <div style="margin-bottom:1.25rem">
+        <h2 class="adm-title">📄 Pages du site</h2>
+        <div style="margin-bottom:1.1rem">
           <button class="btn btn-fire" onclick="newPage()">➕ Nouvelle page</button>
         </div>
         <div class="list" id="pages-list"></div>
       </div>
 
       <!-- ── ÉDITEUR PAGE ── -->
-      <div class="adm-panel" id="p-editor">
-        <h2 class="adm-title" id="ed-title">✏️ Éditeur</h2>
-        <input type="hidden" id="edit-id">
+      <div class="adm-panel" id="p-page-editor">
+        <h2 class="adm-title" id="pg-ed-title">✏️ Éditeur de page</h2>
+        <input type="hidden" id="edit-pg-id">
 
         <div class="fg-2">
-          <div class="fg">
-            <label>Titre *</label>
-            <input type="text" id="pg-title" placeholder="Ex: Économie">
-          </div>
-          <div class="fg">
-            <label>Icône</label>
-            <input type="text" id="pg-icon" placeholder="💰" maxlength="4">
-          </div>
+          <div class="fg"><label>Titre *</label>
+            <input type="text" id="pg-title" placeholder="Ex: Économie"></div>
+          <div class="fg"><label>Icône (emoji)</label>
+            <input type="text" id="pg-icon" placeholder="💰" maxlength="4"></div>
         </div>
-        <div class="fg-2">
-          <div class="fg">
-            <label>Catégorie *</label>
-            <select id="pg-cat"></select>
+        <div class="fg"><label>Description courte</label>
+          <input type="text" id="pg-desc" placeholder="Résumé en une phrase..."></div>
+
+        <!-- Options de la page -->
+        <div class="info-box" style="margin-bottom:1rem">
+          <p style="font-weight:600;margin-bottom:.6rem;color:var(--txt)">Options de la page</p>
+          <div class="toggle-row">
+            <span class="toggle-label">Afficher la sidebar gauche (table des matières auto)</span>
+            <label class="toggle"><input type="checkbox" id="pg-showtoc" checked><span class="toggle-slider"></span></label>
           </div>
-          <div class="fg">
-            <label>Description courte</label>
-            <input type="text" id="pg-desc" placeholder="Résumé en une ligne...">
+          <div class="toggle-row">
+            <span class="toggle-label">Afficher la barre de recherche commandes (droite)</span>
+            <label class="toggle"><input type="checkbox" id="pg-showcmd"><span class="toggle-slider"></span></label>
           </div>
         </div>
 
         <div class="fg">
           <label>Contenu Markdown</label>
-          <!-- Toolbar -->
           <div class="ed-bar">
             <button onclick="ins('## ','')">H2</button>
             <button onclick="ins('### ','')">H3</button>
@@ -456,7 +373,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
             <div class="ed-sep"></div>
             <button onclick="ins('- ','')">• liste</button>
             <button onclick="ins('1. ','')">1. liste</button>
-            <button onclick="ins('> ','')">❝ citation</button>
+            <button onclick="ins('> ','')">❝</button>
             <div class="ed-sep"></div>
             <button onclick="ins('\n---\n','')">— sépar.</button>
             <button onclick="ins('\n```\n','\n```')">bloc code</button>
@@ -465,17 +382,54 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
             <button onclick="insImg()">🖼 image</button>
           </div>
           <textarea class="ed-area fg" id="pg-content"
-            placeholder="Écris ton contenu en Markdown...&#10;&#10;## Titre de section&#10;&#10;Du texte, **gras**, *italique*, `code`..."></textarea>
+            placeholder="## Titre de section&#10;&#10;Ton contenu en Markdown..."></textarea>
         </div>
 
-        <div class="prev-label">👁 Prévisualisation en direct</div>
-        <div class="prev-box wc" id="prev">
+        <div class="prev-label">👁 Prévisualisation</div>
+        <div class="prev-box wc" id="pg-prev">
           <span style="color:var(--txt3);font-size:.82rem">Commence à écrire…</span>
         </div>
 
         <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.25rem">
           <button class="btn btn-fire" onclick="savePage()">💾 Sauvegarder</button>
-          <button class="btn btn-ghost" onclick="showP('pages',document.querySelector('[data-panel=pages]'))">✕ Annuler</button>
+          <button class="btn btn-ghost" onclick="showP('pages',document.querySelector('[data-p=pages]'))">✕ Annuler</button>
+        </div>
+      </div>
+
+      <!-- ── COMMANDES ── -->
+      <div class="adm-panel" id="p-commands">
+        <h2 class="adm-title">⌨️ Commandes</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;flex-wrap:wrap;gap:.5rem">
+          <button class="btn btn-fire" onclick="newCmd()">➕ Ajouter une commande</button>
+          <span style="color:var(--txt3);font-size:.8rem" id="cmd-count"></span>
+        </div>
+        <div class="list" id="cmd-list"></div>
+      </div>
+
+      <!-- ── ÉDITEUR COMMANDE ── -->
+      <div class="adm-panel" id="p-cmd-editor">
+        <h2 class="adm-title" id="cmd-ed-title">➕ Nouvelle commande</h2>
+        <input type="hidden" id="edit-cmd-id">
+
+        <div class="fg-2">
+          <div class="fg"><label>Commande principale *</label>
+            <input type="text" id="cmd-main" placeholder="Ex: /home"></div>
+          <div class="fg"><label>Alternatives (séparées par virgules)</label>
+            <input type="text" id="cmd-alts" placeholder="Ex: /retour, /spawn perso"></div>
+        </div>
+        <div class="fg"><label>Description *</label>
+          <input type="text" id="cmd-desc" placeholder="Ce que fait cette commande..."></div>
+        <div class="fg">
+          <label>Mots-clés de recherche (séparés par espaces)</label>
+          <input type="text" id="cmd-kw" placeholder="Ex: home retour base téléportation spawn">
+          <div style="font-size:.72rem;color:var(--txt3);margin-top:.3rem">
+            💡 Ces mots permettent de trouver la commande même sans taper son nom exact. Ajoutes-en autant que tu veux.
+          </div>
+        </div>
+
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">
+          <button class="btn btn-fire" onclick="saveCmd()">💾 Sauvegarder</button>
+          <button class="btn btn-ghost" onclick="showP('commands',document.querySelector('[data-p=commands]'))">✕ Annuler</button>
         </div>
       </div>
 
@@ -484,61 +438,45 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <h2 class="adm-title">⚙️ Paramètres</h2>
 
         <!-- JSONbin -->
-        <div class="info-box" style="margin-bottom:1.25rem">
+        <div class="info-box" style="margin-bottom:1rem">
           <p><strong style="color:var(--gold)">☁️ Base de données — JSONbin.io</strong><br>
-          1. Crée un compte sur <a href="https://jsonbin.io" target="_blank" style="color:var(--ember)">jsonbin.io</a><br>
-          2. Crée un bin avec le JSON de départ<br>
-          3. Entre ton <strong>Bin ID</strong> et ta <strong>Master Key API</strong> ci-dessous<br>
-          Les données survivront à toutes les mises à jour du code.</p>
+          Entre ton <strong>Bin ID</strong> et ta <strong>Master Key</strong> pour que les données soient sauvegardées dans le cloud.
+          Ton Bin ID : <code style="color:var(--ember);background:var(--bg3);padding:.1rem .3rem;border-radius:3px">69a5edf2d0ea881f40e853ae</code></p>
         </div>
-        <div class="fg-2" style="max-width:580px">
-          <div class="fg">
-            <label>Bin ID</label>
-            <input type="text" id="set-bin" placeholder="69a5edf2...">
-          </div>
-          <div class="fg">
-            <label>Master Key API</label>
-            <input type="password" id="set-key" placeholder="$2a$10$...">
-          </div>
+        <div class="fg-2" style="max-width:560px">
+          <div class="fg"><label>Bin ID</label>
+            <input type="text" id="set-bin" placeholder="69a5edf2d0ea881f40e853ae"></div>
+          <div class="fg"><label>Master Key API</label>
+            <input type="password" id="set-key" placeholder="$2a$10$..."></div>
         </div>
-        <button class="btn btn-fire btn-sm" onclick="saveDB()" style="margin-bottom:1.5rem">
-          💾 Enregistrer la config
-        </button>
+        <button class="btn btn-fire btn-sm" onclick="saveDB()" style="margin-bottom:1.5rem">💾 Enregistrer config DB</button>
 
-        <!-- MC -->
-        <div class="info-box" style="margin-bottom:1.25rem">
-          <p><strong style="color:var(--gold)">⚔️ Serveur Minecraft</strong></p>
+        <!-- Site -->
+        <div class="info-box" style="margin-bottom:1rem">
+          <p><strong style="color:var(--gold)">🌐 Paramètres du site</strong></p>
         </div>
-        <div style="max-width:580px">
+        <div style="max-width:560px">
+          <div class="fg"><label>Description page d'accueil</label>
+            <input type="text" id="set-hero-desc" placeholder="Description du serveur..."></div>
           <div class="fg-2">
-            <div class="fg">
-              <label>IP de ping (interne)</label>
-              <input type="text" id="set-host" placeholder="163.5.141.232">
-            </div>
-            <div class="fg">
-              <label>Port</label>
-              <input type="number" id="set-port" placeholder="25816">
-            </div>
+            <div class="fg"><label>IP interne (ping MC)</label>
+              <input type="text" id="set-mc-host" placeholder="163.5.141.232"></div>
+            <div class="fg"><label>Port</label>
+              <input type="number" id="set-mc-port" placeholder="25816"></div>
           </div>
-          <div class="fg">
-            <label>IP affichée aux joueurs</label>
-            <input type="text" id="set-ip" placeholder="connect.axohosts.fr:25883">
-          </div>
-          <div class="fg">
-            <label>Message de maintenance</label>
-            <input type="text" id="set-maint" placeholder="Le serveur est en maintenance...">
-          </div>
-          <button class="btn btn-fire btn-sm" onclick="saveMC()" style="margin-bottom:1.5rem">
-            💾 Enregistrer
-          </button>
+          <div class="fg"><label>IP affichée aux joueurs</label>
+            <input type="text" id="set-mc-ip" placeholder="connect.axohosts.fr:25883"></div>
+          <div class="fg"><label>Message de maintenance</label>
+            <input type="text" id="set-maint-msg" placeholder="Le serveur est en maintenance..."></div>
+          <button class="btn btn-fire btn-sm" onclick="saveSettings()" style="margin-bottom:1.5rem">💾 Enregistrer</button>
         </div>
 
         <!-- Danger -->
         <div class="danger-box">
           <p class="danger-title">⚠️ Zone dangereuse</p>
           <div style="display:flex;gap:.6rem;flex-wrap:wrap">
-            <button class="btn btn-ghost btn-sm" onclick="exportJSON()">📤 Exporter JSON</button>
-            <button class="btn btn-red btn-sm" onclick="confirmReset()">🗑 Réinitialiser le wiki</button>
+            <button class="btn btn-ghost btn-sm" onclick="exportData()">📤 Exporter JSON</button>
+            <button class="btn btn-red btn-sm" onclick="confirmReset()">🗑 Réinitialiser tout</button>
           </div>
         </div>
       </div>
@@ -552,52 +490,48 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <script>
 'use strict';
 
-/* ── Hash MDP ──────────────────────────────────────────────────
-   MDP 1 : Nzoanfioz'laownb(3((_?
-   MDP 2 : Iakbk igi,onNl!3(("783!!l02(_!{$[®
-   ──────────────────────────────────────────────────────────── */
-const H1 = '14a4112514a4112514a4112514a41125';
-const H2 = '2d2438242d2438242d2438242d243824';
+/* ── MDP ── */
+const H1='14a4112514a4112514a4112514a41125';
+const H2='2d2438242d2438242d2438242d243824';
 
 function sh(s){
-  let h=0;
-  for(let i=0;i<s.length;i++) h=((h<<5)-h+s.charCodeAt(i))|0;
+  let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;
   return Math.abs(h).toString(16).padStart(8,'0').repeat(4);
 }
 
-/* ── Données ──────────────────────────────────────────────────── */
+/* ── Defaults ── */
 const DEFAULTS={
-  categories:[
-    {id:'general',name:'Général',icon:'📖',order:0},
-    {id:'guides', name:'Guides', icon:'📚',order:1},
-    {id:'serveur',name:'Serveur',icon:'⚔️', order:2}
-  ],
+  settings:{mcHost:'163.5.141.232',mcPort:25816,mcIp:'connect.axohosts.fr:25883',
+    maintenance:false,maintMsg:'Serveur en maintenance.',
+    heroDesc:'Serveur Minecraft Survie communautaire francophone.'},
   pages:[
-    {id:'accueil',catId:'general',title:'Accueil',icon:'🏠',order:0,
-     desc:'Bienvenue sur le Wiki officiel du Dragon SMP',
-     content:`## Bienvenue sur le Dragon SMP\n\nLe **Dragon SMP** est un serveur Minecraft Survie communautaire francophone.\n\n### Se connecter\n\n**IP :** \`connect.axohosts.fr:25883\`\n**Version :** Java 1.21+\n\n1. Lance Minecraft → Multijoueur\n2. Ajouter un serveur\n3. Entre l'IP et connecte-toi !\n\n> Rejoins notre **Discord** pour ne rien rater des events 🐉`},
-    {id:'reglement',catId:'general',title:'Règlement',icon:'📋',order:1,
+    {id:'reglement',title:'Règlement',icon:'📋',isCore:true,showToc:true,showCmdSearch:false,
      desc:'Les règles à respecter',
      content:`## Règlement\n\n**1. Respect mutuel** — Aucune insulte ni harcèlement.\n\n**2. Anti-triche** — Hacks et exploits interdits.\n\n**3. Anti-grief** — Ne détruis pas les constructions des autres.\n\n**4. PvP fair-play** — Avec accord mutuel uniquement.\n\n**5. Respect du staff** — Les décisions sont finales.`},
-    {id:'commandes',catId:'guides',title:'Commandes',icon:'⌨️',order:0,
-     desc:'Toutes les commandes disponibles',
-     content:`## Commandes utiles\n\n### Téléportation\n\`/spawn\` — Retour au spawn\n\`/home\` — Retour chez toi\n\`/sethome\` — Définit ton home\n\`/tpa [joueur]\` — Demande de TP\n\n### Économie\n\`/money\` — Voir ton solde\n\`/pay [joueur] [montant]\` — Payer`}
+    {id:'wiki',title:'Wiki',icon:'📖',isCore:true,showToc:true,showCmdSearch:true,
+     desc:'Documentation complète',
+     content:`## Bienvenue sur le Wiki\n\nDocumentation complète du **Dragon SMP**.\n\n## Premiers pas\n\nIP : \`connect.axohosts.fr:25883\` — Java 1.21+\n\n## Économie\n\nLa monnaie s'appelle les **Écailles**.\n\n## Protection\n\nProtège ta base avec \`/claim\`.`}
   ],
-  settings:{maintenance:false,maintMsg:'Le serveur est en maintenance.',
-    mcHost:'163.5.141.232',mcPort:25816,mcIp:'connect.axohosts.fr:25883'}
+  commands:[
+    {id:'c1',cmd:'/home',alts:'/retour',desc:'Retourne à ton home.',keywords:'home retour base'},
+    {id:'c2',cmd:'/sethome',alts:'/home set',desc:'Définit ton home.',keywords:'sethome set home définir base'},
+    {id:'c3',cmd:'/tpa [joueur]',alts:'/tp demande',desc:'Demande de TP à un joueur.',keywords:'tpa tp téléportation joueur'},
+    {id:'c4',cmd:'/money',alts:'/balance, /bal',desc:'Voir ton solde.',keywords:'money argent solde balance'},
+    {id:'c5',cmd:'/pay [joueur] [montant]',alts:'',desc:'Envoie des Écailles.',keywords:'pay payer argent donner'},
+    {id:'c6',cmd:'/claim',alts:'',desc:'Protège ta chunk.',keywords:'claim protéger chunk protection'}
+  ]
 };
 
-let DATA = null;
+let DATA=null;
 
 async function loadData(){
-  const binId = localStorage.getItem('dsmp_bin_id');
-  const apiKey = localStorage.getItem('dsmp_api_key');
-  if(binId && apiKey){
-    try{
-      const r = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`,
-        {headers:{'X-Master-Key':apiKey}});
-      if(r.ok){ DATA=(await r.json()).record;
-        localStorage.setItem('dsmp_cache',JSON.stringify(DATA));return; }
+  const binId=localStorage.getItem('dsmp_bin_id');
+  const apiKey=localStorage.getItem('dsmp_api_key');
+  if(binId&&apiKey){
+    try{const r=await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`,
+      {headers:{'X-Master-Key':apiKey}});
+      if(r.ok){DATA=(await r.json()).record;
+        localStorage.setItem('dsmp_cache',JSON.stringify(DATA));return;}
     }catch{}
   }
   const c=localStorage.getItem('dsmp_cache');
@@ -610,21 +544,15 @@ async function saveData(){
   localStorage.setItem('dsmp_cache',JSON.stringify(DATA));
   const binId=localStorage.getItem('dsmp_bin_id');
   const apiKey=localStorage.getItem('dsmp_api_key');
-  if(binId&&apiKey){
-    try{await fetch(`https://api.jsonbin.io/v3/b/${binId}`,{
-      method:'PUT',
+  if(binId&&apiKey){try{
+    await fetch(`https://api.jsonbin.io/v3/b/${binId}`,{method:'PUT',
       headers:{'Content-Type':'application/json','X-Master-Key':apiKey},
-      body:JSON.stringify(DATA)
-    })}catch{}
-  }
+      body:JSON.stringify(DATA)});
+  }catch{}}
 }
 
-/* ── Login ────────────────────────────────────────────────────── */
-function serr(id,msg){
-  const el=document.getElementById(id);
-  el.textContent='❌ '+msg;
-  setTimeout(()=>el.textContent='',3000);
-}
+/* ── Login ── */
+function serr(id,msg){const el=document.getElementById(id);el.textContent='❌ '+msg;setTimeout(()=>el.textContent='',3000)}
 function s1(){
   if(sh(document.getElementById('pw1').value)===H1){
     document.getElementById('ls1').classList.remove('on');
@@ -637,7 +565,7 @@ function s1(){
 function s2(){
   if(sh(document.getElementById('pw2').value)===H2){
     document.getElementById('sd2').className='sdot done';
-    document.getElementById('login-page').style.display='none';
+    document.getElementById('login-wrap').style.display='none';
     document.getElementById('adm-wrap').classList.add('on');
     initAdmin();
   }else{serr('e2','Mot de passe incorrect');document.getElementById('pw2').value=''}
@@ -647,295 +575,288 @@ function resetLogin(){
   document.getElementById('ls2').classList.remove('on');
   document.getElementById('sd1').className='sdot cur';
   document.getElementById('sd2').className='sdot';
-  document.getElementById('pw1').value='';
-  document.getElementById('pw2').value='';
+  ['pw1','pw2'].forEach(id=>document.getElementById(id).value='');
 }
-function logout(){
-  resetLogin();
-  document.getElementById('login-page').style.display='flex';
-  document.getElementById('adm-wrap').classList.remove('on');
-}
+function logout(){resetLogin();document.getElementById('login-wrap').style.display='flex';document.getElementById('adm-wrap').classList.remove('on')}
 
-/* ── Init ─────────────────────────────────────────────────────── */
+/* ── Init ── */
 async function initAdmin(){
   await loadData();
   setupBurger();
-  renderStats();
-  renderCats();
+  renderDash();
   renderPages();
-  fillCatSelect();
+  renderCmds();
   loadSettings();
-  updateMaintUI();
 }
 
-/* ── Navigation ───────────────────────────────────────────────── */
+/* ── Nav ── */
 function showP(id,el){
   document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.adm-nav').forEach(n=>n.classList.remove('on'));
   document.getElementById('p-'+id)?.classList.add('on');
-  if(el) el.classList.add('on');
+  if(el)el.classList.add('on');
   closeSB();
 }
 
-/* ── Burger ───────────────────────────────────────────────────── */
+/* ── Burger ── */
 function setupBurger(){
-  document.getElementById('burger')?.addEventListener('click',toggleSB);
+  document.getElementById('burger')?.addEventListener('click',()=>{
+    const sb  = document.getElementById('adm-sb');
+    const btn = document.getElementById('burger');
+    const ovl = document.getElementById('overlay');
+    if(sb?.classList.contains('open')){
+      closeSB();
+    } else {
+      sb?.classList.add('open');
+      btn?.classList.add('open');
+      ovl?.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
+  });
   document.getElementById('overlay')?.addEventListener('click',closeSB);
-}
-function toggleSB(){
-  document.getElementById('adm-sb')?.classList.toggle('open');
-  document.getElementById('burger')?.classList.toggle('open');
-  document.getElementById('overlay')?.classList.toggle('on');
 }
 function closeSB(){
   document.getElementById('adm-sb')?.classList.remove('open');
   document.getElementById('burger')?.classList.remove('open');
   document.getElementById('overlay')?.classList.remove('on');
+  document.body.style.overflow = '';
 }
 
-/* ── Dashboard ────────────────────────────────────────────────── */
-function renderStats(){
-  const el=document.getElementById('stats');
+/* ── Dashboard ── */
+function renderDash(){
+  const el=document.getElementById('dash-stats');
   if(!el||!DATA)return;
-  const lines=DATA.pages.reduce((a,p)=>a+(p.content||'').split('\n').length,0);
   el.innerHTML=`
     <div class="stat-c"><div class="n">${DATA.pages.length}</div><div class="l">Pages</div></div>
-    <div class="stat-c"><div class="n">${DATA.categories.length}</div><div class="l">Catégories</div></div>
-    <div class="stat-c"><div class="n">${lines}</div><div class="l">Lignes</div></div>`;
-
+    <div class="stat-c"><div class="n">${DATA.commands.length}</div><div class="l">Commandes</div></div>
+    <div class="stat-c"><div class="n">${DATA.pages.filter(p=>!p.isCore).length}</div><div class="l">Pages custom</div></div>`;
   const tag=document.getElementById('db-tag');
   const binId=localStorage.getItem('dsmp_bin_id');
-  if(tag){
-    if(binId){tag.className='tag tag-ok';tag.textContent='✅ JSONbin configuré — données cloud'}
-    else{tag.className='tag tag-warn';tag.textContent='⚠️ localStorage uniquement — configure JSONbin dans Paramètres'}
-  }
+  if(tag){tag.className=binId?'tag tag-ok':'tag tag-warn';
+    tag.textContent=binId?'✅ JSONbin configuré':'⚠️ localStorage uniquement — configure JSONbin dans Paramètres'}
+  updateMaintUI();
 }
-
 function updateMaintUI(){
   if(!DATA)return;
   const on=DATA.settings.maintenance;
-  const t=document.getElementById('maint-title');
-  const d=document.getElementById('maint-desc');
+  const h=document.getElementById('maint-h');
+  const p=document.getElementById('maint-p');
   const b=document.getElementById('maint-btn');
-  if(t)t.textContent=on?'🔧 Maintenance activée':'✅ Serveur accessible';
-  if(d)d.textContent=on?'Le site affiche "En maintenance" aux visiteurs':'Le statut MC est affiché normalement';
-  if(b){b.textContent=on?'Désactiver':'Activer la maintenance';b.className=`btn ${on?'btn-ghost':'btn-fire'} btn-sm`}
+  if(h)h.textContent=on?'🔧 Maintenance activée':'✅ Serveur accessible';
+  if(p)p.textContent=on?'Le site affiche maintenance aux visiteurs':'Affichage normal du statut';
+  if(b){b.textContent=on?'Désactiver':'Activer';b.className=`btn btn-sm ${on?'btn-ghost':'btn-fire'}`}
 }
 async function toggleMaint(){
   DATA.settings.maintenance=!DATA.settings.maintenance;
   await saveData();updateMaintUI();
-  toast(DATA.settings.maintenance?'🔧 Maintenance activée':'✅ Maintenance désactivée');
+  toast(DATA.settings.maintenance?'🔧 Maintenance activée':'✅ Désactivée');
 }
 
-/* ── Catégories ───────────────────────────────────────────────── */
-function renderCats(){
-  const el=document.getElementById('cat-list');
-  if(!el||!DATA)return;
-  if(!DATA.categories.length){el.innerHTML='<p style="color:var(--txt3)">Aucune catégorie.</p>';return}
-  el.innerHTML=DATA.categories.map(c=>`
-    <div class="li-row">
-      <div class="li-left">
-        <span class="li-icon">${c.icon||'📁'}</span>
-        <div>
-          <div class="li-name">${e(c.name)}</div>
-          <div class="li-meta">${DATA.pages.filter(p=>p.catId===c.id).length} page(s)</div>
-        </div>
-      </div>
-      <div class="li-right">
-        <button class="btn btn-ghost btn-sm" onclick="editCat('${c.id}')">✏️</button>
-        <button class="btn btn-red btn-sm" onclick="delCat('${c.id}')">🗑</button>
-      </div>
-    </div>`).join('');
-}
-
-function newCat(){
-  document.getElementById('cat-edit-id').value='';
-  document.getElementById('cat-ed-title').textContent='➕ Nouvelle catégorie';
-  document.getElementById('cat-name').value='';
-  document.getElementById('cat-icon').value='';
-  showP('cat-editor',null);
-}
-function editCat(id){
-  const c=DATA.categories.find(c=>c.id===id);if(!c)return;
-  document.getElementById('cat-edit-id').value=c.id;
-  document.getElementById('cat-ed-title').textContent=`✏️ ${c.name}`;
-  document.getElementById('cat-name').value=c.name;
-  document.getElementById('cat-icon').value=c.icon||'';
-  showP('cat-editor',null);
-}
-async function saveCat(){
-  const name=document.getElementById('cat-name').value.trim();
-  const icon=document.getElementById('cat-icon').value.trim();
-  const eid=document.getElementById('cat-edit-id').value;
-  if(!name){toast('Nom requis !','err');return}
-  if(eid){
-    const c=DATA.categories.find(c=>c.id===eid);
-    if(c){c.name=name;c.icon=icon}
-    toast('✅ Catégorie modifiée !');
-  }else{
-    const id=gid(name);
-    if(DATA.categories.find(c=>c.id===id)){toast('Cette catégorie existe déjà !','err');return}
-    DATA.categories.push({id,name,icon,order:DATA.categories.length});
-    toast('✅ Catégorie créée !');
-  }
-  await saveData();renderCats();fillCatSelect();
-  showP('categories',document.querySelector('[data-panel=categories]'));
-}
-async function delCat(id){
-  const n=DATA.pages.filter(p=>p.catId===id).length;
-  if(!confirm(`Supprimer cette catégorie${n?` et ses ${n} page(s)`:''}?`))return;
-  DATA.categories=DATA.categories.filter(c=>c.id!==id);
-  DATA.pages=DATA.pages.filter(p=>p.catId!==id);
-  await saveData();renderCats();renderPages();fillCatSelect();renderStats();
-  toast('🗑 Catégorie supprimée.','info');
-}
-
-/* ── Pages ────────────────────────────────────────────────────── */
-function fillCatSelect(){
-  const s=document.getElementById('pg-cat');if(!s||!DATA)return;
-  s.innerHTML=DATA.categories.map(c=>`<option value="${c.id}">${c.icon||''} ${e(c.name)}</option>`).join('')
-    ||'<option value="">— Créer d\'abord une catégorie —</option>';
-}
-
+/* ── Pages ── */
 function renderPages(){
-  const el=document.getElementById('pages-list');if(!el||!DATA)return;
+  const el=document.getElementById('pages-list');
+  if(!el||!DATA)return;
   if(!DATA.pages.length){el.innerHTML='<p style="color:var(--txt3)">Aucune page.</p>';return}
-  const cats={};DATA.categories.forEach(c=>cats[c.id]=c);
   el.innerHTML=DATA.pages.map(p=>`
     <div class="li-row">
-      <div class="li-left">
+      <div class="li-l">
         <span class="li-icon">${p.icon||'📄'}</span>
         <div>
-          <div class="li-name">${e(p.title)}</div>
-          <div class="li-meta">${cats[p.catId]?`${cats[p.catId].icon} ${cats[p.catId].name}`:''} · #${p.id}</div>
+          <div class="li-name">${e(p.title)} ${p.isCore?'<span style="font-size:.68rem;color:var(--txt3);font-weight:400">(page fixe)</span>':''}</div>
+          <div class="li-meta">#${p.id} · TOC:${p.showToc?'✓':'✗'} · Cmds:${p.showCmdSearch?'✓':'✗'}</div>
         </div>
       </div>
-      <div class="li-right">
-        <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️ Modifier</button>
-        <button class="btn btn-red btn-sm" onclick="delPage('${p.id}')">🗑</button>
+      <div class="li-r">
+        <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️</button>
+        ${!p.isCore?`<button class="btn btn-red btn-sm" onclick="delPage('${p.id}')">🗑</button>`:''}
       </div>
     </div>`).join('');
 }
 
 function newPage(){
-  document.getElementById('edit-id').value='';
-  document.getElementById('ed-title').textContent='✏️ Nouvelle page';
+  document.getElementById('edit-pg-id').value='';
+  document.getElementById('pg-ed-title').textContent='✏️ Nouvelle page';
   ['pg-title','pg-icon','pg-desc','pg-content'].forEach(id=>document.getElementById(id).value='');
-  if(DATA.categories.length)document.getElementById('pg-cat').value=DATA.categories[0].id;
-  document.getElementById('prev').innerHTML='<span style="color:var(--txt3);font-size:.82rem">Commence à écrire…</span>';
-  showP('editor',document.getElementById('nav-editor'));
+  document.getElementById('pg-showtoc').checked=true;
+  document.getElementById('pg-showcmd').checked=false;
+  document.getElementById('pg-prev').innerHTML='<span style="color:var(--txt3);font-size:.82rem">Commence à écrire…</span>';
+  showP('page-editor',document.getElementById('nav-pg-ed'));
 }
+
 function editPage(id){
   const p=DATA.pages.find(p=>p.id===id);if(!p)return;
-  document.getElementById('edit-id').value=p.id;
-  document.getElementById('ed-title').textContent=`✏️ ${p.title}`;
+  document.getElementById('edit-pg-id').value=p.id;
+  document.getElementById('pg-ed-title').textContent=`✏️ ${p.title}`;
   document.getElementById('pg-title').value=p.title;
   document.getElementById('pg-icon').value=p.icon||'';
-  document.getElementById('pg-cat').value=p.catId||'';
   document.getElementById('pg-desc').value=p.desc||'';
   document.getElementById('pg-content').value=p.content||'';
-  doPreview();
-  showP('editor',document.getElementById('nav-editor'));
+  document.getElementById('pg-showtoc').checked=!!p.showToc;
+  document.getElementById('pg-showcmd').checked=!!p.showCmdSearch;
+  doPgPrev();
+  showP('page-editor',document.getElementById('nav-pg-ed'));
 }
+
 async function savePage(){
   const title=document.getElementById('pg-title').value.trim();
   const icon=document.getElementById('pg-icon').value.trim();
-  const catId=document.getElementById('pg-cat').value;
   const desc=document.getElementById('pg-desc').value.trim();
   const content=document.getElementById('pg-content').value;
-  const eid=document.getElementById('edit-id').value;
+  const showToc=document.getElementById('pg-showtoc').checked;
+  const showCmdSearch=document.getElementById('pg-showcmd').checked;
+  const eid=document.getElementById('edit-pg-id').value;
   if(!title){toast('Titre requis !','err');return}
-  if(!catId){toast('Choisis une catégorie !','err');return}
   if(eid){
     const idx=DATA.pages.findIndex(p=>p.id===eid);
-    if(idx!==-1)DATA.pages[idx]={...DATA.pages[idx],title,icon,catId,desc,content};
+    if(idx!==-1)DATA.pages[idx]={...DATA.pages[idx],title,icon,desc,content,showToc,showCmdSearch};
     toast('✅ Page modifiée !');
   }else{
     const id=gid(title);
     if(DATA.pages.find(p=>p.id===id)){toast('Cette page existe déjà !','err');return}
-    DATA.pages.push({id,title,icon,catId,desc,content,slug:id,order:DATA.pages.length});
+    DATA.pages.push({id,title,icon,desc,content,showToc,showCmdSearch,isCore:false,slug:id});
     toast('✅ Page créée !');
   }
-  await saveData();renderPages();renderStats();
-  showP('pages',document.querySelector('[data-panel=pages]'));
+  await saveData();renderPages();renderDash();
+  showP('pages',document.querySelector('[data-p=pages]'));
 }
+
 async function delPage(id){
-  if(!confirm('Supprimer cette page définitivement ?'))return;
+  if(!confirm('Supprimer cette page ?'))return;
   DATA.pages=DATA.pages.filter(p=>p.id!==id);
-  await saveData();renderPages();renderStats();
+  await saveData();renderPages();renderDash();
   toast('🗑 Page supprimée.','info');
 }
 
-/* ── Toolbar éditeur ──────────────────────────────────────────── */
+/* ── Commandes ── */
+function renderCmds(){
+  const el=document.getElementById('cmd-list');
+  const cnt=document.getElementById('cmd-count');
+  if(!el||!DATA)return;
+  const cmds=DATA.commands||[];
+  if(cnt)cnt.textContent=`${cmds.length} commande(s)`;
+  if(!cmds.length){el.innerHTML='<p style="color:var(--txt3)">Aucune commande. Ajoutes-en depuis "Ajouter commande".</p>';return}
+  el.innerHTML=cmds.map(c=>`
+    <div class="li-row">
+      <div class="li-l">
+        <span class="li-icon">⌨️</span>
+        <div>
+          <div class="li-name" style="font-family:'Courier New',monospace;color:var(--ember)">${e(c.cmd)}</div>
+          <div class="li-meta">${c.desc?e(c.desc.substring(0,60))+'...':''}</div>
+        </div>
+      </div>
+      <div class="li-r">
+        <button class="btn btn-ghost btn-sm" onclick="editCmd('${c.id}')">✏️</button>
+        <button class="btn btn-red btn-sm" onclick="delCmd('${c.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function newCmd(){
+  document.getElementById('edit-cmd-id').value='';
+  document.getElementById('cmd-ed-title').textContent='➕ Nouvelle commande';
+  ['cmd-main','cmd-alts','cmd-desc','cmd-kw'].forEach(id=>document.getElementById(id).value='');
+  showP('cmd-editor',document.getElementById('nav-cmd-ed'));
+}
+
+function editCmd(id){
+  const c=(DATA.commands||[]).find(c=>c.id===id);if(!c)return;
+  document.getElementById('edit-cmd-id').value=c.id;
+  document.getElementById('cmd-ed-title').textContent=`✏️ ${c.cmd}`;
+  document.getElementById('cmd-main').value=c.cmd;
+  document.getElementById('cmd-alts').value=c.alts||'';
+  document.getElementById('cmd-desc').value=c.desc||'';
+  document.getElementById('cmd-kw').value=c.keywords||'';
+  showP('cmd-editor',document.getElementById('nav-cmd-ed'));
+}
+
+async function saveCmd(){
+  const cmd=document.getElementById('cmd-main').value.trim();
+  const alts=document.getElementById('cmd-alts').value.trim();
+  const desc=document.getElementById('cmd-desc').value.trim();
+  const keywords=document.getElementById('cmd-kw').value.trim();
+  const eid=document.getElementById('edit-cmd-id').value;
+  if(!cmd){toast('La commande est requise !','err');return}
+  if(!desc){toast('La description est requise !','err');return}
+  if(!DATA.commands)DATA.commands=[];
+  if(eid){
+    const idx=DATA.commands.findIndex(c=>c.id===eid);
+    if(idx!==-1)DATA.commands[idx]={...DATA.commands[idx],cmd,alts,desc,keywords};
+    toast('✅ Commande modifiée !');
+  }else{
+    DATA.commands.push({id:'cmd_'+Date.now(),cmd,alts,desc,keywords});
+    toast('✅ Commande ajoutée !');
+  }
+  await saveData();renderCmds();renderDash();
+  showP('commands',document.querySelector('[data-p=commands]'));
+}
+
+async function delCmd(id){
+  if(!confirm('Supprimer cette commande ?'))return;
+  DATA.commands=DATA.commands.filter(c=>c.id!==id);
+  await saveData();renderCmds();renderDash();
+  toast('🗑 Commande supprimée.','info');
+}
+
+/* ── Éditeur toolbar ── */
 function ins(b,a){
   const ta=document.getElementById('pg-content');
   const s=ta.selectionStart,en=ta.selectionEnd;
   const sel=ta.value.substring(s,en);
   ta.value=ta.value.substring(0,s)+b+sel+a+ta.value.substring(en);
   ta.focus();ta.setSelectionRange(s+b.length,s+b.length+sel.length);
-  doPreview();
+  doPgPrev();
 }
-function insLink(){
-  const url=prompt('URL :','https://');if(!url)return;
-  const txt=prompt('Texte du lien :','cliquez ici');
-  ins(`[${txt||'lien'}](${url})`,'');
-}
-function insImg(){
-  const url=prompt('URL de l\'image :','https://');if(!url)return;
-  const alt=prompt('Texte alternatif :','image');
-  ins(`![${alt||'image'}](${url})`,'');
-}
-function doPreview(){
+function insLink(){const url=prompt('URL :','https://');if(!url)return;const t=prompt('Texte :','cliquez ici');ins(`[${t||'lien'}](${url})`,'');}
+function insImg(){const url=prompt('URL image :','https://');if(!url)return;const a=prompt('Alt :','image');ins(`![${a||'image'}](${url})`,'');}
+function doPgPrev(){
   const c=document.getElementById('pg-content').value;
-  document.getElementById('prev').innerHTML=mdToHtml(c)||'<span style="color:var(--txt3)">Aucun contenu.</span>';
+  document.getElementById('pg-prev').innerHTML=mdToHtml(c)||'<span style="color:var(--txt3)">Aucun contenu.</span>';
 }
-
 document.addEventListener('DOMContentLoaded',()=>{
   const ta=document.getElementById('pg-content');
-  if(ta){let d;ta.addEventListener('input',()=>{clearTimeout(d);d=setTimeout(doPreview,400)})}
+  if(ta){let d;ta.addEventListener('input',()=>{clearTimeout(d);d=setTimeout(doPgPrev,400)})}
 });
 
-/* ── Paramètres ───────────────────────────────────────────────── */
+/* ── Paramètres ── */
 function loadSettings(){
   if(!DATA)return;
   const s=DATA.settings;
   const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!==undefined)el.value=v};
-  sv('set-host',s.mcHost);sv('set-port',s.mcPort);
-  sv('set-ip',s.mcIp);sv('set-maint',s.maintMsg);
+  sv('set-mc-host',s.mcHost);sv('set-mc-port',s.mcPort);
+  sv('set-mc-ip',s.mcIp);sv('set-maint-msg',s.maintMsg);
+  sv('set-hero-desc',s.heroDesc);
   sv('set-bin',localStorage.getItem('dsmp_bin_id')||'');
 }
 function saveDB(){
   const b=document.getElementById('set-bin').value.trim();
   const k=document.getElementById('set-key').value.trim();
   if(!b||!k){toast('Remplis les deux champs !','err');return}
-  localStorage.setItem('dsmp_bin_id',b);
-  localStorage.setItem('dsmp_api_key',k);
-  toast('✅ Config DB sauvegardée ! Recharge la page pour activer.','info');
-  renderStats();
+  localStorage.setItem('dsmp_bin_id',b);localStorage.setItem('dsmp_api_key',k);
+  toast('✅ Config DB sauvegardée ! Recharge la page.','info');
+  renderDash();
 }
-async function saveMC(){
+async function saveSettings(){
   if(!DATA)return;
-  DATA.settings.mcHost=document.getElementById('set-host').value.trim();
-  DATA.settings.mcPort=parseInt(document.getElementById('set-port').value)||25816;
-  DATA.settings.mcIp=document.getElementById('set-ip').value.trim();
-  DATA.settings.maintMsg=document.getElementById('set-maint').value.trim();
-  await saveData();toast('✅ Paramètres MC sauvegardés !');
+  DATA.settings.mcHost=document.getElementById('set-mc-host').value.trim();
+  DATA.settings.mcPort=parseInt(document.getElementById('set-mc-port').value)||25816;
+  DATA.settings.mcIp=document.getElementById('set-mc-ip').value.trim();
+  DATA.settings.maintMsg=document.getElementById('set-maint-msg').value.trim();
+  DATA.settings.heroDesc=document.getElementById('set-hero-desc').value.trim();
+  await saveData();toast('✅ Paramètres sauvegardés !');
 }
-function exportJSON(){
+function exportData(){
   const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='dragonsmp-wiki-backup.json';a.click();
-  toast('📤 Export réussi !','info');
+  a.download='dragonsmp-backup.json';a.click();toast('📤 Export réussi !','info');
 }
 async function confirmReset(){
-  if(!confirm('⚠️ Réinitialiser TOUTES les données ? Cette action est irréversible.'))return;
-  localStorage.removeItem('dsmp_cache');
-  DATA=JSON.parse(JSON.stringify(DEFAULTS));
-  await saveData();renderStats();renderCats();renderPages();fillCatSelect();
-  toast('Wiki réinitialisé aux données par défaut.','info');
+  if(!confirm('⚠️ Réinitialiser TOUTES les données ?'))return;
+  localStorage.removeItem('dsmp_cache');DATA=JSON.parse(JSON.stringify(DEFAULTS));
+  await saveData();renderDash();renderPages();renderCmds();loadSettings();
+  toast('Réinitialisé.','info');
 }
 
-/* ── Markdown (partagé avec index.html) ───────────────────────── */
+/* ── Markdown ── */
 function mdToHtml(raw){
   if(!raw)return'';let s=raw;
   const blocks=[];
@@ -946,53 +867,27 @@ function mdToHtml(raw){
   s=s.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
   s=s.replace(/^&gt; (.+)$/gm,'<blockquote><p>$1</p></blockquote>');
   s=s.replace(/^---$/gm,'<hr>');
-  s=s.replace(/(\|.+\|\n)(\|[-| :]+\|\n)((?:\|.+\|?\n?)*)/g,(_,h,__,b)=>{
-    const ths=h.split('|').filter(c=>c.trim()).map(c=>`<th>${c.trim()}</th>`).join('');
-    const trs=b.trim().split('\n').map(row=>{
-      const tds=row.split('|').filter(c=>c.trim()).map(c=>`<td>${c.trim()}</td>`).join('');
-      return`<tr>${tds}</tr>`;
-    }).join('');
-    return`<div style="overflow-x:auto"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
-  });
   s=s.replace(/^### (.+)$/gm,'<h3>$1</h3>');
   s=s.replace(/^## (.+)$/gm,'<h2>$1</h2>');
   s=s.replace(/^# (.+)$/gm,'<h1>$1</h1>');
   s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
   s=s.replace(/\*(.+?)\*/g,'<em>$1</em>');
-  s=s.replace(/((?:^- .+\n?)+)/gm,m=>{
-    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^- /,'')}</li>`).join('');
-    return`<ul>${li}</ul>`;
-  });
-  s=s.replace(/((?:^\d+\. .+\n?)+)/gm,m=>{
-    const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('');
-    return`<ol>${li}</ol>`;
-  });
-  s=s.replace(/\n{2,}/g,'</p><p>');
-  s=`<p>${s}</p>`;
+  s=s.replace(/((?:^- .+\n?)+)/gm,m=>{const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^- /,'')}</li>`).join('');return`<ul>${li}</ul>`});
+  s=s.replace(/((?:^\d+\. .+\n?)+)/gm,m=>{const li=m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('');return`<ol>${li}</ol>`});
+  s=s.replace(/\n{2,}/g,'</p><p>');s=`<p>${s}</p>`;
   s=s.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|hr|div)[^>]*>)/g,'$1');
   s=s.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|hr|div)>)\s*<\/p>/g,'$1');
   s=s.replace(/<p>\s*<\/p>/g,'');
   s=s.replace(/\x00B(\d+)\x00/g,(_,i)=>{
-    const code=blocks[+i].replace(/^\n/,'').replace(/\n$/,'')
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return`<pre><code>${code}</code></pre>`;
-  });
+    const code=blocks[+i].replace(/^\n/,'').replace(/\n$/,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return`<pre><code>${code}</code></pre>`;});
   return s.trim();
 }
 
-/* ── Utils ────────────────────────────────────────────────────── */
+/* ── Utils ── */
 function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function gid(t){
-  return t.toLowerCase()
-    .replace(/[àáâã]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
-    .replace(/[òóôõ]/g,'o').replace(/[ùúûü]/g,'u').replace(/ç/g,'c')
-    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'page-'+Date.now();
-}
-function toast(msg,type='ok'){
-  const t=document.getElementById('toast');if(!t)return;
-  t.textContent=msg;t.className=`on ${type}`;
-  setTimeout(()=>t.className='',3500);
-}
+function gid(t){return t.toLowerCase().replace(/[àáâã]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõ]/g,'o').replace(/[ùúûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'page-'+Date.now()}
+function toast(msg,type='ok'){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.className=`on ${type}`;setTimeout(()=>t.className='',3500)}
 </script>
 </body>
 </html>
