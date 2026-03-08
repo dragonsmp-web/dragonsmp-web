@@ -395,6 +395,30 @@ body::after {
 }
 .hero-ip.copied .tip { opacity:1 }
 
+/* ════ WIDGETS ════ */
+.widget-row {
+  display:flex; flex-wrap:wrap; gap:.75rem;
+  margin-bottom:1.75rem;
+}
+.widget-card {
+  background:var(--bg2); border:1px solid var(--line2);
+  border-radius:10px; padding:.9rem 1.1rem;
+  display:flex; align-items:center; gap:.75rem;
+  min-width:140px; flex:1; max-width:220px;
+  transition:border-color .15s;
+}
+.widget-card:hover { border-color:rgba(200,150,60,.2) }
+.w-icon { font-size:1.5rem; flex-shrink:0 }
+.w-body { display:flex; flex-direction:column; gap:.1rem; min-width:0 }
+.w-val {
+  font-family:'Cinzel',serif; font-size:1.15rem;
+  color:var(--fire); font-weight:700; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
+}
+.w-ip { cursor:pointer; transition:color .15s }
+.w-ip:hover { color:var(--gold) }
+.w-lbl { font-size:.68rem; text-transform:uppercase; letter-spacing:1px; color:var(--txt3) }
+
 /* ════ TOAST ════ */
 #toast {
   position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
@@ -422,7 +446,7 @@ body::after {
 
 <!-- ═══ HEADER ═══ -->
 <header class="hdr">
-  <div class="logo" onclick="goPage('presentation')">🐉 Dragon<em>SMP</em></div>
+  <div class="logo" onclick="goHome()">🐉 Dragon<em>SMP</em></div>
 
   <div class="ip-chip" id="hdr-ip" onclick="copyIP(this)">
     <span class="icon">📋</span>
@@ -697,13 +721,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   startMC();
 
   const hash = location.hash.replace('#', '');
-  goPage(hash && DATA.pages.find(p => p.id === hash) ? hash : 'presentation');
+  const startPage = hash && DATA.pages.find(p => p.id === hash)
+    ? hash
+    : (DATA.pages.find(p => p.isHome)?.id || DATA.pages[0]?.id || 'presentation');
+  goPage(startPage);
 });
 
 window.addEventListener('hashchange', () => {
   const id = location.hash.replace('#', '');
   if (id) goPage(id);
 });
+
+function goHome() {
+  const home = DATA?.pages?.find(p => p.isHome) || DATA?.pages?.[0];
+  goPage(home?.id || 'presentation');
+}
 
 /* ─── Paramètres ────────────────────────────────────────── */
 function applySettings() {
@@ -736,16 +768,82 @@ function buildPages() {
     const div = document.createElement('div');
     div.className = 'page';
     div.id = `page-${p.id}`;
+
+    // Génère les widgets configurés pour cette page
+    const widgetsHtml = buildWidgetsHtml(p.widgets || []);
+
     div.innerHTML = `
       <div class="page-head">
         <h1 class="page-title">${p.icon || ''} ${e(p.title)}</h1>
         ${p.desc ? `<p class="page-desc">${e(p.desc)}</p>` : ''}
       </div>
+      ${widgetsHtml ? `<div class="widget-row" id="widgets-${p.id}">${widgetsHtml}</div>` : ''}
       <div class="wc" id="wc-${p.id}">${mdToHtml(p.content || '')}</div>`;
     container.appendChild(div);
   });
-  // Injecte les boutons copie dans chaque bloc <pre>
   injectCopyButtons();
+  // Lance les widgets dynamiques (MC status, etc.)
+  initWidgets();
+}
+
+/* ─── Widgets ────────────────────────────────────────────── */
+const WIDGET_DEFS = {
+  mc_players:  { label:'Joueurs en ligne', icon:'👥', render: () => `<span class="w-val" id="w-mc-players">—</span><span class="w-lbl">Joueurs en ligne</span>` },
+  mc_status:   { label:'Statut serveur',   icon:'🟢', render: () => `<span class="w-val" id="w-mc-status">—</span><span class="w-lbl">Statut serveur</span>` },
+  mc_ip:       { label:'IP du serveur',    icon:'📋', render: () => `<span class="w-val w-ip" id="w-mc-ip" onclick="copyIPWidget()" title="Cliquer pour copier">${DATA?.settings?.mcIp||'163.5.141.232:25816'}</span><span class="w-lbl">IP — cliquer pour copier</span>` },
+  mc_version:  { label:'Version',          icon:'⚙️', render: () => `<span class="w-val">Java</span><span class="w-lbl">1.21+ requis</span>` },
+  mc_motd:     { label:'Message du jour',  icon:'💬', render: () => `<span class="w-val" id="w-mc-motd">—</span><span class="w-lbl">Message du serveur</span>` },
+  discord:     { label:'Discord',          icon:'💬', render: () => `<span class="w-val">Discord</span><span class="w-lbl"><a href="https://discord.gg/A7wpe2Yr6S" target="_blank" style="color:var(--gold)">Rejoindre le serveur</a></span>` },
+  kofi:        { label:'Ko-fi',            icon:'☕', render: () => `<span class="w-val">Ko-fi</span><span class="w-lbl"><a href="https://ko-fi.com/dragonsmpv2" target="_blank" style="color:var(--gold)">Soutenir le serveur</a></span>` },
+  playtime:    { label:'Uptime serveur',   icon:'⏱',  render: () => `<span class="w-val" id="w-uptime">24/7</span><span class="w-lbl">Disponibilité</span>` },
+  custom_text: { label:'Texte libre',      icon:'✏️', render: (cfg) => `<span class="w-val">${e(cfg?.val||'Texte')}</span><span class="w-lbl">${e(cfg?.lbl||'Info')}</span>` },
+};
+
+function buildWidgetsHtml(widgets) {
+  if (!widgets?.length) return '';
+  return widgets.map(w => {
+    const def = WIDGET_DEFS[w.type];
+    if (!def) return '';
+    return `<div class="widget-card" data-wtype="${w.type}">
+      <span class="w-icon">${def.icon}</span>
+      <div class="w-body">${def.render(w)}</div>
+    </div>`;
+  }).join('');
+}
+
+function initWidgets() {
+  // Met à jour les widgets MC dynamiquement après le fetch
+  updateMCWidgets();
+}
+
+function updateMCWidgets() {
+  const s = DATA?.settings || DEFAULTS.settings;
+  // Players
+  const wp = document.getElementById('w-mc-players');
+  const ws = document.getElementById('w-mc-status');
+  const wm = document.getElementById('w-mc-motd');
+  const wi = document.getElementById('w-mc-ip');
+  if (wi) wi.textContent = s.mcIp || '163.5.141.232:25816';
+
+  fetch(`https://api.mcstatus.io/v2/status/java/${s.mcHost}:${s.mcPort}`)
+    .then(r => r.json()).then(j => {
+      if (wp) wp.textContent = j.online ? `${j.players?.online ?? 0}/${j.players?.max ?? 0}` : 'Off';
+      if (ws) { ws.textContent = j.online ? 'En ligne ✓' : 'Hors ligne'; ws.style.color = j.online ? 'var(--ok)' : 'var(--bad)'; }
+      if (wm) wm.textContent = j.motd?.clean?.replace(/\n.*/,'').trim() || '—';
+    }).catch(() => {
+      if (wp) wp.textContent = 'Off';
+      if (ws) { ws.textContent = 'Hors ligne'; ws.style.color = 'var(--bad)'; }
+    });
+}
+
+function copyIPWidget() {
+  const ip = DATA?.settings?.mcIp || '163.5.141.232:25816';
+  const el = document.getElementById('w-mc-ip');
+  navigator.clipboard?.writeText(ip).catch(() => {
+    const ta = document.createElement('textarea'); ta.value = ip;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  });
+  if (el) { const orig = el.textContent; el.textContent = '✓ Copié !'; el.style.color = 'var(--ok)'; setTimeout(() => { el.textContent = orig; el.style.color = ''; }, 2000); }
 }
 
 function injectCopyButtons() {
