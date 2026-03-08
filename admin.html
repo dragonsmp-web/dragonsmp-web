@@ -464,12 +464,25 @@ select.finput option { background:var(--bg3) }
         <div class="info-card" style="margin-bottom:1rem">
           <p style="font-weight:600;color:var(--txt);margin-bottom:.65rem">Options d'affichage</p>
           <div class="toggle-row">
-            <span class="toggle-lbl">Afficher la table des matières (sidebar gauche, auto-générée depuis les titres)</span>
+            <span class="toggle-lbl">⭐ Page d'accueil — le logo DragonSMP ramène ici (une seule page à la fois)</span>
+            <label class="sw"><input type="checkbox" id="pg-home"><span class="sw-track"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-lbl">Afficher la table des matières (sidebar gauche)</span>
             <label class="sw"><input type="checkbox" id="pg-toc" checked><span class="sw-track"></span></label>
           </div>
           <div class="toggle-row">
             <span class="toggle-lbl">Afficher la barre de recherche commandes (sidebar droite)</span>
             <label class="sw"><input type="checkbox" id="pg-cmds"><span class="sw-track"></span></label>
+          </div>
+        </div>
+
+        <!-- Widgets -->
+        <div class="info-card" style="margin-bottom:1rem">
+          <p style="font-weight:600;color:var(--txt);margin-bottom:.2rem">🧩 Widgets — cartes d'info affichées en haut de la page</p>
+          <p style="font-size:.78rem;color:var(--txt3);margin-bottom:.8rem">Coche les widgets à afficher. Ils apparaissent dans l'ordre coché, avant le contenu.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem" id="widget-checkboxes">
+            <!-- injecté par JS -->
           </div>
         </div>
 
@@ -825,28 +838,40 @@ async function toggleMaint() {
 function renderPages() {
   const el = document.getElementById('pages-list');
   if (!el || !DATA) return;
-  const allPages = DATA.pages;
-  if (!allPages.length) { el.innerHTML = '<p style="color:var(--txt3)">Aucune page.</p>'; return; }
-  el.innerHTML = allPages.map(p => {
-    const isPresentation = p.id === 'presentation';
-    const badge = isPresentation
-      ? `<span style="font-size:.65rem;background:rgba(200,150,60,.12);color:var(--gold);border:1px solid rgba(200,150,60,.2);border-radius:10px;padding:.1rem .45rem;margin-left:.35rem">Accueil</span>`
-      : (p.isSpecial ? '<span style="font-size:.65rem;color:var(--txt3)">fixe</span>' : '');
+  const pages = DATA.pages;
+  if (!pages.length) { el.innerHTML = '<p style="color:var(--txt3)">Aucune page.</p>'; return; }
+  el.innerHTML = pages.map((p, idx) => {
+    const homeBadge = p.isHome
+      ? '<span style="font-size:.65rem;background:rgba(217,79,30,.15);color:var(--ember);border:1px solid rgba(217,79,30,.3);border-radius:10px;padding:.1rem .45rem;margin-left:.35rem">⭐ Accueil</span>' : '';
+    const wCount = p.widgets?.length ? ` · ${p.widgets.length} widget(s)` : '';
+    const meta = p.id === 'presentation' ? 'Page hero modifiable' :
+      `#${p.id} · TOC:${p.showToc?'✓':'✗'} · Cmds:${p.showCmds?'✓':'✗'}${wCount}`;
     return `
     <div class="lrow">
       <div class="lrow-l">
         <span class="lrow-icon">${p.icon || '📄'}</span>
         <div>
-          <div class="lrow-name">${e(p.title)} ${badge}</div>
-          <div class="lrow-meta">${isPresentation ? 'Page d\'accueil' : '#'+p.id+' · TOC:'+( p.showToc ? '✓' : '✗')+' · Cmds:'+(p.showCmds ? '✓' : '✗')}</div>
+          <div class="lrow-name">${e(p.title)}${homeBadge}</div>
+          <div class="lrow-meta">${meta}</div>
         </div>
       </div>
-      <div class="lrow-r">
-        <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️ Éditer</button>
+      <div class="lrow-r" style="gap:.25rem">
+        <button class="btn btn-ghost btn-sm" onclick="movePage(${idx},-1)" ${idx===0?'disabled':''} title="Monter">↑</button>
+        <button class="btn btn-ghost btn-sm" onclick="movePage(${idx},1)"  ${idx===pages.length-1?'disabled':''} title="Descendre">↓</button>
+        <button class="btn btn-ghost btn-sm" onclick="editPage('${p.id}')">✏️</button>
         ${!p.isSpecial ? `<button class="btn btn-red btn-sm" onclick="delPage('${p.id}')">🗑</button>` : ''}
       </div>
     </div>`;
   }).join('');
+}
+
+async function movePage(idx, dir) {
+  const pages = DATA.pages;
+  const ni = idx + dir;
+  if (ni < 0 || ni >= pages.length) return;
+  [pages[idx], pages[ni]] = [pages[ni], pages[idx]];
+  await saveData(); renderPages();
+  toast('✅ Ordre mis à jour !');
 }
 
 function newPage() {
@@ -857,6 +882,8 @@ function newPage() {
   document.getElementById('pg-desc').value = '';
   document.getElementById('pg-toc').checked = true;
   document.getElementById('pg-cmds').checked = false;
+  document.getElementById('pg-home').checked = false;
+  buildWidgetCheckboxes([]);
   rteSetContent('');
   showP('pg-editor', document.getElementById('nav-pged'));
 }
@@ -865,7 +892,6 @@ function editPage(id) {
   const p = DATA.pages.find(p => p.id === id);
   if (!p) return;
 
-  // Cas spécial : page présentation (pas de markdown, juste texte + sous-titre)
   if (id === 'presentation') {
     document.getElementById('edit-pg-id').value = 'presentation';
     document.getElementById('pged-title').textContent = "✏️ Page d'accueil";
@@ -874,19 +900,17 @@ function editPage(id) {
     document.getElementById('pg-desc').value = DATA.settings.heroSub || '';
     document.getElementById('pg-toc').checked = false;
     document.getElementById('pg-cmds').checked = false;
-    // Contenu = texte affiché sous le titre héro
-    rteSetContent(DATA.settings.heroSub || '');
-    // Cache les toggles TOC/Cmds qui n'ont pas de sens ici
+    document.getElementById('pg-home').checked = !!p.isHome;
     document.getElementById('pg-toc').parentElement.parentElement.style.display = 'none';
     document.getElementById('pg-cmds').parentElement.parentElement.style.display = 'none';
+    buildWidgetCheckboxes([]);
+    rteSetContent(DATA.settings.heroSub || '');
     showP('pg-editor', document.getElementById('nav-pged'));
     return;
   }
 
-  // Ré-affiche les toggles si on venait de la présentation
   document.getElementById('pg-toc').parentElement.parentElement.style.display = '';
   document.getElementById('pg-cmds').parentElement.parentElement.style.display = '';
-
   document.getElementById('edit-pg-id').value = p.id;
   document.getElementById('pged-title').textContent = `✏️ ${p.title}`;
   document.getElementById('pg-title').value = p.title;
@@ -894,43 +918,48 @@ function editPage(id) {
   document.getElementById('pg-desc').value = p.desc || '';
   document.getElementById('pg-toc').checked = !!p.showToc;
   document.getElementById('pg-cmds').checked = !!p.showCmds;
+  document.getElementById('pg-home').checked = !!p.isHome;
+  buildWidgetCheckboxes(p.widgets || []);
   rteSetContent(p.content || '');
   showP('pg-editor', document.getElementById('nav-pged'));
 }
 
 async function savePage() {
-  const title   = document.getElementById('pg-title').value.trim();
-  const icon    = document.getElementById('pg-icon').value.trim();
-  const desc    = document.getElementById('pg-desc').value.trim();
-  const showToc = document.getElementById('pg-toc').checked;
-  const showCmds= document.getElementById('pg-cmds').checked;
-  const content = rteGetMarkdown();
-  const eid     = document.getElementById('edit-pg-id').value;
+  const title    = document.getElementById('pg-title').value.trim();
+  const icon     = document.getElementById('pg-icon').value.trim();
+  const desc     = document.getElementById('pg-desc').value.trim();
+  const showToc  = document.getElementById('pg-toc').checked;
+  const showCmds = document.getElementById('pg-cmds').checked;
+  const isHome   = document.getElementById('pg-home').checked;
+  const widgets  = getWidgetSelection();
+  const content  = rteGetMarkdown();
+  const eid      = document.getElementById('edit-pg-id').value;
 
   if (!title) { toast('Titre requis !', 'err'); return; }
 
-  // Cas spécial : page présentation
   if (eid === 'presentation') {
     DATA.settings.heroSub = desc || rteGetMarkdown();
     const idx = DATA.pages.findIndex(p => p.id === 'presentation');
-    if (idx !== -1) DATA.pages[idx] = { ...DATA.pages[idx], title, icon };
+    if (isHome) DATA.pages.forEach(p => { p.isHome = false; });
+    if (idx !== -1) DATA.pages[idx] = { ...DATA.pages[idx], title, icon, isHome };
     await saveData(); renderPages(); renderDash();
     toast("✅ Page d'accueil mise à jour !");
     showP('pages', document.querySelector('[data-p=pages]'));
-    // Ré-affiche les toggles
     document.getElementById('pg-toc').parentElement.parentElement.style.display = '';
     document.getElementById('pg-cmds').parentElement.parentElement.style.display = '';
     return;
   }
 
+  if (isHome) DATA.pages.forEach(p => { p.isHome = false; });
+
   if (eid) {
     const idx = DATA.pages.findIndex(p => p.id === eid);
-    if (idx !== -1) DATA.pages[idx] = { ...DATA.pages[idx], title, icon, desc, content, showToc, showCmds };
+    if (idx !== -1) DATA.pages[idx] = { ...DATA.pages[idx], title, icon, desc, content, showToc, showCmds, isHome, widgets };
     toast('✅ Page modifiée !');
   } else {
     const id = gid(title);
     if (DATA.pages.find(p => p.id === id)) { toast('Cette page existe déjà !', 'err'); return; }
-    DATA.pages.push({ id, title, icon, desc, content, showToc, showCmds, isSpecial: false });
+    DATA.pages.push({ id, title, icon, desc, content, showToc, showCmds, isHome, widgets, isSpecial: false });
     toast('✅ Page créée !');
   }
   await saveData(); renderPages(); renderDash();
@@ -945,6 +974,40 @@ async function delPage(id) {
 }
 
 /* ─── Commandes ─────────────────────────────────────────── */
+/* ─── Widget helpers ─────────────────────────────────────── */
+const WIDGET_DEFS = {
+  mc_players: { label: '👥 Joueurs en ligne',   desc: 'Nombre de joueurs connectés en live' },
+  mc_status:  { label: '🟢 Statut serveur',      desc: 'En ligne / Hors ligne en temps réel' },
+  mc_ip:      { label: '📋 IP du serveur',        desc: "IP cliquable pour copier" },
+  mc_version: { label: '⚙️ Version Minecraft',   desc: 'Java 1.21+ requis' },
+  mc_motd:    { label: '💬 Message du serveur',   desc: 'MOTD récupéré en live' },
+  discord:    { label: '🎮 Lien Discord',          desc: 'Bouton vers le serveur Discord' },
+  kofi:       { label: '☕ Ko-fi',                desc: 'Lien de soutien Ko-fi' },
+  playtime:   { label: '⏱ Disponibilité 24/7',   desc: 'Indique que le serveur est en ligne 24h/24' },
+};
+
+function buildWidgetCheckboxes(active) {
+  const el = document.getElementById('widget-checkboxes');
+  if (!el) return;
+  const activeIds = (active || []).map(w => w.type);
+  el.innerHTML = Object.entries(WIDGET_DEFS).map(([id, def]) => `
+    <label style="display:flex;align-items:flex-start;gap:.5rem;padding:.5rem .6rem;background:var(--bg3);border:1px solid var(--ln2);border-radius:6px;cursor:pointer">
+      <input type="checkbox" id="w-${id}" ${activeIds.includes(id)?'checked':''}
+        style="margin-top:.15rem;accent-color:var(--fire);cursor:pointer">
+      <div>
+        <div style="font-size:.82rem;font-weight:600;color:var(--txt)">${def.label}</div>
+        <div style="font-size:.7rem;color:var(--txt3)">${def.desc}</div>
+      </div>
+    </label>`).join('');
+}
+
+function getWidgetSelection() {
+  return Object.keys(WIDGET_DEFS)
+    .filter(id => document.getElementById('w-' + id)?.checked)
+    .map(id => ({ type: id }));
+}
+
+
 function renderCmds() {
   const el  = document.getElementById('cmd-list');
   const cnt = document.getElementById('cmd-count');
